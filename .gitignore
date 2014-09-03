@@ -1,0 +1,6 @@
+doc
+config.sh
+.project
+.settings
+*.pyc
+
