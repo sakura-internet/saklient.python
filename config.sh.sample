@@ -2,4 +2,4 @@
 
 export SACLOUD_TOKEN='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 export SACLOUD_SECRET='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-
+# export SACLOUD_ZONE='is1b'
