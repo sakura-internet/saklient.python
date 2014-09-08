@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.model.model_serverplan import Model_ServerPlan
-from saklient.cloud.model.model_diskplan import Model_DiskPlan
-from saklient.cloud.model.model_routerplan import Model_RouterPlan
-from saklient.cloud.client import Client
-from saklient.util import Util
+from .model.model_serverplan import Model_ServerPlan
+from .model.model_diskplan import Model_DiskPlan
+from .model.model_routerplan import Model_RouterPlan
+from .client import Client
+from ..util import Util
 
 # module saklient.cloud.product
 

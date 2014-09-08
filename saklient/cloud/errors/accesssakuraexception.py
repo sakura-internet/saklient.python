@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httpforbiddenexception import HttpForbiddenException
-from saklient.errors.httpforbiddenexception import HttpForbiddenException
+from ...errors.httpforbiddenexception import HttpForbiddenException
 
 # module saklient.cloud.errors.accesssakuraexception
 

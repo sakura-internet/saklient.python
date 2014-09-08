@@ -1,12 +1,10 @@
 # -*- coding:utf-8 -*-
 
-from saklient.util import Util
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.resource.isoimage import IsoImage
-from saklient.cloud.enums.eserverinstancestatus import EServerInstanceStatus
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ...util import Util
+from ..client import Client
+from .resource import Resource
+from .isoimage import IsoImage
+from ..enums.eserverinstancestatus import EServerInstanceStatus
 
 # module saklient.cloud.resource.serverinstance
 

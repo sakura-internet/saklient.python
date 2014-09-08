@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httpbadrequestexception import HttpBadRequestException
-from saklient.errors.httpbadrequestexception import HttpBadRequestException
+from ...errors.httpbadrequestexception import HttpBadRequestException
 
 # module saklient.cloud.errors.paramresnotfoundexception
 

@@ -1,9 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.model.model import Model
-from saklient.cloud.resource.disk import Disk
-from saklient.util import Util
-from saklient.cloud.model.model import Model
+from .model import Model
+from ..resource.disk import Disk
+from ...util import Util
 
 # module saklient.cloud.model.model_disk
 

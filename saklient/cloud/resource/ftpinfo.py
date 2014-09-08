@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.util import Util
-from saklient.util import Util
+from ...util import Util
 
 # module saklient.cloud.resource.ftpinfo
 

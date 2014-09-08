@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.saklientexception import SaklientException
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.resource.icon import Icon
-from saklient.cloud.enums.escope import EScope
-from saklient.cloud.enums.escriptclass import EScriptClass
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ...errors.saklientexception import SaklientException
+from ..client import Client
+from .resource import Resource
+from .icon import Icon
+from ..enums.escope import EScope
+from ..enums.escriptclass import EScriptClass
+from ...util import Util
 
 # module saklient.cloud.resource.script
 

@@ -1,13 +1,12 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.resource.icon import Icon
-from saklient.cloud.resource.ftpinfo import FtpInfo
-from saklient.cloud.enums.escope import EScope
-from saklient.errors.saklientexception import SaklientException
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ..client import Client
+from .resource import Resource
+from .icon import Icon
+from .ftpinfo import FtpInfo
+from ..enums.escope import EScope
+from ...errors.saklientexception import SaklientException
+from ...util import Util
 
 # module saklient.cloud.resource.isoimage
 

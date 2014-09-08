@@ -1,9 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.model.model import Model
-from saklient.cloud.resource.serverplan import ServerPlan
-from saklient.util import Util
-from saklient.cloud.model.model import Model
+from .model import Model
+from ..resource.serverplan import ServerPlan
+from ...util import Util
 
 # module saklient.cloud.model.model_serverplan
 

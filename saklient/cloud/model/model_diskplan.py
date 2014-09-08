@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.client import Client
-from saklient.cloud.model.model import Model
-from saklient.cloud.resource.diskplan import DiskPlan
-from saklient.util import Util
-from saklient.cloud.model.model import Model
+from ..client import Client
+from .model import Model
+from ..resource.diskplan import DiskPlan
+from ...util import Util
 
 # module saklient.cloud.model.model_diskplan
 

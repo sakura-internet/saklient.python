@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httpnotfoundexception import HttpNotFoundException
-from saklient.errors.httpnotfoundexception import HttpNotFoundException
+from ...errors.httpnotfoundexception import HttpNotFoundException
 
 # module saklient.cloud.errors.replicanotfoundexception
 

@@ -1,17 +1,16 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.saklientexception import SaklientException
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.resource.icon import Icon
-from saklient.cloud.resource.iface import Iface
-from saklient.cloud.resource.serverplan import ServerPlan
-from saklient.cloud.resource.serverinstance import ServerInstance
-from saklient.cloud.resource.isoimage import IsoImage
-from saklient.cloud.enums.eserverinstancestatus import EServerInstanceStatus
-from saklient.cloud.enums.eavailability import EAvailability
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ...errors.saklientexception import SaklientException
+from ..client import Client
+from .resource import Resource
+from .icon import Icon
+from .iface import Iface
+from .serverplan import ServerPlan
+from .serverinstance import ServerInstance
+from .isoimage import IsoImage
+from ..enums.eserverinstancestatus import EServerInstanceStatus
+from ..enums.eavailability import EAvailability
+from ...util import Util
 
 # module saklient.cloud.resource.server
 

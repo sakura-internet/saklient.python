@@ -3,7 +3,7 @@
 import urllib.request, urllib.parse
 from urllib.error import URLError, HTTPError
 import json, re, base64
-from saklient.errors.exceptionfactory import ExceptionFactory
+from ..errors.exceptionfactory import ExceptionFactory
 
 class Client:
     

@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httpconflictexception import HttpConflictException
-from saklient.errors.httpconflictexception import HttpConflictException
+from ...errors.httpconflictexception import HttpConflictException
 
 # module saklient.cloud.errors.packetfilterversionmismatchexception
 

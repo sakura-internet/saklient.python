@@ -1,14 +1,13 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.saklientexception import SaklientException
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.resource.icon import Icon
-from saklient.cloud.resource.router import Router
-from saklient.cloud.resource.ipv4net import Ipv4Net
-from saklient.cloud.resource.ipv6net import Ipv6Net
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ...errors.saklientexception import SaklientException
+from ..client import Client
+from .resource import Resource
+from .icon import Icon
+from .router import Router
+from .ipv4net import Ipv4Net
+from .ipv6net import Ipv6Net
+from ...util import Util
 
 # module saklient.cloud.resource.swytch
 

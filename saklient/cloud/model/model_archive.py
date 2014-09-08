@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.model.model import Model
-from saklient.cloud.resource.archive import Archive
-from saklient.cloud.enums.escope import EScope
-from saklient.util import Util
-from saklient.cloud.model.model import Model
+from .model import Model
+from ..resource.archive import Archive
+from ..enums.escope import EScope
+from ...util import Util
 
 # module saklient.cloud.model.model_archive
 

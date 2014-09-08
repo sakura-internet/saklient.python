@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.saklientexception import SaklientException
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ...errors.saklientexception import SaklientException
+from ..client import Client
+from .resource import Resource
+from ...util import Util
 
 # module saklient.cloud.resource.iface
 

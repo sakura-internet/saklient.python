@@ -1,20 +1,19 @@
 # -*- coding:utf-8 -*-
 
-from saklient.util import Util
-from saklient.cloud.client import Client
-from saklient.cloud.product import Product
-from saklient.cloud.model.model_icon import Model_Icon
-from saklient.cloud.model.model_server import Model_Server
-from saklient.cloud.model.model_disk import Model_Disk
-from saklient.cloud.model.model_appliance import Model_Appliance
-from saklient.cloud.model.model_archive import Model_Archive
-from saklient.cloud.model.model_isoimage import Model_IsoImage
-from saklient.cloud.model.model_iface import Model_Iface
-from saklient.cloud.model.model_swytch import Model_Swytch
-from saklient.cloud.model.model_router import Model_Router
-from saklient.cloud.model.model_ipv6net import Model_Ipv6Net
-from saklient.cloud.model.model_script import Model_Script
-from saklient.util import Util
+from ..util import Util
+from .client import Client
+from .product import Product
+from .model.model_icon import Model_Icon
+from .model.model_server import Model_Server
+from .model.model_disk import Model_Disk
+from .model.model_appliance import Model_Appliance
+from .model.model_archive import Model_Archive
+from .model.model_isoimage import Model_IsoImage
+from .model.model_iface import Model_Iface
+from .model.model_swytch import Model_Swytch
+from .model.model_router import Model_Router
+from .model.model_ipv6net import Model_Ipv6Net
+from .model.model_script import Model_Script
 
 # module saklient.cloud.api
 

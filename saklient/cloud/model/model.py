@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.util import Util
+from ..client import Client
+from ..resource.resource import Resource
+from ...util import Util
 
 # module saklient.cloud.model.model
 

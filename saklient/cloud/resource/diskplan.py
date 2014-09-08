@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.enums.estorageclass import EStorageClass
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ..client import Client
+from .resource import Resource
+from ..enums.estorageclass import EStorageClass
+from ...util import Util
 
 # module saklient.cloud.resource.diskplan
 

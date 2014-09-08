@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httpexception import HttpException
-from saklient.errors.httpexception import HttpException
+from .httpexception import HttpException
 
 # module saklient.errors.httpexpectationfailedexception
 

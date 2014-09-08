@@ -1,16 +1,15 @@
 # -*- coding:utf-8 -*-
 
-from saklient.cloud.client import Client
-from saklient.cloud.resource.resource import Resource
-from saklient.cloud.resource.icon import Icon
-from saklient.cloud.resource.ftpinfo import FtpInfo
-from saklient.cloud.resource.diskplan import DiskPlan
-from saklient.cloud.resource.server import Server
-from saklient.cloud.enums.escope import EScope
-from saklient.cloud.enums.eavailability import EAvailability
-from saklient.errors.saklientexception import SaklientException
-from saklient.util import Util
-from saklient.cloud.resource.resource import Resource
+from ..client import Client
+from .resource import Resource
+from .icon import Icon
+from .ftpinfo import FtpInfo
+from .diskplan import DiskPlan
+from .server import Server
+from ..enums.escope import EScope
+from ..enums.eavailability import EAvailability
+from ...errors.saklientexception import SaklientException
+from ...util import Util
 
 # module saklient.cloud.resource.archive
 

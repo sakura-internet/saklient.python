@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httppaymentrequiredexception import HttpPaymentRequiredException
-from saklient.errors.httppaymentrequiredexception import HttpPaymentRequiredException
+from ...errors.httppaymentrequiredexception import HttpPaymentRequiredException
 
 # module saklient.cloud.errors.paymentunpayableexception
 

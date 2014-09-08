@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from saklient.errors.httpserviceunavailableexception import HttpServiceUnavailableException
-from saklient.errors.httpserviceunavailableexception import HttpServiceUnavailableException
+from ...errors.httpserviceunavailableexception import HttpServiceUnavailableException
 
 # module saklient.cloud.errors.toomanyrequestexception
 

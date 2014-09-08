@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import datetime, re, types, time, urllib.parse
-from saklient.errors.saklientexception import SaklientException
+from .errors.saklientexception import SaklientException
 
 # module saklient.util
 

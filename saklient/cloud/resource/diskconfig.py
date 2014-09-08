@@ -1,9 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from saklient.util import Util
-from saklient.cloud.client import Client
-from saklient.cloud.resource.script import Script
-from saklient.util import Util
+from ...util import Util
+from ..client import Client
+from .script import Script
 
 # module saklient.cloud.resource.diskconfig
 
