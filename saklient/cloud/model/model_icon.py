@@ -82,6 +82,7 @@ class Model_Icon(Model):
     # 大文字・小文字は区別されません。
     # 半角スペースで区切られた複数の文字列は、それらをすべて含むことが条件とみなされます。
     # 
+    # @todo Implement test case
     # @param {str} name
     # @return {saklient.cloud.model.model_icon.Model_Icon}
     def with_name_like(self, name):
@@ -92,6 +93,7 @@ class Model_Icon(Model):
     # 
     # 複数のタグを指定する場合は withTags() を利用してください。
     # 
+    # @todo Implement test case
     # @param {str} tag
     # @return {saklient.cloud.model.model_icon.Model_Icon}
     def with_tag(self, tag):
@@ -100,14 +102,25 @@ class Model_Icon(Model):
     
     ## 指定したすべてのタグを持つリソースに絞り込みます。
     # 
+    # @todo Implement test case
     # @param {str[]} tags
     # @return {saklient.cloud.model.model_icon.Model_Icon}
     def with_tags(self, tags):
         Util.validate_type(tags, "list")
         return self._with_tags(tags)
     
+    ## 指定したDNFに合致するタグを持つリソースに絞り込みます。
+    # 
+    # @todo Implement test case
+    # @param {str[][]} dnf
+    # @return {saklient.cloud.model.model_icon.Model_Icon}
+    def with_tag_dnf(self, dnf):
+        Util.validate_type(dnf, "list")
+        return self._with_tag_dnf(dnf)
+    
     ## 名前でソートします。
     # 
+    # @todo Implement test case
     # @param {bool} reverse=False
     # @return {saklient.cloud.model.model_icon.Model_Icon}
     def sort_by_name(self, reverse=False):
@@ -118,13 +131,13 @@ class Model_Icon(Model):
     # 
     # @return {saklient.cloud.model.model_icon.Model_Icon}
     def with_shared_scope(self):
-        self._filter_by("Scope", EScope.shared)
+        self._filter_by("Scope", [EScope.shared])
         return self
     
     ## プライベートアイコンに絞り込みます。
     # 
     # @return {saklient.cloud.model.model_icon.Model_Icon}
     def with_user_scope(self):
-        self._filter_by("Scope", EScope.user)
+        self._filter_by("Scope", [EScope.user])
         return self
     

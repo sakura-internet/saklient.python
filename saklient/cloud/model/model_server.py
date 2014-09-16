@@ -92,6 +92,7 @@ class Model_Server(Model):
     # 大文字・小文字は区別されません。
     # 半角スペースで区切られた複数の文字列は、それらをすべて含むことが条件とみなされます。
     # 
+    # @todo Implement test case
     # @param {str} name
     # @return {saklient.cloud.model.model_server.Model_Server}
     def with_name_like(self, name):
@@ -102,6 +103,7 @@ class Model_Server(Model):
     # 
     # 複数のタグを指定する場合は withTags() を利用してください。
     # 
+    # @todo Implement test case
     # @param {str} tag
     # @return {saklient.cloud.model.model_server.Model_Server}
     def with_tag(self, tag):
@@ -110,14 +112,25 @@ class Model_Server(Model):
     
     ## 指定したすべてのタグを持つリソースに絞り込みます。
     # 
+    # @todo Implement test case
     # @param {str[]} tags
     # @return {saklient.cloud.model.model_server.Model_Server}
     def with_tags(self, tags):
         Util.validate_type(tags, "list")
         return self._with_tags(tags)
     
+    ## 指定したDNFに合致するタグを持つリソースに絞り込みます。
+    # 
+    # @todo Implement test case
+    # @param {str[][]} dnf
+    # @return {saklient.cloud.model.model_server.Model_Server}
+    def with_tag_dnf(self, dnf):
+        Util.validate_type(dnf, "list")
+        return self._with_tag_dnf(dnf)
+    
     ## 名前でソートします。
     # 
+    # @todo Implement test case
     # @param {bool} reverse=False
     # @return {saklient.cloud.model.model_server.Model_Server}
     def sort_by_name(self, reverse=False):
@@ -130,7 +143,7 @@ class Model_Server(Model):
     # @return {saklient.cloud.model.model_server.Model_Server}
     def with_plan(self, plan):
         Util.validate_type(plan, "saklient.cloud.resource.serverplan.ServerPlan")
-        self._filter_by("ServerPlan.ID", plan._id(), True)
+        self._filter_by("ServerPlan.ID", [plan._id()])
         return self
     
     ## インスタンスが指定した状態にあるサーバに絞り込みます。
@@ -139,7 +152,7 @@ class Model_Server(Model):
     # @return {saklient.cloud.model.model_server.Model_Server}
     def with_status(self, status):
         Util.validate_type(status, "str")
-        self._filter_by("Instance.Status", status, True)
+        self._filter_by("Instance.Status", [status])
         return self
     
     ## インスタンスが起動中のサーバに絞り込みます。
@@ -160,7 +173,7 @@ class Model_Server(Model):
     # @return {saklient.cloud.model.model_server.Model_Server}
     def with_iso_image(self, iso):
         Util.validate_type(iso, "saklient.cloud.resource.isoimage.IsoImage")
-        self._filter_by("Instance.CDROM.ID", iso._id(), True)
+        self._filter_by("Instance.CDROM.ID", [iso._id()])
         return self
     
     ## 仮想コア数でソートします。

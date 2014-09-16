@@ -89,6 +89,7 @@ class Model_Router(Model):
     # 大文字・小文字は区別されません。
     # 半角スペースで区切られた複数の文字列は、それらをすべて含むことが条件とみなされます。
     # 
+    # @todo Implement test case
     # @param {str} name
     # @return {saklient.cloud.model.model_router.Model_Router}
     def with_name_like(self, name):
@@ -97,6 +98,7 @@ class Model_Router(Model):
     
     ## 名前でソートします。
     # 
+    # @todo Implement test case
     # @param {bool} reverse=False
     # @return {saklient.cloud.model.model_router.Model_Router}
     def sort_by_name(self, reverse=False):
@@ -109,6 +111,6 @@ class Model_Router(Model):
     # @return {saklient.cloud.model.model_router.Model_Router}
     def with_band_width_mbps(self, mbps):
         Util.validate_type(mbps, "int")
-        self._filter_by("BandWidthMbps", mbps)
+        self._filter_by("BandWidthMbps", [mbps])
         return self
     

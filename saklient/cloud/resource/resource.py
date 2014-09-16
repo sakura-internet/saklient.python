@@ -18,7 +18,7 @@ class Resource:
     ## @ignore
     client = property(get_client, None, None)
     
-    # (instance field) _params
+    # (instance field) _query
     
     ## @ignore
     # @param {str} key
@@ -26,10 +26,10 @@ class Resource:
     # @return {void}
     def set_param(self, key, value):
         Util.validate_type(key, "str")
-        if isinstance(self._params, dict):
-            self._params[key] = value
+        if isinstance(self._query, dict):
+            self._query[key] = value
         else:
-            setattr(self._params, key, value)
+            setattr(self._query, key, value)
     
     ## @private
     # @return {str}
@@ -61,7 +61,7 @@ class Resource:
     def __init__(self, client):
         Util.validate_type(client, "saklient.cloud.client.Client")
         self._client = client
-        self._params = {}
+        self._query = {}
     
     # (instance field) is_new
     
@@ -176,11 +176,11 @@ class Resource:
     # @return {saklient.cloud.resource.resource.Resource} this
     def _save(self):
         r = self.api_serialize()
-        params = self._params
-        self._params = {}
-        keys = params.keys()
+        query = self._query
+        self._query = {}
+        keys = query.keys()
         for k in keys:
-            v = ( (params[k] if k in params else None ) if isinstance(params, dict) else getattr(params, k))
+            v = ( (query[k] if k in query else None ) if isinstance(query, dict) else getattr(query, k))
             if isinstance(r, dict):
                 r[k] = v
             else:
@@ -221,10 +221,10 @@ class Resource:
     # 
     # @return {bool}
     def exists(self):
-        params = {}
-        Util.set_by_path(params, "Filter.ID", [self._id()])
-        Util.set_by_path(params, "Include", ["ID"])
-        result = self._client.request("GET", self._api_path(), params)
+        query = {}
+        Util.set_by_path(query, "Filter.ID", [self._id()])
+        Util.set_by_path(query, "Include", ["ID"])
+        result = self._client.request("GET", self._api_path(), query)
         return ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count")) == 1
     
     ## @ignore

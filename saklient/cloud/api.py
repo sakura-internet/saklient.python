@@ -165,13 +165,18 @@ class API:
     # @static
     # @param {str} token ACCESS TOKEN
     # @param {str} secret ACCESS TOKEN SECRET
+    # @param {str} zone=None
     # @return {saklient.cloud.api.API} APIクライアント
     @staticmethod
-    def authorize(token, secret):
+    def authorize(token, secret, zone=None):
         Util.validate_type(token, "str")
         Util.validate_type(secret, "str")
+        Util.validate_type(zone, "str")
         c = Client(token, secret)
-        return API(c)
+        ret = API(c)
+        if zone is not None:
+            ret = ret.in_zone(zone)
+        return ret
     
     ## 認証情報を引き継ぎ、指定したゾーンへのアクセスを行うAPIクライアントを作成します。
     # 
@@ -180,6 +185,10 @@ class API:
     def in_zone(self, name):
         Util.validate_type(name, "str")
         ret = API(self._client.clone_instance())
+        suffix = ""
+        if name == "is1x" or name == "is1y":
+            suffix = "-test"
+        ret._client.set_api_root("https://secure.sakura.ad.jp/cloud" + suffix + "/")
         ret._client.set_api_root_suffix("zone/" + name)
         return ret
     

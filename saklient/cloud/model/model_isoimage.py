@@ -90,6 +90,7 @@ class Model_IsoImage(Model):
     # 大文字・小文字は区別されません。
     # 半角スペースで区切られた複数の文字列は、それらをすべて含むことが条件とみなされます。
     # 
+    # @todo Implement test case
     # @param {str} name
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def with_name_like(self, name):
@@ -100,6 +101,7 @@ class Model_IsoImage(Model):
     # 
     # 複数のタグを指定する場合は withTags() を利用してください。
     # 
+    # @todo Implement test case
     # @param {str} tag
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def with_tag(self, tag):
@@ -108,14 +110,25 @@ class Model_IsoImage(Model):
     
     ## 指定したすべてのタグを持つリソースに絞り込みます。
     # 
+    # @todo Implement test case
     # @param {str[]} tags
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def with_tags(self, tags):
         Util.validate_type(tags, "list")
         return self._with_tags(tags)
     
+    ## 指定したDNFに合致するタグを持つリソースに絞り込みます。
+    # 
+    # @todo Implement test case
+    # @param {str[][]} dnf
+    # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
+    def with_tag_dnf(self, dnf):
+        Util.validate_type(dnf, "list")
+        return self._with_tag_dnf(dnf)
+    
     ## 名前でソートします。
     # 
+    # @todo Implement test case
     # @param {bool} reverse=False
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def sort_by_name(self, reverse=False):
@@ -128,21 +141,21 @@ class Model_IsoImage(Model):
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def with_size_gib(self, sizeGib):
         Util.validate_type(sizeGib, "int")
-        self._filter_by("SizeMB", sizeGib * 1024)
+        self._filter_by("SizeMB", [sizeGib * 1024])
         return self
     
     ## パブリックISOイメージに絞り込みます。
     # 
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def with_shared_scope(self):
-        self._filter_by("Scope", EScope.shared)
+        self._filter_by("Scope", [EScope.shared])
         return self
     
     ## プライベートISOイメージに絞り込みます。
     # 
     # @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
     def with_user_scope(self):
-        self._filter_by("Scope", EScope.user)
+        self._filter_by("Scope", [EScope.user])
         return self
     
     ## サイズでソートします。

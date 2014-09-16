@@ -2,6 +2,7 @@
 
 from ..client import Client
 from ..resource.resource import Resource
+from ...errors.saklientexception import SaklientException
 from ...util import Util
 
 # module saklient.cloud.model.model
@@ -17,13 +18,13 @@ class Model:
     
     client = property(get_client, None, None)
     
-    # (instance field) _params
+    # (instance field) _query
     
     ## @return {TQueryParams}
-    def get_params(self):
-        return self._params
+    def get_query(self):
+        return self._query
     
-    params = property(get_params, None, None)
+    query = property(get_query, None, None)
     
     # (instance field) _total
     
@@ -74,10 +75,10 @@ class Model:
     # @return {saklient.cloud.model.model.Model} this
     def _offset(self, offset):
         Util.validate_type(offset, "int")
-        if isinstance(self._params, dict):
-            self._params["Begin"] = offset
+        if isinstance(self._query, dict):
+            self._query["Begin"] = offset
         else:
-            setattr(self._params, "Begin", offset)
+            setattr(self._query, "Begin", offset)
         return self
     
     ## 次に取得するリストの上限レコード数を指定します。
@@ -87,10 +88,10 @@ class Model:
     # @return {saklient.cloud.model.model.Model} this
     def _limit(self, count):
         Util.validate_type(count, "int")
-        if isinstance(self._params, dict):
-            self._params["Count"] = count
+        if isinstance(self._query, dict):
+            self._query["Count"] = count
         else:
-            setattr(self._params, "Count", count)
+            setattr(self._query, "Count", count)
         return self
     
     ## 次に取得するリストのソートカラムを指定します。
@@ -102,12 +103,12 @@ class Model:
     def _sort(self, column, reverse=False):
         Util.validate_type(column, "str")
         Util.validate_type(reverse, "bool")
-        if not ( "Sort" in self._params if isinstance(self._params, dict) else hasattr(self._params, "Sort")):
-            if isinstance(self._params, dict):
-                self._params["Sort"] = []
+        if not ( "Sort" in self._query if isinstance(self._query, dict) else hasattr(self._query, "Sort")):
+            if isinstance(self._query, dict):
+                self._query["Sort"] = []
             else:
-                setattr(self._params, "Sort", [])
-        sort = ( (self._params["Sort"] if "Sort" in self._params else None ) if isinstance(self._params, dict) else getattr(self._params, "Sort"))
+                setattr(self._query, "Sort", [])
+        sort = ( (self._query["Sort"] if "Sort" in self._query else None ) if isinstance(self._query, dict) else getattr(self._query, "Sort"))
         op = "-" if reverse else ""
         sort.append(op + column)
         return self
@@ -122,12 +123,12 @@ class Model:
     def _filter_by(self, key, value, multiple=False):
         Util.validate_type(key, "str")
         Util.validate_type(multiple, "bool")
-        if not ( "Filter" in self._params if isinstance(self._params, dict) else hasattr(self._params, "Filter")):
-            if isinstance(self._params, dict):
-                self._params["Filter"] = {}
+        if not ( "Filter" in self._query if isinstance(self._query, dict) else hasattr(self._query, "Filter")):
+            if isinstance(self._query, dict):
+                self._query["Filter"] = {}
             else:
-                setattr(self._params, "Filter", {})
-        filter = ( (self._params["Filter"] if "Filter" in self._params else None ) if isinstance(self._params, dict) else getattr(self._params, "Filter"))
+                setattr(self._query, "Filter", {})
+        filter = ( (self._query["Filter"] if "Filter" in self._query else None ) if isinstance(self._query, dict) else getattr(self._query, "Filter"))
         if multiple:
             if not ( key in filter if isinstance(filter, dict) else hasattr(filter, key)):
                 if isinstance(filter, dict):
@@ -137,6 +138,8 @@ class Model:
             values = ( (filter[key] if key in filter else None ) if isinstance(filter, dict) else getattr(filter, key))
             values.append(value)
         else:
+            if ( key in filter if isinstance(filter, dict) else hasattr(filter, key)):
+                raise SaklientException("filter_duplicated", "The same filter key can be specified only once (by calling the same method 'withFooBar')")
             if isinstance(filter, dict):
                 filter[key] = value
             else:
@@ -148,7 +151,7 @@ class Model:
     # @private
     # @return {saklient.cloud.model.model.Model} this
     def _reset(self):
-        self._params = {
+        self._query = {
             'Count': 0
         }
         self._total = 0
@@ -171,9 +174,9 @@ class Model:
     # @return {saklient.cloud.resource.resource.Resource} リソースオブジェクト
     def _get_by_id(self, id):
         Util.validate_type(id, "str")
-        params = self._params
+        query = self._query
         self._reset()
-        result = self._client.request("GET", self._api_path() + "/" + Util.url_encode(id), params)
+        result = self._client.request("GET", self._api_path() + "/" + Util.url_encode(id), query)
         self._total = 1
         self._count = 1
         return Util.create_class_instance("saklient.cloud.resource." + self._class_name(), [self._client, result, True])
@@ -183,9 +186,9 @@ class Model:
     # @private
     # @return {saklient.cloud.resource.resource.Resource[]} リソースオブジェクトの配列
     def _find(self):
-        params = self._params
+        query = self._query
         self._reset()
-        result = self._client.request("GET", self._api_path(), params)
+        result = self._client.request("GET", self._api_path(), query)
         self._total = ( (result["Total"] if "Total" in result else None ) if isinstance(result, dict) else getattr(result, "Total"))
         self._count = ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count"))
         records = ( (result[self._root_key_m()] if self._root_key_m() in result else None ) if isinstance(result, dict) else getattr(result, self._root_key_m()))
@@ -200,9 +203,9 @@ class Model:
     # @private
     # @return {saklient.cloud.resource.resource.Resource} リソースオブジェクト
     def _find_one(self):
-        params = self._params
+        query = self._query
         self._reset()
-        result = self._client.request("GET", self._api_path(), params)
+        result = self._client.request("GET", self._api_path(), query)
         self._total = ( (result["Total"] if "Total" in result else None ) if isinstance(result, dict) else getattr(result, "Total"))
         self._count = ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count"))
         if self._total == 0:
@@ -216,35 +219,49 @@ class Model:
     # 半角スペースで区切られた複数の文字列は、それらをすべて含むことが条件とみなされます。
     # 
     # @private
+    # @todo Implement test case
     # @param {str} name
     # @return {saklient.cloud.model.model.Model}
     def _with_name_like(self, name):
         Util.validate_type(name, "str")
-        return self._filter_by("Name", name)
+        return self._filter_by("Name", [name])
     
     ## 指定したタグを持つリソースに絞り込みます。
     # 
     # 複数のタグを指定する場合は withTags() を利用してください。
     # 
     # @private
+    # @todo Implement test case
     # @param {str} tag
     # @return {saklient.cloud.model.model.Model}
     def _with_tag(self, tag):
         Util.validate_type(tag, "str")
-        return self._filter_by("Tags.Name", tag, True)
+        return self._filter_by("Tags.Name", [tag])
     
     ## 指定したすべてのタグを持つリソースに絞り込みます。
     # 
     # @private
+    # @todo Implement test case
     # @param {str[]} tags
     # @return {saklient.cloud.model.model.Model}
     def _with_tags(self, tags):
         Util.validate_type(tags, "list")
-        return self._filter_by("Tags.Name", tags, True)
+        return self._filter_by("Tags.Name", [tags])
+    
+    ## 指定したDNFに合致するタグを持つリソースに絞り込みます。
+    # 
+    # @private
+    # @todo Implement test case
+    # @param {str[][]} dnf
+    # @return {saklient.cloud.model.model.Model}
+    def _with_tag_dnf(self, dnf):
+        Util.validate_type(dnf, "list")
+        return self._filter_by("Tags.Name", dnf)
     
     ## 名前でソートします。
     # 
     # @private
+    # @todo Implement test case
     # @param {bool} reverse=False
     # @return {saklient.cloud.model.model.Model}
     def _sort_by_name(self, reverse=False):

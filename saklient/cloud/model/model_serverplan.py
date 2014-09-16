@@ -84,7 +84,7 @@ class Model_ServerPlan(Model):
     def get_by_spec(self, cores, memoryGib):
         Util.validate_type(cores, "int")
         Util.validate_type(memoryGib, "int")
-        self._filter_by("CPU", cores, True)
-        self._filter_by("MemoryMB", memoryGib * 1024, True)
+        self._filter_by("CPU", [cores])
+        self._filter_by("MemoryMB", [memoryGib * 1024])
         return self._find_one()
     
