@@ -2,6 +2,7 @@
 
 from ..client import Client
 from ..resource.resource import Resource
+from .queryparams import QueryParams
 from ...errors.saklientexception import SaklientException
 from ...util import Util
 
@@ -20,7 +21,7 @@ class Model:
     
     # (instance field) _query
     
-    ## @return {TQueryParams}
+    ## @return {saklient.cloud.model.queryparams.QueryParams}
     def get_query(self):
         return self._query
     
@@ -75,10 +76,7 @@ class Model:
     # @return {saklient.cloud.model.model.Model} this
     def _offset(self, offset):
         Util.validate_type(offset, "int")
-        if isinstance(self._query, dict):
-            self._query["Begin"] = offset
-        else:
-            setattr(self._query, "Begin", offset)
+        self._query.begin = offset
         return self
     
     ## 次に取得するリストの上限レコード数を指定します。
@@ -88,10 +86,7 @@ class Model:
     # @return {saklient.cloud.model.model.Model} this
     def _limit(self, count):
         Util.validate_type(count, "int")
-        if isinstance(self._query, dict):
-            self._query["Count"] = count
-        else:
-            setattr(self._query, "Count", count)
+        self._query.count = count
         return self
     
     ## 次に取得するリストのソートカラムを指定します。
@@ -103,14 +98,8 @@ class Model:
     def _sort(self, column, reverse=False):
         Util.validate_type(column, "str")
         Util.validate_type(reverse, "bool")
-        if not ( "Sort" in self._query if isinstance(self._query, dict) else hasattr(self._query, "Sort")):
-            if isinstance(self._query, dict):
-                self._query["Sort"] = []
-            else:
-                setattr(self._query, "Sort", [])
-        sort = ( (self._query["Sort"] if "Sort" in self._query else None ) if isinstance(self._query, dict) else getattr(self._query, "Sort"))
         op = "-" if reverse else ""
-        sort.append(op + column)
+        self._query.sort.append(op + column)
         return self
     
     ## Web APIのフィルタリング設定を直接指定します。
@@ -123,12 +112,7 @@ class Model:
     def _filter_by(self, key, value, multiple=False):
         Util.validate_type(key, "str")
         Util.validate_type(multiple, "bool")
-        if not ( "Filter" in self._query if isinstance(self._query, dict) else hasattr(self._query, "Filter")):
-            if isinstance(self._query, dict):
-                self._query["Filter"] = {}
-            else:
-                setattr(self._query, "Filter", {})
-        filter = ( (self._query["Filter"] if "Filter" in self._query else None ) if isinstance(self._query, dict) else getattr(self._query, "Filter"))
+        filter = self._query.filter
         if multiple:
             if not ( key in filter if isinstance(filter, dict) else hasattr(filter, key)):
                 if isinstance(filter, dict):
@@ -151,9 +135,7 @@ class Model:
     # @private
     # @return {saklient.cloud.model.model.Model} this
     def _reset(self):
-        self._query = {
-            'Count': 0
-        }
+        self._query = QueryParams()
         self._total = 0
         self._count = 0
         return self
@@ -174,7 +156,7 @@ class Model:
     # @return {saklient.cloud.resource.resource.Resource} リソースオブジェクト
     def _get_by_id(self, id):
         Util.validate_type(id, "str")
-        query = self._query
+        query = self._query.build()
         self._reset()
         result = self._client.request("GET", self._api_path() + "/" + Util.url_encode(id), query)
         self._total = 1
@@ -186,7 +168,7 @@ class Model:
     # @private
     # @return {saklient.cloud.resource.resource.Resource[]} リソースオブジェクトの配列
     def _find(self):
-        query = self._query
+        query = self._query.build()
         self._reset()
         result = self._client.request("GET", self._api_path(), query)
         self._total = ( (result["Total"] if "Total" in result else None ) if isinstance(result, dict) else getattr(result, "Total"))
@@ -203,7 +185,7 @@ class Model:
     # @private
     # @return {saklient.cloud.resource.resource.Resource} リソースオブジェクト
     def _find_one(self):
-        query = self._query
+        query = self._query.build()
         self._reset()
         result = self._client.request("GET", self._api_path(), query)
         self._total = ( (result["Total"] if "Total" in result else None ) if isinstance(result, dict) else getattr(result, "Total"))
@@ -224,7 +206,7 @@ class Model:
     # @return {saklient.cloud.model.model.Model}
     def _with_name_like(self, name):
         Util.validate_type(name, "str")
-        return self._filter_by("Name", [name])
+        return self._filter_by("Name", name)
     
     ## 指定したタグを持つリソースに絞り込みます。
     # 
