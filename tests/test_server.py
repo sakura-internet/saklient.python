@@ -4,11 +4,11 @@ import unittest, sys, os, re, random, string, time, subprocess
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from datetime import datetime
 from saklient.cloud.api import API
-from saklient.cloud.resource.server import Server
-from saklient.cloud.resource.serverplan import ServerPlan
-from saklient.cloud.resource.iface import Iface
-from saklient.cloud.resource.archive import Archive
-from saklient.cloud.resource.disk import Disk
+from saklient.cloud.resources.server import Server
+from saklient.cloud.resources.serverplan import ServerPlan
+from saklient.cloud.resources.iface import Iface
+from saklient.cloud.resources.archive import Archive
+from saklient.cloud.resources.disk import Disk
 from saklient.cloud.enums.eserverinstancestatus import EServerInstanceStatus
 from saklient.errors.saklientexception import SaklientException
 from saklient.errors.httpconflictexception import HttpConflictException

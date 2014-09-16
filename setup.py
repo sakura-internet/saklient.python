@@ -9,7 +9,7 @@ setup(
     packages = [
         'saklient',
         'saklient.cloud',
-        'saklient.cloud.model',
-        'saklient.cloud.resource'
+        'saklient.cloud.models',
+        'saklient.cloud.resources'
     ]
 )

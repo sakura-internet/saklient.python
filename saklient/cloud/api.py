@@ -3,17 +3,17 @@
 from ..util import Util
 from .client import Client
 from .product import Product
-from .model.model_icon import Model_Icon
-from .model.model_server import Model_Server
-from .model.model_disk import Model_Disk
-from .model.model_appliance import Model_Appliance
-from .model.model_archive import Model_Archive
-from .model.model_isoimage import Model_IsoImage
-from .model.model_iface import Model_Iface
-from .model.model_swytch import Model_Swytch
-from .model.model_router import Model_Router
-from .model.model_ipv6net import Model_Ipv6Net
-from .model.model_script import Model_Script
+from .models.model_icon import Model_Icon
+from .models.model_server import Model_Server
+from .models.model_disk import Model_Disk
+from .models.model_appliance import Model_Appliance
+from .models.model_archive import Model_Archive
+from .models.model_isoimage import Model_IsoImage
+from .models.model_iface import Model_Iface
+from .models.model_swytch import Model_Swytch
+from .models.model_router import Model_Router
+from .models.model_ipv6net import Model_Ipv6Net
+from .models.model_script import Model_Script
 
 # module saklient.cloud.api
 
@@ -42,7 +42,7 @@ class API:
     
     # (instance field) _icon
     
-    ## @return {saklient.cloud.model.model_icon.Model_Icon}
+    ## @return {saklient.cloud.models.model_icon.Model_Icon}
     def get_icon(self):
         return self._icon
     
@@ -51,7 +51,7 @@ class API:
     
     # (instance field) _server
     
-    ## @return {saklient.cloud.model.model_server.Model_Server}
+    ## @return {saklient.cloud.models.model_server.Model_Server}
     def get_server(self):
         return self._server
     
@@ -60,7 +60,7 @@ class API:
     
     # (instance field) _disk
     
-    ## @return {saklient.cloud.model.model_disk.Model_Disk}
+    ## @return {saklient.cloud.models.model_disk.Model_Disk}
     def get_disk(self):
         return self._disk
     
@@ -69,7 +69,7 @@ class API:
     
     # (instance field) _appliance
     
-    ## @return {saklient.cloud.model.model_appliance.Model_Appliance}
+    ## @return {saklient.cloud.models.model_appliance.Model_Appliance}
     def get_appliance(self):
         return self._appliance
     
@@ -78,7 +78,7 @@ class API:
     
     # (instance field) _archive
     
-    ## @return {saklient.cloud.model.model_archive.Model_Archive}
+    ## @return {saklient.cloud.models.model_archive.Model_Archive}
     def get_archive(self):
         return self._archive
     
@@ -87,7 +87,7 @@ class API:
     
     # (instance field) _iso_image
     
-    ## @return {saklient.cloud.model.model_isoimage.Model_IsoImage}
+    ## @return {saklient.cloud.models.model_isoimage.Model_IsoImage}
     def get_iso_image(self):
         return self._iso_image
     
@@ -96,7 +96,7 @@ class API:
     
     # (instance field) _iface
     
-    ## @return {saklient.cloud.model.model_iface.Model_Iface}
+    ## @return {saklient.cloud.models.model_iface.Model_Iface}
     def get_iface(self):
         return self._iface
     
@@ -105,7 +105,7 @@ class API:
     
     # (instance field) _swytch
     
-    ## @return {saklient.cloud.model.model_swytch.Model_Swytch}
+    ## @return {saklient.cloud.models.model_swytch.Model_Swytch}
     def get_swytch(self):
         return self._swytch
     
@@ -114,7 +114,7 @@ class API:
     
     # (instance field) _router
     
-    ## @return {saklient.cloud.model.model_router.Model_Router}
+    ## @return {saklient.cloud.models.model_router.Model_Router}
     def get_router(self):
         return self._router
     
@@ -123,7 +123,7 @@ class API:
     
     # (instance field) _ipv6_net
     
-    ## @return {saklient.cloud.model.model_ipv6net.Model_Ipv6Net}
+    ## @return {saklient.cloud.models.model_ipv6net.Model_Ipv6Net}
     def get_ipv6_net(self):
         return self._ipv6_net
     
@@ -132,7 +132,7 @@ class API:
     
     # (instance field) _script
     
-    ## @return {saklient.cloud.model.model_script.Model_Script}
+    ## @return {saklient.cloud.models.model_script.Model_Script}
     def get_script(self):
         return self._script
     

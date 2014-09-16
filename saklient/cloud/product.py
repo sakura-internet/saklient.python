@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 
-from .model.model_serverplan import Model_ServerPlan
-from .model.model_diskplan import Model_DiskPlan
-from .model.model_routerplan import Model_RouterPlan
+from .models.model_serverplan import Model_ServerPlan
+from .models.model_diskplan import Model_DiskPlan
+from .models.model_routerplan import Model_RouterPlan
 from .client import Client
 from ..util import Util
 
@@ -13,7 +13,7 @@ class Product:
     
     # (instance field) _server
     
-    ## @return {saklient.cloud.model.model_serverplan.Model_ServerPlan}
+    ## @return {saklient.cloud.models.model_serverplan.Model_ServerPlan}
     def get_server(self):
         return self._server
     
@@ -22,7 +22,7 @@ class Product:
     
     # (instance field) _disk
     
-    ## @return {saklient.cloud.model.model_diskplan.Model_DiskPlan}
+    ## @return {saklient.cloud.models.model_diskplan.Model_DiskPlan}
     def get_disk(self):
         return self._disk
     
@@ -31,7 +31,7 @@ class Product:
     
     # (instance field) _router
     
-    ## @return {saklient.cloud.model.model_routerplan.Model_RouterPlan}
+    ## @return {saklient.cloud.models.model_routerplan.Model_RouterPlan}
     def get_router(self):
         return self._router
     
