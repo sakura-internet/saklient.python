@@ -184,6 +184,6 @@ class DiskConfig:
                 })
             Util.set_by_path(q, "Notes", notes)
         path = "/disk/" + self._disk_id + "/config"
-        result = self._client.request("PUT", path, q)
+        self._client.request("PUT", path, q)
         return self
     

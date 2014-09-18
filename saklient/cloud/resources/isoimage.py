@@ -134,7 +134,7 @@ class IsoImage(Resource):
     # @return {saklient.cloud.resources.isoimage.IsoImage} this
     def close_ftp(self):
         path = self._api_path() + "/" + Util.url_encode(self._id()) + "/ftp"
-        result = self._client.request("DELETE", path)
+        self._client.request("DELETE", path)
         self._ftp_info = None
         return self
     

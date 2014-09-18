@@ -9,8 +9,6 @@ class HttpException(Exception):
     
     # (instance field) code
     
-    # (instance field) message
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
@@ -18,5 +16,4 @@ class HttpException(Exception):
         super(HttpException, self).__init__(message)
         self.status = status
         self.code = code
-        self.message = message
     

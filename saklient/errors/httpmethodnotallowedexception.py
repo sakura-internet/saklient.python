@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpMethodNotAllowedException(HttpException):
     ## 要求されたHTTPメソッドは対応していません。
     
-    # (class field) default_message = "要求されたHTTPメソッドは対応していません。"
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpMethodNotAllowedException, self).__init__(status, code, message)
+        super(HttpMethodNotAllowedException, self).__init__(status, code, "要求されたHTTPメソッドは対応していません。" if message is None or message == "" else message)
     

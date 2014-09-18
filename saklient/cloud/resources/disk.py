@@ -139,7 +139,7 @@ class Disk(Resource):
                 if s is not None:
                     id = ( (s["ID"] if "ID" in s else None ) if isinstance(s, dict) else getattr(s, "ID"))
                     if id is not None:
-                        obj = Util.create_class_instance("saklient.cloud.resources.Archive", [self._client, s])
+                        obj = Util.create_class_instance("saklient.cloud.resources.Archive", [self._client, s, False])
                         self._source = obj
     
     ## @private

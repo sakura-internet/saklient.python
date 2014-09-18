@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpPaymentRequiredException(HttpException):
     ## HTTPエラー。Payment Required.
     
-    # (class field) default_message = "HTTPエラー。Payment Required."
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpPaymentRequiredException, self).__init__(status, code, message)
+        super(HttpPaymentRequiredException, self).__init__(status, code, "HTTPエラー。Payment Required." if message is None or message == "" else message)
     

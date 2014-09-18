@@ -7,11 +7,9 @@ from ...errors.httpserviceunavailableexception import HttpServiceUnavailableExce
 class TooManyRequestException(HttpServiceUnavailableException):
     ## 要求を受け付けできません。リクエストの密度が高すぎます。
     
-    # (class field) default_message = "要求を受け付けできません。リクエストの密度が高すぎます。"
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(TooManyRequestException, self).__init__(status, code, message)
+        super(TooManyRequestException, self).__init__(status, code, "要求を受け付けできません。リクエストの密度が高すぎます。" if message is None or message == "" else message)
     

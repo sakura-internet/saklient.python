@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpInsufficientStorageException(HttpException):
     ## HTTPエラー。Insufficient Storage.
     
-    # (class field) default_message = "HTTPエラー。Insufficient Storage."
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpInsufficientStorageException, self).__init__(status, code, message)
+        super(HttpInsufficientStorageException, self).__init__(status, code, "HTTPエラー。Insufficient Storage." if message is None or message == "" else message)
     

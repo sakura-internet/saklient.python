@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpLockedException(HttpException):
     ## HTTPエラー。Locked.
     
-    # (class field) default_message = "HTTPエラー。Locked."
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpLockedException, self).__init__(status, code, message)
+        super(HttpLockedException, self).__init__(status, code, "HTTPエラー。Locked." if message is None or message == "" else message)
     

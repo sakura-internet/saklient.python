@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpFailedDependencyException(HttpException):
     ## HTTPエラー。Failed Dependency.
     
-    # (class field) default_message = "HTTPエラー。Failed Dependency."
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpFailedDependencyException, self).__init__(status, code, message)
+        super(HttpFailedDependencyException, self).__init__(status, code, "HTTPエラー。Failed Dependency." if message is None or message == "" else message)
     

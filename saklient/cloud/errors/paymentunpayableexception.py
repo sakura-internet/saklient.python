@@ -7,11 +7,9 @@ from ...errors.httppaymentrequiredexception import HttpPaymentRequiredException
 class PaymentUnpayableException(HttpPaymentRequiredException):
     ## お客様のご都合により操作を受け付けることができません。
     
-    # (class field) default_message = "お客様のご都合により操作を受け付けることができません。"
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(PaymentUnpayableException, self).__init__(status, code, message)
+        super(PaymentUnpayableException, self).__init__(status, code, "お客様のご都合により操作を受け付けることができません。" if message is None or message == "" else message)
     

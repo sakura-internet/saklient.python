@@ -174,9 +174,7 @@ class API:
         Util.validate_type(zone, "str")
         c = Client(token, secret)
         ret = API(c)
-        if zone is not None:
-            ret = ret.in_zone(zone)
-        return ret
+        return ret.in_zone(zone) if zone is not None else ret
     
     ## 認証情報を引き継ぎ、指定したゾーンへのアクセスを行うAPIクライアントを作成します。
     # 

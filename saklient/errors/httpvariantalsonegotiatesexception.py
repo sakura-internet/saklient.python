@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpVariantAlsoNegotiatesException(HttpException):
     ## HTTPエラー。Variant Also Negotiates.
     
-    # (class field) default_message = "HTTPエラー。Variant Also Negotiates."
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpVariantAlsoNegotiatesException, self).__init__(status, code, message)
+        super(HttpVariantAlsoNegotiatesException, self).__init__(status, code, "HTTPエラー。Variant Also Negotiates." if message is None or message == "" else message)
     

@@ -7,11 +7,9 @@ from ...errors.httpbadrequestexception import HttpBadRequestException
 class CopyToItselfException(HttpBadRequestException):
     ## 不適切な要求です。自分自身をソースとするコピーはできません。
     
-    # (class field) default_message = "不適切な要求です。自分自身をソースとするコピーはできません。"
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(CopyToItselfException, self).__init__(status, code, message)
+        super(CopyToItselfException, self).__init__(status, code, "不適切な要求です。自分自身をソースとするコピーはできません。" if message is None or message == "" else message)
     

@@ -154,7 +154,7 @@ class Archive(Resource):
                 if s is not None:
                     id = ( (s["ID"] if "ID" in s else None ) if isinstance(s, dict) else getattr(s, "ID"))
                     if id is not None:
-                        obj = Util.create_class_instance("saklient.cloud.resources.Disk", [self._client, s])
+                        obj = Util.create_class_instance("saklient.cloud.resources.Disk", [self._client, s, False])
                         self._source = obj
     
     ## @private
@@ -207,7 +207,7 @@ class Archive(Resource):
     # @return {saklient.cloud.resources.archive.Archive} this
     def close_ftp(self):
         path = self._api_path() + "/" + Util.url_encode(self._id()) + "/ftp"
-        result = self._client.request("DELETE", path)
+        self._client.request("DELETE", path)
         self._ftp_info = None
         return self
     

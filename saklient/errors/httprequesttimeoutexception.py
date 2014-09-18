@@ -7,11 +7,9 @@ from .httpexception import HttpException
 class HttpRequestTimeoutException(HttpException):
     ## HTTPエラー。Request Timeout.
     
-    # (class field) default_message = "HTTPエラー。Request Timeout."
-    
     ## @param {int} status
     # @param {str} code=None
     # @param {str} message=""
     def __init__(self, status, code=None, message=""):
-        super(HttpRequestTimeoutException, self).__init__(status, code, message)
+        super(HttpRequestTimeoutException, self).__init__(status, code, "HTTPエラー。Request Timeout." if message is None or message == "" else message)
     

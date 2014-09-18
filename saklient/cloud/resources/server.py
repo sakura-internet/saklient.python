@@ -212,7 +212,7 @@ class Server(Resource):
                 'ID': iso._id()
             }
         }
-        result = self._client.request("PUT", path, q)
+        self._client.request("PUT", path, q)
         self.reload()
         return self
     
@@ -221,7 +221,7 @@ class Server(Resource):
     # @return {saklient.cloud.resources.server.Server} this
     def eject_iso_image(self):
         path = self._api_path() + "/" + Util.url_encode(self._id()) + "/cdrom"
-        result = self._client.request("DELETE", path)
+        self._client.request("DELETE", path)
         self.reload()
         return self
     
