@@ -9,4 +9,9 @@ class DiskStockRunOutException(HttpServiceUnavailableException):
     
     # (class field) default_message = "サービスが利用できません。作成済みディスクを確保できませんでした。サーバが混雑している可能性があります。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(DiskStockRunOutException, self).__init__(status, code, message)
+    

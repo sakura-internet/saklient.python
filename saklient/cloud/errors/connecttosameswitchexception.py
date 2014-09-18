@@ -9,4 +9,9 @@ class ConnectToSameSwitchException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。複数のインタフェースから同一のスイッチに接続することはできません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(ConnectToSameSwitchException, self).__init__(status, code, message)
+    

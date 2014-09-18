@@ -9,4 +9,9 @@ class SwitchHybridConnectedException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。ハイブリッド接続されているスイッチに対して、この操作はできません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(SwitchHybridConnectedException, self).__init__(status, code, message)
+    

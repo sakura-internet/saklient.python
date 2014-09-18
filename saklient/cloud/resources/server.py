@@ -168,7 +168,7 @@ class Server(Resource):
         step = 3
         while (0 < timeoutSec):
             self.reload()
-            s = ( (self.get_instance()["status"] if "status" in self.get_instance() else None ) if isinstance(self.get_instance(), dict) else getattr(self.get_instance(), "status"))
+            s = self.get_instance().status
             if s is None:
                 s = EServerInstanceStatus.down
             if s == status:

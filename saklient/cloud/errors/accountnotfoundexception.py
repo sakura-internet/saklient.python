@@ -9,4 +9,9 @@ class AccountNotFoundException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。アカウントが存在しません。IDをご確認ください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(AccountNotFoundException, self).__init__(status, code, message)
+    

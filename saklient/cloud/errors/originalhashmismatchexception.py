@@ -9,4 +9,9 @@ class OriginalHashMismatchException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。オリジナルのデータを取得してからこのリクエストを行うまでの間に、他の変更が加わった可能性があります。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(OriginalHashMismatchException, self).__init__(status, code, message)
+    

@@ -9,4 +9,9 @@ class PaymentUnpayableException(HttpPaymentRequiredException):
     
     # (class field) default_message = "お客様のご都合により操作を受け付けることができません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(PaymentUnpayableException, self).__init__(status, code, message)
+    

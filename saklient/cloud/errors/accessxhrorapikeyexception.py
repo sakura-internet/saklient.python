@@ -9,4 +9,9 @@ class AccessXhrOrApiKeyException(HttpForbiddenException):
     
     # (class field) default_message = "要求された操作は許可されていません。XHRまたはAPIキーによるアクセスのみ許可されています。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(AccessXhrOrApiKeyException, self).__init__(status, code, message)
+    

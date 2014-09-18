@@ -9,4 +9,9 @@ class ResourcePathNotFoundException(HttpNotFoundException):
     
     # (class field) default_message = "対象が見つかりません。パスに誤りがあります。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(ResourcePathNotFoundException, self).__init__(status, code, message)
+    

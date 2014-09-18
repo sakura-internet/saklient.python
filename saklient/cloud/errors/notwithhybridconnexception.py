@@ -9,4 +9,9 @@ class NotWithHybridconnException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。ハイブリッド接続と併用する場合はお問い合わせください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(NotWithHybridconnException, self).__init__(status, code, message)
+    

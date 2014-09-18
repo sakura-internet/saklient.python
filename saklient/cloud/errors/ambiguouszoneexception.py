@@ -9,4 +9,9 @@ class AmbiguousZoneException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。リクエストパラメータに指定されたゾーンをパスに含むURLへアクセスしてください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(AmbiguousZoneException, self).__init__(status, code, message)
+    

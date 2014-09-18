@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from ..client import Client
 from .model import Model
 from ..resources.disk import Disk
 from ...util import Util
@@ -133,6 +134,12 @@ class Model_Disk(Model):
     def sort_by_name(self, reverse=False):
         Util.validate_type(reverse, "bool")
         return self._sort_by_name(reverse)
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(Model_Disk, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     
     ## 指定したサイズのディスクに絞り込みます。
     # 

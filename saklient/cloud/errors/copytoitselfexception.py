@@ -9,4 +9,9 @@ class CopyToItselfException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。自分自身をソースとするコピーはできません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(CopyToItselfException, self).__init__(status, code, message)
+    

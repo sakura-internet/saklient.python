@@ -9,4 +9,9 @@ class MissingIsoImageException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。ISOイメージが見つかりません。イメージを正しくアップロードし、FTP共有を終了した後に再度お試しください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(MissingIsoImageException, self).__init__(status, code, message)
+    

@@ -9,4 +9,9 @@ class HttpRequestTimeoutException(HttpException):
     
     # (class field) default_message = "HTTPエラー。Request Timeout."
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(HttpRequestTimeoutException, self).__init__(status, code, message)
+    

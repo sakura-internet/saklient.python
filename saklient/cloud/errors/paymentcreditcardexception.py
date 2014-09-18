@@ -9,4 +9,9 @@ class PaymentCreditCardException(HttpPaymentRequiredException):
     
     # (class field) default_message = "要求を受け付けできません。クレジットカードの使用期限、利用限度額をご確認ください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(PaymentCreditCardException, self).__init__(status, code, message)
+    

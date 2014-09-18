@@ -9,4 +9,9 @@ class HttpGoneException(HttpException):
     
     # (class field) default_message = "HTTPエラー。Gone."
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(HttpGoneException, self).__init__(status, code, message)
+    

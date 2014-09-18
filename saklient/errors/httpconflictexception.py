@@ -9,4 +9,9 @@ class HttpConflictException(HttpException):
     
     # (class field) default_message = "要求された操作を行えません。現在の対象の状態では、この操作を受け付けできません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(HttpConflictException, self).__init__(status, code, message)
+    

@@ -9,4 +9,9 @@ class BootFailureByLockException(HttpServiceUnavailableException):
     
     # (class field) default_message = "サービスが利用できません。サーバが予期せず終了したため、ロックされています。しばらく時間をおいてから再度お試しください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(BootFailureByLockException, self).__init__(status, code, message)
+    

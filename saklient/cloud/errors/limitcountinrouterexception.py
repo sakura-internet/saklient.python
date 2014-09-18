@@ -9,4 +9,9 @@ class LimitCountInRouterException(HttpConflictException):
     
     # (class field) default_message = "要求を受け付けできません。ルータあたりのリソース数上限により、リソースの割り当てに失敗しました。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(LimitCountInRouterException, self).__init__(status, code, message)
+    

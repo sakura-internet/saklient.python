@@ -56,7 +56,8 @@ class ServerPlan(Resource):
     
     ## @return {int}
     def get_memory_gib(self):
-        return self.get_memory_mib() >> 10
+        memoryMib = self.get_memory_mib()
+        return None if memoryMib is None else memoryMib >> 10
     
     memory_gib = property(get_memory_gib, None, None)
     

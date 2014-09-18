@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from ..client import Client
 from .model import Model
 from ..resources.routerplan import RouterPlan
 from ...util import Util
@@ -75,4 +76,10 @@ class Model_RouterPlan(Model):
     # @return {saklient.cloud.resources.routerplan.RouterPlan[]} リソースオブジェクトの配列
     def find(self):
         return self._find()
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(Model_RouterPlan, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     

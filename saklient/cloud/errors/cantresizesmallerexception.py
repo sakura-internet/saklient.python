@@ -9,4 +9,9 @@ class CantResizeSmallerException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。現在の容量よりも小さくリサイズすることはできません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(CantResizeSmallerException, self).__init__(status, code, message)
+    

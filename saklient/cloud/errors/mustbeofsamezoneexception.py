@@ -9,4 +9,9 @@ class MustBeOfSameZoneException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。参照するリソースは同一ゾーンに存在しなければなりません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(MustBeOfSameZoneException, self).__init__(status, code, message)
+    

@@ -147,7 +147,8 @@ class Model:
     # @private
     # @return {saklient.cloud.resources.resource.Resource} リソースオブジェクト
     def _create(self):
-        return Util.create_class_instance("saklient.cloud.resources." + self._class_name(), [self._client, None])
+        a = [self._client, None]
+        return Util.create_class_instance("saklient.cloud.resources." + self._class_name(), a)
     
     ## 指定したIDを持つ唯一のリソースを取得します。
     # 
@@ -176,7 +177,8 @@ class Model:
         records = ( (result[self._root_key_m()] if self._root_key_m() in result else None ) if isinstance(result, dict) else getattr(result, self._root_key_m()))
         data = []
         for record in records:
-            i = Util.create_class_instance("saklient.cloud.resources." + self._class_name(), [self._client, record])
+            a = [self._client, record]
+            i = Util.create_class_instance("saklient.cloud.resources." + self._class_name(), a)
             data.append(i)
         return Client.haxe2native(data, 1)
     

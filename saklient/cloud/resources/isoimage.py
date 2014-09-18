@@ -92,10 +92,18 @@ class IsoImage(Resource):
     
     ## @return {int}
     def get_size_gib(self):
-        return self.get_size_mib() >> 10
+        sizeMib = self.get_size_mib()
+        return None if sizeMib is None else sizeMib >> 10
+    
+    ## @param {int} sizeGib
+    # @return {int}
+    def set_size_gib(self, sizeGib):
+        Util.validate_type(sizeGib, "int")
+        self.set_size_mib(None if sizeGib is None else sizeGib * 1024)
+        return sizeGib
     
     ## サイズ[GiB]
-    size_gib = property(get_size_gib, None, None)
+    size_gib = property(get_size_gib, set_size_gib, None)
     
     # (instance field) _ftp_info
     

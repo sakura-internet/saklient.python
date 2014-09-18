@@ -9,4 +9,9 @@ class FilterUnknownOperatorException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。不明な演算子がフィルタ中に含まれています。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(FilterUnknownOperatorException, self).__init__(status, code, message)
+    

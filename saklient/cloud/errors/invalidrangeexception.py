@@ -9,4 +9,9 @@ class InvalidRangeException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。パラメータに含まれている値の範囲が一部不正です。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(InvalidRangeException, self).__init__(status, code, message)
+    

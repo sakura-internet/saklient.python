@@ -9,4 +9,9 @@ class FileNotUploadedException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。ファイルをアップロード後に実行してください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(FileNotUploadedException, self).__init__(status, code, message)
+    

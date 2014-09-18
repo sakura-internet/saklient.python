@@ -9,4 +9,9 @@ class HttpPaymentRequiredException(HttpException):
     
     # (class field) default_message = "HTTPエラー。Payment Required."
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(HttpPaymentRequiredException, self).__init__(status, code, message)
+    

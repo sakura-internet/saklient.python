@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from ..client import Client
 from .model import Model
 from ..resources.serverplan import ServerPlan
 from ...util import Util
@@ -75,6 +76,12 @@ class Model_ServerPlan(Model):
     # @return {saklient.cloud.resources.serverplan.ServerPlan[]} リソースオブジェクトの配列
     def find(self):
         return self._find()
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(Model_ServerPlan, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     
     ## 指定したスペックのプランを取得します。
     # 

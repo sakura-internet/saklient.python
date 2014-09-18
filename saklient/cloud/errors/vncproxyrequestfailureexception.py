@@ -9,4 +9,9 @@ class VncProxyRequestFailureException(HttpServiceUnavailableException):
     
     # (class field) default_message = "サービスが利用できません。VNCプロクシの要求に失敗しました。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(VncProxyRequestFailureException, self).__init__(status, code, message)
+    

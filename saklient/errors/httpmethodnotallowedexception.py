@@ -9,4 +9,9 @@ class HttpMethodNotAllowedException(HttpException):
     
     # (class field) default_message = "要求されたHTTPメソッドは対応していません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(HttpMethodNotAllowedException, self).__init__(status, code, message)
+    

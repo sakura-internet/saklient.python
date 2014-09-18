@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from ..client import Client
 from .model import Model
 from ..resources.ipv6net import Ipv6Net
 from ...util import Util
@@ -75,4 +76,10 @@ class Model_Ipv6Net(Model):
     # @return {saklient.cloud.resources.ipv6net.Ipv6Net[]} リソースオブジェクトの配列
     def find(self):
         return self._find()
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(Model_Ipv6Net, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     

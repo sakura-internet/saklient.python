@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+from ..client import Client
 from .model import Model
 from ..resources.router import Router
 from ...util import Util
@@ -104,6 +105,12 @@ class Model_Router(Model):
     def sort_by_name(self, reverse=False):
         Util.validate_type(reverse, "bool")
         return self._sort_by_name(reverse)
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(Model_Router, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     
     ## 指定した帯域幅のルータに絞り込みます。
     # 

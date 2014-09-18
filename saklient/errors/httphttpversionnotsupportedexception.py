@@ -9,4 +9,9 @@ class HttpHttpVersionNotSupportedException(HttpException):
     
     # (class field) default_message = "HTTPエラー。Http Version Not Supported."
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(HttpHttpVersionNotSupportedException, self).__init__(status, code, message)
+    

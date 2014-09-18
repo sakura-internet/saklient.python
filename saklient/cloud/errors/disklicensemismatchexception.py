@@ -9,4 +9,9 @@ class DiskLicenseMismatchException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。ライセンスの問題により、組み合わせて使用できないディスクが接続されています。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(DiskLicenseMismatchException, self).__init__(status, code, message)
+    

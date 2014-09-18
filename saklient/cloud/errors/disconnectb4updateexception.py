@@ -9,4 +9,9 @@ class DisconnectB4UpdateException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。サーバと接続された状態では変更できない値が含まれています。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(DisconnectB4UpdateException, self).__init__(status, code, message)
+    

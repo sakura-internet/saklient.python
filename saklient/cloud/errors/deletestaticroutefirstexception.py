@@ -9,4 +9,9 @@ class DeleteStaticRouteFirstException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。ルータを削除する前に、スタティックルートを削除してください。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(DeleteStaticRouteFirstException, self).__init__(status, code, message)
+    

@@ -9,4 +9,9 @@ class LimitCountInZoneException(HttpConflictException):
     
     # (class field) default_message = "要求を受け付けできません。ゾーン内リソース数上限により、リソースの割り当てに失敗しました。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(LimitCountInZoneException, self).__init__(status, code, message)
+    

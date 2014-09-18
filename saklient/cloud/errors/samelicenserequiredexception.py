@@ -9,4 +9,9 @@ class SameLicenseRequiredException(HttpConflictException):
     
     # (class field) default_message = "要求された操作を行えません。再インストール時に指定できるソースは、同一のライセンスを必要とするアーカイブに限られます。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(SameLicenseRequiredException, self).__init__(status, code, message)
+    

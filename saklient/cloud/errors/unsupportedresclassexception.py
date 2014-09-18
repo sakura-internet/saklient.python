@@ -9,4 +9,9 @@ class UnsupportedResClassException(HttpBadRequestException):
     
     # (class field) default_message = "不適切な要求です。この種類のリソースは要求された操作に対応しません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(UnsupportedResClassException, self).__init__(status, code, message)
+    

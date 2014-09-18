@@ -9,4 +9,9 @@ class UnknownOsTypeException(HttpServiceUnavailableException):
     
     # (class field) default_message = "サービスが利用できません。ディスクにインストールされたOSが特定できないため、正しく修正できません。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(UnknownOsTypeException, self).__init__(status, code, message)
+    

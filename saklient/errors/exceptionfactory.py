@@ -60,6 +60,7 @@ from ..cloud.errors.deleteipv6netsfirstexception import DeleteIpV6NetsFirstExcep
 from ..cloud.errors.deleteresb4accountexception import DeleteResB4AccountException
 from ..cloud.errors.deleterouterb4switchexception import DeleteRouterB4SwitchException
 from ..cloud.errors.deletestaticroutefirstexception import DeleteStaticRouteFirstException
+from ..cloud.errors.disabledinsandboxexception import DisabledInSandboxException
 from ..cloud.errors.disconnectb4deleteexception import DisconnectB4DeleteException
 from ..cloud.errors.disconnectb4updateexception import DisconnectB4UpdateException
 from ..cloud.errors.diskconnectionlimitexception import DiskConnectionLimitException
@@ -71,6 +72,7 @@ from ..cloud.errors.diskstockrunoutexception import DiskStockRunOutException
 from ..cloud.errors.dnsarecordnotfoundexception import DnsARecordNotFoundException
 from ..cloud.errors.dnsaaaarecordnotfoundexception import DnsAaaaRecordNotFoundException
 from ..cloud.errors.dnsptrupdatefailureexception import DnsPtrUpdateFailureException
+from ..cloud.errors.dontcreateinsandboxexception import DontCreateInSandboxException
 from ..cloud.errors.duplicateaccountcodeexception import DuplicateAccountCodeException
 from ..cloud.errors.duplicateentryexception import DuplicateEntryException
 from ..cloud.errors.duplicateusercodeexception import DuplicateUserCodeException
@@ -223,6 +225,8 @@ class ExceptionFactory:
             return DeleteRouterB4SwitchException(status, code, message)
         elif code == "delete_static_route_first":
             return DeleteStaticRouteFirstException(status, code, message)
+        elif code == "disabled_in_sandbox":
+            return DisabledInSandboxException(status, code, message)
         elif code == "disconnect_b4_delete":
             return DisconnectB4DeleteException(status, code, message)
         elif code == "disconnect_b4_update":
@@ -245,6 +249,8 @@ class ExceptionFactory:
             return DnsAaaaRecordNotFoundException(status, code, message)
         elif code == "dns_ptr_update_failure":
             return DnsPtrUpdateFailureException(status, code, message)
+        elif code == "dont_create_in_sandbox":
+            return DontCreateInSandboxException(status, code, message)
         elif code == "duplicate_account_code":
             return DuplicateAccountCodeException(status, code, message)
         elif code == "duplicate_entry":

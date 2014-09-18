@@ -9,4 +9,9 @@ class InvalidUriArgumentException(HttpNotFoundException):
     
     # (class field) default_message = "対象が見つかりません。パスに使用できない文字が含まれています。"
     
-    pass
+    ## @param {int} status
+    # @param {str} code=None
+    # @param {str} message=""
+    def __init__(self, status, code=None, message=""):
+        super(InvalidUriArgumentException, self).__init__(status, code, message)
+    
