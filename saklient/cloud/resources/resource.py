@@ -225,7 +225,8 @@ class Resource:
         Util.set_by_path(query, "Filter.ID", [self._id()])
         Util.set_by_path(query, "Include", ["ID"])
         result = self._client.request("GET", self._api_path(), query)
-        return ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count")) == 1
+        cnt = ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count"))
+        return cnt == 1
     
     ## @ignore
     # @return {any}

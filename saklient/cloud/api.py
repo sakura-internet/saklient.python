@@ -165,7 +165,7 @@ class API:
     # @static
     # @param {str} token ACCESS TOKEN
     # @param {str} secret ACCESS TOKEN SECRET
-    # @param {str} zone=None
+    # @param {str} zone=None ゾーン名
     # @return {saklient.cloud.api.API} APIクライアント
     @staticmethod
     def authorize(token, secret, zone=None):
