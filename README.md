@@ -8,6 +8,7 @@ This library gives you an easy interface to control your resources on
 
 * [Requirements](#requirements)
 * [How to use this library in your project](#how-to-use-this-library-in-your-project)
+* [Examples](#examples)
 * [Copyright and license](#copyright-and-license)
 
 
@@ -18,7 +19,15 @@ This library gives you an easy interface to control your resources on
 
 ## How to use this library in your project
 
-Just copy the **saklient** directory into your project.
+```bash
+# Install the package
+pip3 install saklient
+
+# Edit your code
+cd YOUR/PROJECT/ROOT
+vim YOUR-CODE.py
+```
+
 ```python
 from saklient.cloud.api import API
 
@@ -28,6 +37,11 @@ api = API.authorize(token, secret, zone)
 
 # ...
 ```
+
+
+## Examples
+
+Code examples are available [here](http://sakura-internet.github.io/saklient.doc/).
 
 
 ## Copyright and license
