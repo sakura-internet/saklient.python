@@ -40,11 +40,10 @@ class TestServer(unittest.TestCase):
         
         self.assertIn('SACLOUD_TOKEN', config)
         self.assertIn('SACLOUD_SECRET', config)
-        # self.assertIn('SACLOUD_ZONE', config)
+        self.assertIn('SACLOUD_ZONE', config)
         
         # authorize
-        api = API.authorize(config['SACLOUD_TOKEN'], config['SACLOUD_SECRET'])
-        if 'SACLOUD_ZONE' in config: api = api.in_zone(config['SACLOUD_ZONE'])
+        api = API.authorize(config['SACLOUD_TOKEN'], config['SACLOUD_SECRET'], config['SACLOUD_ZONE'])
         self.assertIsInstance(api, API)
         
         
