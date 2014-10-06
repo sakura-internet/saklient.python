@@ -3,6 +3,8 @@
 from ..client import Client
 from .model import Model
 from ..resources.archive import Archive
+from ..resources.loadbalancer import LoadBalancer
+from ..resources.vpcrouter import VpcRouter
 from ..enums.escope import EScope
 from ...util import Util
 

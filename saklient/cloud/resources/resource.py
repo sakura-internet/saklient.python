@@ -68,9 +68,9 @@ class Resource:
     # (instance field) is_incomplete
     
     ## @private
-    # @param {any} r
+    # @param {any} query
     # @return {void}
-    def _on_before_save(self, r):
+    def _on_before_save(self, query):
         {}
     
     ## @private
@@ -185,7 +185,6 @@ class Resource:
                 r[k] = v
             else:
                 setattr(r, k, v)
-        self._on_before_save(r)
         method = "POST" if self.is_new else "PUT"
         path = self._api_path()
         if not self.is_new:
@@ -195,6 +194,7 @@ class Resource:
             q[self._root_key()] = r
         else:
             setattr(q, self._root_key(), r)
+        self._on_before_save(q)
         result = self._client.request(method, path, q)
         self.api_deserialize(result, True)
         return self
@@ -232,4 +232,28 @@ class Resource:
     # @return {any}
     def dump(self):
         return self.api_serialize(True)
+    
+    ## @ignore
+    # @return {str}
+    def true_class_name(self):
+        return None
+    
+    ## @ignore
+    # @static
+    # @param {str} className
+    # @param {saklient.cloud.client.Client} client
+    # @param {any} obj
+    # @param {bool} wrapped=False
+    # @return {saklient.cloud.resources.resource.Resource}
+    @staticmethod
+    def create_with(className, client, obj, wrapped=False):
+        Util.validate_type(className, "str")
+        Util.validate_type(client, "saklient.cloud.client.Client")
+        Util.validate_type(wrapped, "bool")
+        a = [client, obj, wrapped]
+        ret = Util.create_class_instance("saklient.cloud.resources." + className, a)
+        trueClassName = ret.true_class_name()
+        if trueClassName is not None:
+            ret = Util.create_class_instance("saklient.cloud.resources." + trueClassName, a)
+        return ret
     

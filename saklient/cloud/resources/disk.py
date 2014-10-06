@@ -139,8 +139,7 @@ class Disk(Resource):
                 if s is not None:
                     id = ( (s["ID"] if "ID" in s else None ) if isinstance(s, dict) else getattr(s, "ID"))
                     if id is not None:
-                        obj = Util.create_class_instance("saklient.cloud.resources.Archive", [self._client, s, False])
-                        self._source = obj
+                        self._source = Resource.create_with("Archive", self._client, s)
     
     ## @private
     # @param {any} r
@@ -286,6 +285,7 @@ class Disk(Resource):
     # 
     # @return {str[]}
     def get_tags(self):
+        self.n_tags = True
         return self.m_tags
     
     ## (This method is generated in Translator_default#buildImpl)

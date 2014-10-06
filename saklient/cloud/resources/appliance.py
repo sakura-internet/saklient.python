@@ -27,6 +27,12 @@ class Appliance(Resource):
     
     # (instance field) m_ifaces
     
+    # (instance field) m_annotation
+    
+    # (instance field) m_raw_settings
+    
+    # (instance field) m_raw_settings_hash
+    
     # (instance field) m_service_class
     
     ## @private
@@ -67,6 +73,14 @@ class Appliance(Resource):
         return self._reload()
     
     ## @ignore
+    # @return {str}
+    def true_class_name(self):
+        if (self.clazz) == "loadbalancer":
+            return "LoadBalancer"
+        elif (self.clazz) == "vpcrouter":
+            return "VpcRouter"
+    
+    ## @ignore
     # @param {saklient.cloud.client.Client} client
     # @param {any} obj
     # @param {bool} wrapped=False
@@ -75,6 +89,12 @@ class Appliance(Resource):
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
         self.api_deserialize(obj, wrapped)
+    
+    ## @private
+    # @param {any} query
+    # @return {void}
+    def _on_before_save(self, query):
+        Util.set_by_path(query, "OriginalSettingsHash", self.raw_settings_hash)
     
     ## アプライアンスを起動します。
     # 
@@ -188,6 +208,7 @@ class Appliance(Resource):
     # 
     # @return {str[]}
     def get_tags(self):
+        self.n_tags = True
         return self.m_tags
     
     ## (This method is generated in Translator_default#buildImpl)
@@ -234,6 +255,49 @@ class Appliance(Resource):
     
     ## プラン
     ifaces = property(get_ifaces, None, None)
+    
+    # (instance field) n_annotation = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {any}
+    def get_annotation(self):
+        return self.m_annotation
+    
+    ## 注釈
+    annotation = property(get_annotation, None, None)
+    
+    # (instance field) n_raw_settings = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {any}
+    def get_raw_settings(self):
+        self.n_raw_settings = True
+        return self.m_raw_settings
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @param {any} v
+    # @return {any}
+    def set_raw_settings(self, v):
+        self.m_raw_settings = v
+        self.n_raw_settings = True
+        return self.m_raw_settings
+    
+    ## 設定の生データ
+    raw_settings = property(get_raw_settings, set_raw_settings, None)
+    
+    # (instance field) n_raw_settings_hash = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {str}
+    def get_raw_settings_hash(self):
+        return self.m_raw_settings_hash
+    
+    ## @ignore
+    raw_settings_hash = property(get_raw_settings_hash, None, None)
     
     # (instance field) n_service_class = False
     
@@ -312,6 +376,24 @@ class Appliance(Resource):
             self.m_ifaces = None
             self.is_incomplete = True
         self.n_ifaces = False
+        if Util.exists_path(r, "Remark"):
+            self.m_annotation = Util.get_by_path(r, "Remark")
+        else:
+            self.m_annotation = None
+            self.is_incomplete = True
+        self.n_annotation = False
+        if Util.exists_path(r, "Settings"):
+            self.m_raw_settings = Util.get_by_path(r, "Settings")
+        else:
+            self.m_raw_settings = None
+            self.is_incomplete = True
+        self.n_raw_settings = False
+        if Util.exists_path(r, "SettingsHash"):
+            self.m_raw_settings_hash = None if Util.get_by_path(r, "SettingsHash") is None else str(Util.get_by_path(r, "SettingsHash"))
+        else:
+            self.m_raw_settings_hash = None
+            self.is_incomplete = True
+        self.n_raw_settings_hash = False
         if Util.exists_path(r, "ServiceClass"):
             self.m_service_class = None if Util.get_by_path(r, "ServiceClass") is None else str(Util.get_by_path(r, "ServiceClass"))
         else:
@@ -360,6 +442,12 @@ class Appliance(Resource):
                     'ID': "0"
                 } if r2 is None else r2.api_serialize_id())
                 ( (ret["Interfaces"] if "Interfaces" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Interfaces")).append(v)
+        if withClean or self.n_annotation:
+            Util.set_by_path(ret, "Remark", self.m_annotation)
+        if withClean or self.n_raw_settings:
+            Util.set_by_path(ret, "Settings", self.m_raw_settings)
+        if withClean or self.n_raw_settings_hash:
+            Util.set_by_path(ret, "SettingsHash", self.m_raw_settings_hash)
         if withClean or self.n_service_class:
             Util.set_by_path(ret, "ServiceClass", self.m_service_class)
         if len(missing) > 0:

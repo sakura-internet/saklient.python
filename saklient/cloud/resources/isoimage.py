@@ -218,6 +218,7 @@ class IsoImage(Resource):
     # 
     # @return {str[]}
     def get_tags(self):
+        self.n_tags = True
         return self.m_tags
     
     ## (This method is generated in Translator_default#buildImpl)

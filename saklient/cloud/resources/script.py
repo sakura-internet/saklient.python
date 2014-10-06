@@ -159,6 +159,7 @@ class Script(Resource):
     # 
     # @return {str[]}
     def get_tags(self):
+        self.n_tags = True
         return self.m_tags
     
     ## (This method is generated in Translator_default#buildImpl)
@@ -224,17 +225,8 @@ class Script(Resource):
     def get_annotation(self):
         return self.m_annotation
     
-    ## (This method is generated in Translator_default#buildImpl)
-    # 
-    # @param {any} v
-    # @return {any}
-    def set_annotation(self, v):
-        self.m_annotation = v
-        self.n_annotation = True
-        return self.m_annotation
-    
     ## 注釈
-    annotation = property(get_annotation, set_annotation, None)
+    annotation = property(get_annotation, None, None)
     
     ## (This method is generated in Translator_default#buildImpl)
     # 

@@ -140,6 +140,14 @@ class Model:
         self._count = 0
         return self
     
+    ## @private
+    # @param {any} obj
+    # @param {bool} wrapped=False
+    # @return {saklient.cloud.resources.resource.Resource}
+    def _create_resource_with(self, obj, wrapped=False):
+        Util.validate_type(wrapped, "bool")
+        return Resource.create_with(self._class_name(), self._client, obj, wrapped)
+    
     ## 新規リソース作成用のオブジェクトを用意します。
     # 
     # 返り値のオブジェクトにパラメータを設定し、save() を呼ぶことで実際のリソースが作成されます。
@@ -147,8 +155,7 @@ class Model:
     # @private
     # @return {saklient.cloud.resources.resource.Resource} リソースオブジェクト
     def _create(self):
-        a = [self._client, None, False]
-        return Util.create_class_instance("saklient.cloud.resources." + self._class_name(), a)
+        return self._create_resource_with(None)
     
     ## 指定したIDを持つ唯一のリソースを取得します。
     # 
@@ -162,8 +169,7 @@ class Model:
         result = self._client.request("GET", self._api_path() + "/" + Util.url_encode(id), query)
         self._total = 1
         self._count = 1
-        a = [self._client, result, True]
-        return Util.create_class_instance("saklient.cloud.resources." + self._class_name(), a)
+        return self._create_resource_with(result, True)
     
     ## リソースの検索リクエストを実行し、結果をリストで取得します。
     # 
@@ -178,9 +184,7 @@ class Model:
         data = []
         records = ( (result[self._root_key_m()] if self._root_key_m() in result else None ) if isinstance(result, dict) else getattr(result, self._root_key_m()))
         for record in records:
-            a = [self._client, record, False]
-            i = Util.create_class_instance("saklient.cloud.resources." + self._class_name(), a)
-            data.append(i)
+            data.append(self._create_resource_with(record))
         return Client.haxe2native(data, 1)
     
     ## リソースの検索リクエストを実行し、唯一のリソースを取得します。
@@ -196,8 +200,7 @@ class Model:
         if self._total == 0:
             return None
         records = ( (result[self._root_key_m()] if self._root_key_m() in result else None ) if isinstance(result, dict) else getattr(result, self._root_key_m()))
-        a = [self._client, records[0], False]
-        return Util.create_class_instance("saklient.cloud.resources." + self._class_name(), a)
+        return self._create_resource_with(records[0])
     
     ## 指定した文字列を名前に含むリソースに絞り込みます。
     # 
