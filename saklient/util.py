@@ -30,6 +30,15 @@ class Util:
             if seg not in obj: return None
             obj = obj[seg]
         return obj
+  
+    ## @ignore
+    @staticmethod
+    def get_by_path_any(objects, pathes):
+        for obj in objects:
+            for path in pathes:
+                ret = get_by_path(obj, path)
+                if ret is not None: return ret
+        return None
     
     ## @ignore
     @staticmethod

@@ -139,20 +139,20 @@ class Archive(Resource):
     def _on_after_api_deserialize(self, r, root):
         if root is not None:
             if ( "FTPServer" in root if isinstance(root, dict) else hasattr(root, "FTPServer")):
-                ftp = ( (root["FTPServer"] if "FTPServer" in root else None ) if isinstance(root, dict) else getattr(root, "FTPServer"))
+                ftp = (root["FTPServer"] if "FTPServer" in root else None)
                 if ftp is not None:
                     self._ftp_info = FtpInfo(ftp)
         if r is not None:
             if ( "SourceArchive" in r if isinstance(r, dict) else hasattr(r, "SourceArchive")):
-                s = ( (r["SourceArchive"] if "SourceArchive" in r else None ) if isinstance(r, dict) else getattr(r, "SourceArchive"))
+                s = (r["SourceArchive"] if "SourceArchive" in r else None)
                 if s is not None:
-                    id = ( (s["ID"] if "ID" in s else None ) if isinstance(s, dict) else getattr(s, "ID"))
+                    id = (s["ID"] if "ID" in s else None)
                     if id is not None:
                         self._source = Archive(self._client, s)
             if ( "SourceDisk" in r if isinstance(r, dict) else hasattr(r, "SourceDisk")):
-                s = ( (r["SourceDisk"] if "SourceDisk" in r else None ) if isinstance(r, dict) else getattr(r, "SourceDisk"))
+                s = (r["SourceDisk"] if "SourceDisk" in r else None)
                 if s is not None:
-                    id = ( (s["ID"] if "ID" in s else None ) if isinstance(s, dict) else getattr(s, "ID"))
+                    id = (s["ID"] if "ID" in s else None)
                     if id is not None:
                         self._source = Resource.create_with("Disk", self._client, s)
     
@@ -169,19 +169,13 @@ class Archive(Resource):
                 s = self._source.api_serialize(True) if withClean else {
                     'ID': self._source._id()
                 }
-                if isinstance(r, dict):
-                    r["SourceArchive"] = s
-                else:
-                    setattr(r, "SourceArchive", s)
+                r["SourceArchive"] = s
             else:
                 if self._source._class_name() == "Disk":
                     s = self._source.api_serialize(True) if withClean else {
                         'ID': self._source._id()
                     }
-                    if isinstance(r, dict):
-                        r["SourceDisk"] = s
-                    else:
-                        setattr(r, "SourceDisk", s)
+                    r["SourceDisk"] = s
                 else:
                     self._source = None
                     Util.validate_type(self._source, "Disk or Archive", True)
@@ -209,18 +203,6 @@ class Archive(Resource):
         self._client.request("DELETE", path)
         self._ftp_info = None
         return self
-    
-    ## コピー中のアーカイブが利用可能になるまで待機します。
-    # 
-    # @ignore
-    # @param {int} timeoutSec
-    # @param {(saklient.cloud.resources.archive.Archive, bool) => void} callback
-    # @return {void}
-    def after_copy(self, timeoutSec, callback):
-        Util.validate_type(timeoutSec, "int")
-        Util.validate_type(callback, "function")
-        ret = self.sleep_while_copying(timeoutSec)
-        callback(self, ret)
     
     ## コピー中のアーカイブが利用可能になるまで待機します。
     # 
@@ -534,7 +516,7 @@ class Archive(Resource):
             for r1 in self.m_tags:
                 v = None
                 v = r1
-                ( (ret["Tags"] if "Tags" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Tags")).append(v)
+                (ret["Tags"] if "Tags" in ret else None).append(v)
         if withClean or self.n_icon:
             Util.set_by_path(ret, "Icon", (None if self.m_icon is None else self.m_icon.api_serialize(withClean)) if withClean else ({
                 'ID': "0"

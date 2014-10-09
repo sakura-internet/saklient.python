@@ -6,6 +6,8 @@ from .resource import Resource
 from .icon import Icon
 from .iface import Iface
 from ..enums.eapplianceclass import EApplianceClass
+from ..enums.eavailability import EAvailability
+from ..enums.eserverinstancestatus import EServerInstanceStatus
 from ...util import Util
 
 # module saklient.cloud.resources.appliance
@@ -25,15 +27,21 @@ class Appliance(Resource):
     
     # (instance field) m_icon
     
+    # (instance field) m_plan_id
+    
     # (instance field) m_ifaces
     
-    # (instance field) m_annotation
+    # (instance field) m_raw_annotation
     
     # (instance field) m_raw_settings
     
     # (instance field) m_raw_settings_hash
     
+    # (instance field) m_status
+    
     # (instance field) m_service_class
+    
+    # (instance field) m_availability
     
     ## @private
     # @return {str}
@@ -75,10 +83,13 @@ class Appliance(Resource):
     ## @ignore
     # @return {str}
     def true_class_name(self):
-        if (self.clazz) == "loadbalancer":
+        if self.clazz is None:
+            return None
+        if self.clazz == "loadbalancer":
             return "LoadBalancer"
-        elif (self.clazz) == "vpcrouter":
+        elif self.clazz == "vpcrouter":
             return "VpcRouter"
+        return None
     
     ## @ignore
     # @param {saklient.cloud.client.Client} client
@@ -94,7 +105,7 @@ class Appliance(Resource):
     # @param {any} query
     # @return {void}
     def _on_before_save(self, query):
-        Util.set_by_path(query, "OriginalSettingsHash", self.raw_settings_hash)
+        Util.set_by_path(query, "OriginalSettingsHash", self.get_raw_settings_hash())
     
     ## アプライアンスを起動します。
     # 
@@ -125,6 +136,63 @@ class Appliance(Resource):
     def reboot(self):
         self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/reset")
         return self
+    
+    ## 作成中のアプライアンスが利用可能になるまで待機します。
+    # 
+    # @param {int} timeoutSec=600
+    # @return {bool} 成功時はtrue、タイムアウトやエラーによる失敗時はfalseを返します。
+    def sleep_while_creating(self, timeoutSec=600):
+        Util.validate_type(timeoutSec, "int")
+        step = 10
+        while (0 < timeoutSec):
+            self.reload()
+            a = self.get_availability()
+            if a == EAvailability.available:
+                return True
+            if a != EAvailability.migrating:
+                timeoutSec = 0
+            timeoutSec -= step
+            if 0 < timeoutSec:
+                Util.sleep(step)
+        return False
+    
+    ## アプライアンスが起動するまで待機します。
+    # 
+    # @param {int} timeoutSec=600
+    # @return {bool}
+    def sleep_until_up(self, timeoutSec=600):
+        Util.validate_type(timeoutSec, "int")
+        return self.sleep_until(EServerInstanceStatus.up, timeoutSec)
+    
+    ## アプライアンスが停止するまで待機します。
+    # 
+    # @param {int} timeoutSec=600
+    # @return {bool} 成功時はtrue、タイムアウトやエラーによる失敗時はfalseを返します。
+    def sleep_until_down(self, timeoutSec=600):
+        Util.validate_type(timeoutSec, "int")
+        return self.sleep_until(EServerInstanceStatus.down, timeoutSec)
+    
+    ## アプライアンスが指定のステータスに遷移するまで待機します。
+    # 
+    # @ignore
+    # @param {str} status
+    # @param {int} timeoutSec=600
+    # @return {bool}
+    def sleep_until(self, status, timeoutSec=600):
+        Util.validate_type(status, "str")
+        Util.validate_type(timeoutSec, "int")
+        step = 10
+        while (0 < timeoutSec):
+            self.reload()
+            s = self.get_status()
+            if s is None:
+                s = EServerInstanceStatus.down
+            if s == status:
+                return True
+            timeoutSec -= step
+            if 0 < timeoutSec:
+                Util.sleep(step)
+        return False
     
     # (instance field) n_id = False
     
@@ -245,6 +313,29 @@ class Appliance(Resource):
     ## アイコン
     icon = property(get_icon, set_icon, None)
     
+    # (instance field) n_plan_id = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {int}
+    def get_plan_id(self):
+        return self.m_plan_id
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @param {int} v
+    # @return {int}
+    def set_plan_id(self, v):
+        Util.validate_type(v, "int")
+        if not self.is_new:
+            raise SaklientException("immutable_field", "Immutable fields cannot be modified after the resource creation: " + "saklient.cloud.resources.appliance.Appliance#plan_id")
+        self.m_plan_id = v
+        self.n_plan_id = True
+        return self.m_plan_id
+    
+    ## プラン
+    plan_id = property(get_plan_id, set_plan_id, None)
+    
     # (instance field) n_ifaces = False
     
     ## (This method is generated in Translator_default#buildImpl)
@@ -253,19 +344,30 @@ class Appliance(Resource):
     def get_ifaces(self):
         return self.m_ifaces
     
-    ## プラン
+    ## インタフェース
     ifaces = property(get_ifaces, None, None)
     
-    # (instance field) n_annotation = False
+    # (instance field) n_raw_annotation = False
     
     ## (This method is generated in Translator_default#buildImpl)
     # 
     # @return {any}
-    def get_annotation(self):
-        return self.m_annotation
+    def get_raw_annotation(self):
+        return self.m_raw_annotation
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @param {any} v
+    # @return {any}
+    def set_raw_annotation(self, v):
+        if not self.is_new:
+            raise SaklientException("immutable_field", "Immutable fields cannot be modified after the resource creation: " + "saklient.cloud.resources.appliance.Appliance#raw_annotation")
+        self.m_raw_annotation = v
+        self.n_raw_annotation = True
+        return self.m_raw_annotation
     
     ## 注釈
-    annotation = property(get_annotation, None, None)
+    raw_annotation = property(get_raw_annotation, set_raw_annotation, None)
     
     # (instance field) n_raw_settings = False
     
@@ -299,6 +401,17 @@ class Appliance(Resource):
     ## @ignore
     raw_settings_hash = property(get_raw_settings_hash, None, None)
     
+    # (instance field) n_status = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {str}
+    def get_status(self):
+        return self.m_status
+    
+    ## 起動状態 {@link EServerInstanceStatus}
+    status = property(get_status, None, None)
+    
     # (instance field) n_service_class = False
     
     ## (This method is generated in Translator_default#buildImpl)
@@ -309,6 +422,17 @@ class Appliance(Resource):
     
     ## サービスクラス
     service_class = property(get_service_class, None, None)
+    
+    # (instance field) n_availability = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {str}
+    def get_availability(self):
+        return self.m_availability
+    
+    ## 有効状態 {@link EAvailability}
+    availability = property(get_availability, None, None)
     
     ## (This method is generated in Translator_default#buildImpl)
     # 
@@ -363,6 +487,12 @@ class Appliance(Resource):
             self.m_icon = None
             self.is_incomplete = True
         self.n_icon = False
+        if Util.exists_path(r, "Plan.ID"):
+            self.m_plan_id = None if Util.get_by_path(r, "Plan.ID") is None else int(str(Util.get_by_path(r, "Plan.ID")))
+        else:
+            self.m_plan_id = None
+            self.is_incomplete = True
+        self.n_plan_id = False
         if Util.exists_path(r, "Interfaces"):
             if Util.get_by_path(r, "Interfaces") is None:
                 self.m_ifaces = []
@@ -377,11 +507,11 @@ class Appliance(Resource):
             self.is_incomplete = True
         self.n_ifaces = False
         if Util.exists_path(r, "Remark"):
-            self.m_annotation = Util.get_by_path(r, "Remark")
+            self.m_raw_annotation = Util.get_by_path(r, "Remark")
         else:
-            self.m_annotation = None
+            self.m_raw_annotation = None
             self.is_incomplete = True
-        self.n_annotation = False
+        self.n_raw_annotation = False
         if Util.exists_path(r, "Settings"):
             self.m_raw_settings = Util.get_by_path(r, "Settings")
         else:
@@ -394,12 +524,24 @@ class Appliance(Resource):
             self.m_raw_settings_hash = None
             self.is_incomplete = True
         self.n_raw_settings_hash = False
+        if Util.exists_path(r, "Instance.Status"):
+            self.m_status = None if Util.get_by_path(r, "Instance.Status") is None else str(Util.get_by_path(r, "Instance.Status"))
+        else:
+            self.m_status = None
+            self.is_incomplete = True
+        self.n_status = False
         if Util.exists_path(r, "ServiceClass"):
             self.m_service_class = None if Util.get_by_path(r, "ServiceClass") is None else str(Util.get_by_path(r, "ServiceClass"))
         else:
             self.m_service_class = None
             self.is_incomplete = True
         self.n_service_class = False
+        if Util.exists_path(r, "Availability"):
+            self.m_availability = None if Util.get_by_path(r, "Availability") is None else str(Util.get_by_path(r, "Availability"))
+        else:
+            self.m_availability = None
+            self.is_incomplete = True
+        self.n_availability = False
     
     ## @ignore
     # @param {bool} withClean=False
@@ -429,11 +571,16 @@ class Appliance(Resource):
             for r1 in self.m_tags:
                 v = None
                 v = r1
-                ( (ret["Tags"] if "Tags" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Tags")).append(v)
+                (ret["Tags"] if "Tags" in ret else None).append(v)
         if withClean or self.n_icon:
             Util.set_by_path(ret, "Icon", (None if self.m_icon is None else self.m_icon.api_serialize(withClean)) if withClean else ({
                 'ID': "0"
             } if self.m_icon is None else self.m_icon.api_serialize_id()))
+        if withClean or self.n_plan_id:
+            Util.set_by_path(ret, "Plan.ID", self.m_plan_id)
+        else:
+            if self.is_new:
+                missing.append("plan_id")
         if withClean or self.n_ifaces:
             Util.set_by_path(ret, "Interfaces", [])
             for r2 in self.m_ifaces:
@@ -441,15 +588,22 @@ class Appliance(Resource):
                 v = (None if r2 is None else r2.api_serialize(withClean)) if withClean else ({
                     'ID': "0"
                 } if r2 is None else r2.api_serialize_id())
-                ( (ret["Interfaces"] if "Interfaces" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Interfaces")).append(v)
-        if withClean or self.n_annotation:
-            Util.set_by_path(ret, "Remark", self.m_annotation)
+                (ret["Interfaces"] if "Interfaces" in ret else None).append(v)
+        if withClean or self.n_raw_annotation:
+            Util.set_by_path(ret, "Remark", self.m_raw_annotation)
+        else:
+            if self.is_new:
+                missing.append("raw_annotation")
         if withClean or self.n_raw_settings:
             Util.set_by_path(ret, "Settings", self.m_raw_settings)
         if withClean or self.n_raw_settings_hash:
             Util.set_by_path(ret, "SettingsHash", self.m_raw_settings_hash)
+        if withClean or self.n_status:
+            Util.set_by_path(ret, "Instance.Status", self.m_status)
         if withClean or self.n_service_class:
             Util.set_by_path(ret, "ServiceClass", self.m_service_class)
+        if withClean or self.n_availability:
+            Util.set_by_path(ret, "Availability", self.m_availability)
         if len(missing) > 0:
             raise SaklientException("required_field", "Required fields must be set before the Appliance creation: " + ", ".join(missing))
         return ret

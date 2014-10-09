@@ -124,29 +124,13 @@ class Server(Resource):
         self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/reset")
         return self.reload()
     
-    ## サーバが停止するまで待機します。
+    ## サーバが起動するまで待機します。
     # 
-    # @param {int} timeoutSec
-    # @param {(saklient.cloud.resources.server.Server, bool) => void} callback
-    # @return {void} 成功時はtrue、タイムアウトやエラーによる失敗時はfalseを返します。
-    def after_down(self, timeoutSec, callback):
+    # @param {int} timeoutSec=180
+    # @return {bool}
+    def sleep_until_up(self, timeoutSec=180):
         Util.validate_type(timeoutSec, "int")
-        Util.validate_type(callback, "function")
-        self.after_status(EServerInstanceStatus.down, timeoutSec, callback)
-    
-    ## サーバが指定のステータスに遷移するまで待機します。
-    # 
-    # @ignore
-    # @param {str} status
-    # @param {int} timeoutSec
-    # @param {(saklient.cloud.resources.server.Server, bool) => void} callback
-    # @return {void}
-    def after_status(self, status, timeoutSec, callback):
-        Util.validate_type(status, "str")
-        Util.validate_type(timeoutSec, "int")
-        Util.validate_type(callback, "function")
-        ret = self.sleep_until(status, timeoutSec)
-        callback(self, ret)
+        return self.sleep_until(EServerInstanceStatus.up, timeoutSec)
     
     ## サーバが停止するまで待機します。
     # 
@@ -165,10 +149,13 @@ class Server(Resource):
     def sleep_until(self, status, timeoutSec=180):
         Util.validate_type(status, "str")
         Util.validate_type(timeoutSec, "int")
-        step = 3
+        step = 10
         while (0 < timeoutSec):
             self.reload()
-            s = self.get_instance().status
+            s = None
+            inst = self.instance
+            if inst is not None:
+                s = inst.status
             if s is None:
                 s = EServerInstanceStatus.down
             if s == status:
@@ -197,7 +184,7 @@ class Server(Resource):
     def add_iface(self):
         model = Util.create_class_instance("saklient.cloud.models.Model_Iface", [self._client])
         res = model.create()
-        res.set_property("serverId", self._id())
+        res.server_id = self._id()
         return res.save()
     
     ## サーバにISOイメージを挿入します。
@@ -479,7 +466,7 @@ class Server(Resource):
             for r1 in self.m_tags:
                 v = None
                 v = r1
-                ( (ret["Tags"] if "Tags" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Tags")).append(v)
+                (ret["Tags"] if "Tags" in ret else None).append(v)
         if withClean or self.n_icon:
             Util.set_by_path(ret, "Icon", (None if self.m_icon is None else self.m_icon.api_serialize(withClean)) if withClean else ({
                 'ID': "0"
@@ -498,7 +485,7 @@ class Server(Resource):
                 v = (None if r2 is None else r2.api_serialize(withClean)) if withClean else ({
                     'ID': "0"
                 } if r2 is None else r2.api_serialize_id())
-                ( (ret["Interfaces"] if "Interfaces" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Interfaces")).append(v)
+                (ret["Interfaces"] if "Interfaces" in ret else None).append(v)
         if withClean or self.n_instance:
             Util.set_by_path(ret, "Instance", (None if self.m_instance is None else self.m_instance.api_serialize(withClean)) if withClean else ({
                 'ID': "0"

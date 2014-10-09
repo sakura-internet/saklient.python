@@ -97,6 +97,35 @@ class Model_Router(Model):
         Util.validate_type(name, "str")
         return self._with_name_like(name)
     
+    ## 指定したタグを持つリソースに絞り込みます。
+    # 
+    # 複数のタグを指定する場合は withTags() を利用してください。
+    # 
+    # @todo Implement test case
+    # @param {str} tag
+    # @return {saklient.cloud.models.model_router.Model_Router}
+    def with_tag(self, tag):
+        Util.validate_type(tag, "str")
+        return self._with_tag(tag)
+    
+    ## 指定したすべてのタグを持つリソースに絞り込みます。
+    # 
+    # @todo Implement test case
+    # @param {str[]} tags
+    # @return {saklient.cloud.models.model_router.Model_Router}
+    def with_tags(self, tags):
+        Util.validate_type(tags, "list")
+        return self._with_tags(tags)
+    
+    ## 指定したDNFに合致するタグを持つリソースに絞り込みます。
+    # 
+    # @todo Implement test case
+    # @param {str[][]} dnf
+    # @return {saklient.cloud.models.model_router.Model_Router}
+    def with_tag_dnf(self, dnf):
+        Util.validate_type(dnf, "list")
+        return self._with_tag_dnf(dnf)
+    
     ## 名前でソートします。
     # 
     # @todo Implement test case

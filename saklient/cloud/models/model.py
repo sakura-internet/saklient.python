@@ -115,19 +115,13 @@ class Model:
         filter = self._query.filter
         if multiple:
             if not ( key in filter if isinstance(filter, dict) else hasattr(filter, key)):
-                if isinstance(filter, dict):
-                    filter[key] = []
-                else:
-                    setattr(filter, key, [])
-            values = ( (filter[key] if key in filter else None ) if isinstance(filter, dict) else getattr(filter, key))
+                filter[key] = []
+            values = (filter[key] if key in filter else None)
             values.append(value)
         else:
             if ( key in filter if isinstance(filter, dict) else hasattr(filter, key)):
                 raise SaklientException("filter_duplicated", "The same filter key can be specified only once (by calling the same method 'withFooBar')")
-            if isinstance(filter, dict):
-                filter[key] = value
-            else:
-                setattr(filter, key, value)
+            filter[key] = value
         return self
     
     ## 次のリクエストのために設定されているステートをすべて破棄します。
@@ -141,21 +135,27 @@ class Model:
         return self
     
     ## @private
+    # @param {str} className
     # @param {any} obj
     # @param {bool} wrapped=False
     # @return {saklient.cloud.resources.resource.Resource}
-    def _create_resource_with(self, obj, wrapped=False):
+    def _create_resource_with(self, className, obj, wrapped=False):
+        Util.validate_type(className, "str")
         Util.validate_type(wrapped, "bool")
-        return Resource.create_with(self._class_name(), self._client, obj, wrapped)
+        if className is None:
+            className = self._class_name()
+        return Resource.create_with(className, self._client, obj, wrapped)
     
     ## 新規リソース作成用のオブジェクトを用意します。
     # 
     # 返り値のオブジェクトにパラメータを設定し、save() を呼ぶことで実際のリソースが作成されます。
     # 
     # @private
+    # @param {str} className=None
     # @return {saklient.cloud.resources.resource.Resource} リソースオブジェクト
-    def _create(self):
-        return self._create_resource_with(None)
+    def _create(self, className=None):
+        Util.validate_type(className, "str")
+        return self._create_resource_with(className, None)
     
     ## 指定したIDを持つ唯一のリソースを取得します。
     # 
@@ -169,7 +169,7 @@ class Model:
         result = self._client.request("GET", self._api_path() + "/" + Util.url_encode(id), query)
         self._total = 1
         self._count = 1
-        return self._create_resource_with(result, True)
+        return self._create_resource_with(None, result, True)
     
     ## リソースの検索リクエストを実行し、結果をリストで取得します。
     # 
@@ -179,12 +179,12 @@ class Model:
         query = self._query.build()
         self._reset()
         result = self._client.request("GET", self._api_path(), query)
-        self._total = ( (result["Total"] if "Total" in result else None ) if isinstance(result, dict) else getattr(result, "Total"))
-        self._count = ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count"))
+        self._total = (result["Total"] if "Total" in result else None)
+        self._count = (result["Count"] if "Count" in result else None)
         data = []
-        records = ( (result[self._root_key_m()] if self._root_key_m() in result else None ) if isinstance(result, dict) else getattr(result, self._root_key_m()))
+        records = (result[self._root_key_m()] if self._root_key_m() in result else None)
         for record in records:
-            data.append(self._create_resource_with(record))
+            data.append(self._create_resource_with(None, record))
         return Client.haxe2native(data, 1)
     
     ## リソースの検索リクエストを実行し、唯一のリソースを取得します。
@@ -195,12 +195,12 @@ class Model:
         query = self._query.build()
         self._reset()
         result = self._client.request("GET", self._api_path(), query)
-        self._total = ( (result["Total"] if "Total" in result else None ) if isinstance(result, dict) else getattr(result, "Total"))
-        self._count = ( (result["Count"] if "Count" in result else None ) if isinstance(result, dict) else getattr(result, "Count"))
+        self._total = (result["Total"] if "Total" in result else None)
+        self._count = (result["Count"] if "Count" in result else None)
         if self._total == 0:
             return None
-        records = ( (result[self._root_key_m()] if self._root_key_m() in result else None ) if isinstance(result, dict) else getattr(result, self._root_key_m()))
-        return self._create_resource_with(records[0])
+        records = (result[self._root_key_m()] if self._root_key_m() in result else None)
+        return self._create_resource_with(None, records[0])
     
     ## 指定した文字列を名前に含むリソースに絞り込みます。
     # 
