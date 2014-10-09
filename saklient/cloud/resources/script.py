@@ -327,7 +327,7 @@ class Script(Resource):
             for r1 in self.m_tags:
                 v = None
                 v = r1
-                ( (ret["Tags"] if "Tags" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Tags")).append(v)
+                (ret["Tags"] if "Tags" in ret else None).append(v)
         if withClean or self.n_icon:
             Util.set_by_path(ret, "Icon", (None if self.m_icon is None else self.m_icon.api_serialize(withClean)) if withClean else ({
                 'ID': "0"

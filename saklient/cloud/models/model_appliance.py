@@ -3,6 +3,9 @@
 from ..client import Client
 from .model import Model
 from ..resources.appliance import Appliance
+from ..resources.loadbalancer import LoadBalancer
+from ..resources.vpcrouter import VpcRouter
+from ..resources.swytch import Swytch
 from ...util import Util
 
 # module saklient.cloud.models.model_appliance
@@ -62,6 +65,23 @@ class Model_Appliance(Model):
     # @return {saklient.cloud.models.model_appliance.Model_Appliance} this
     def reset(self):
         return self._reset()
+    
+    ## @param {saklient.cloud.resources.swytch.Swytch} swytch
+    # @param {int} vrid
+    # @param {str[]} realIps
+    # @param {bool} isHighSpec=False
+    # @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
+    def create_load_balancer(self, swytch, vrid, realIps, isHighSpec=False):
+        Util.validate_type(swytch, "saklient.cloud.resources.swytch.Swytch")
+        Util.validate_type(vrid, "int")
+        Util.validate_type(realIps, "list")
+        Util.validate_type(isHighSpec, "bool")
+        ret = self._create("LoadBalancer")
+        return ret.set_initial_params(swytch, vrid, realIps, isHighSpec)
+    
+    ## @return {saklient.cloud.resources.vpcrouter.VpcRouter}
+    def create_vpc_router(self):
+        return self._create("VpcRouter")
     
     ## 指定したIDを持つ唯一のリソースを取得します。
     # 

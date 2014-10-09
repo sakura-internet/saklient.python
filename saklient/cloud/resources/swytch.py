@@ -340,7 +340,7 @@ class Swytch(Resource):
                 v = (None if r1 is None else r1.api_serialize(withClean)) if withClean else ({
                     'ID': "0"
                 } if r1 is None else r1.api_serialize_id())
-                ( (ret["Subnets"] if "Subnets" in ret else None ) if isinstance(ret, dict) else getattr(ret, "Subnets")).append(v)
+                (ret["Subnets"] if "Subnets" in ret else None).append(v)
         if withClean or self.n_ipv6_nets:
             Util.set_by_path(ret, "IPv6Nets", [])
             for r2 in self.m_ipv6_nets:
@@ -348,7 +348,7 @@ class Swytch(Resource):
                 v = (None if r2 is None else r2.api_serialize(withClean)) if withClean else ({
                     'ID': "0"
                 } if r2 is None else r2.api_serialize_id())
-                ( (ret["IPv6Nets"] if "IPv6Nets" in ret else None ) if isinstance(ret, dict) else getattr(ret, "IPv6Nets")).append(v)
+                (ret["IPv6Nets"] if "IPv6Nets" in ret else None).append(v)
         if len(missing) > 0:
             raise SaklientException("required_field", "Required fields must be set before the Swytch creation: " + ", ".join(missing))
         return ret

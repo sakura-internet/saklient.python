@@ -114,7 +114,7 @@ class Router(Resource):
     def add_ipv6_net(self):
         result = self._client.request("POST", self._api_path() + "/" + Util.url_encode(self._id()) + "/ipv6net")
         self.reload()
-        return Ipv6Net(self._client, ( (result["IPv6Net"] if "IPv6Net" in result else None ) if isinstance(result, dict) else getattr(result, "IPv6Net")))
+        return Ipv6Net(self._client, (result["IPv6Net"] if "IPv6Net" in result else None))
     
     ## このルータ＋スイッチでIPv6アドレスを無効にします。
     # 
@@ -139,7 +139,7 @@ class Router(Resource):
         Util.set_by_path(q, "NextHop", nextHop)
         result = self._client.request("POST", self._api_path() + "/" + Util.url_encode(self._id()) + "/subnet", q)
         self.reload()
-        return Ipv4Net(self._client, ( (result["Subnet"] if "Subnet" in result else None ) if isinstance(result, dict) else getattr(result, "Subnet")))
+        return Ipv4Net(self._client, (result["Subnet"] if "Subnet" in result else None))
     
     ## このルータ＋スイッチからスタティックルートを削除します。
     # 
