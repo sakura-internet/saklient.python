@@ -13,8 +13,15 @@ class LbServer:
     def get_ip_address(self):
         return self._ip_address
     
+    ## @param {str} v
+    # @return {str}
+    def set_ip_address(self, v):
+        Util.validate_type(v, "str")
+        self._ip_address = v
+        return self._ip_address
+    
     ## IPアドレス
-    ip_address = property(get_ip_address, None, None)
+    ip_address = property(get_ip_address, set_ip_address, None)
     
     # (instance field) _port
     
@@ -22,8 +29,15 @@ class LbServer:
     def get_port(self):
         return self._port
     
+    ## @param {int} v
+    # @return {int}
+    def set_port(self, v):
+        Util.validate_type(v, "int")
+        self._port = v
+        return self._port
+    
     ## ポート番号
-    port = property(get_port, None, None)
+    port = property(get_port, set_port, None)
     
     # (instance field) _protocol
     
@@ -31,8 +45,15 @@ class LbServer:
     def get_protocol(self):
         return self._protocol
     
+    ## @param {str} v
+    # @return {str}
+    def set_protocol(self, v):
+        Util.validate_type(v, "str")
+        self._protocol = v
+        return self._protocol
+    
     ## 監視方法
-    protocol = property(get_protocol, None, None)
+    protocol = property(get_protocol, set_protocol, None)
     
     # (instance field) _path_to_check
     
@@ -40,33 +61,71 @@ class LbServer:
     def get_path_to_check(self):
         return self._path_to_check
     
-    ## パス
-    path_to_check = property(get_path_to_check, None, None)
+    ## @param {str} v
+    # @return {str}
+    def set_path_to_check(self, v):
+        Util.validate_type(v, "str")
+        self._path_to_check = v
+        return self._path_to_check
     
-    # (instance field) _expected_status
+    ## 監視対象パス
+    path_to_check = property(get_path_to_check, set_path_to_check, None)
+    
+    # (instance field) _response_expected
     
     ## @return {int}
-    def get_expected_status(self):
-        return self._expected_status
+    def get_response_expected(self):
+        return self._response_expected
+    
+    ## @param {int} v
+    # @return {int}
+    def set_response_expected(self, v):
+        Util.validate_type(v, "int")
+        self._response_expected = v
+        return self._response_expected
+    
+    ## 監視時に期待されるレスポンスコード
+    response_expected = property(get_response_expected, set_response_expected, None)
+    
+    # (instance field) _active_connections
+    
+    ## @return {int}
+    def get_active_connections(self):
+        return self._active_connections
     
     ## レスポンスコード
-    expected_status = property(get_expected_status, None, None)
+    active_connections = property(get_active_connections, None, None)
+    
+    # (instance field) _status
+    
+    ## @return {str}
+    def get_status(self):
+        return self._status
+    
+    ## レスポンスコード
+    status = property(get_status, None, None)
     
     ## @ignore
-    # @param {any} obj
-    def __init__(self, obj):
+    # @param {any} obj=None
+    def __init__(self, obj=None):
+        if obj is None:
+            obj = {}
         health = Util.get_by_path_any([obj], ["HealthCheck", "healthCheck", "health_check", "health"])
         self._ip_address = Util.get_by_path_any([obj], ["IPAddress", "ipAddress", "ip_address", "ip"])
         self._protocol = Util.get_by_path_any([health, obj], ["Protocol", "protocol"])
-        self._path_to_check = Util.get_by_path_any([health, obj], ["Path", "path"])
+        self._path_to_check = Util.get_by_path_any([health, obj], ["Path", "path", "pathToCheck", "path_to_check"])
         port = Util.get_by_path_any([obj], ["Port", "port"])
-        self._port = None if port is None else int(port)
+        self._port = None
+        if port is not None:
+            self._port = int(port)
         if self._port == 0:
             self._port = None
-        status = Util.get_by_path_any([health, obj], ["Status", "status"])
-        self._expected_status = None if status is None else int(status)
-        if self._expected_status == 0:
-            self._expected_status = None
+        responseExpected = Util.get_by_path_any([health, obj], ["Status", "status", "responseExpected", "response_expected"])
+        self._response_expected = None
+        if responseExpected is not None:
+            self._response_expected = int(responseExpected)
+        if self._response_expected == 0:
+            self._response_expected = None
     
     ## @return {any}
     def to_raw_settings(self):
@@ -76,7 +135,18 @@ class LbServer:
             'HealthCheck': {
                 'Protocol': self._protocol,
                 'Path': self._path_to_check,
-                'Status': self._expected_status
+                'Status': self._response_expected
             }
         }
+    
+    ## @param {any} obj
+    # @return {saklient.cloud.resources.lbserver.LbServer}
+    def update_status(self, obj):
+        connStr = (obj["ActiveConn"] if "ActiveConn" in obj else None)
+        self._active_connections = 0
+        if connStr is not None:
+            self._active_connections = int(connStr)
+        status = (obj["Status"] if "Status" in obj else None)
+        self._status = None if status is None else status.lower()
+        return self
     

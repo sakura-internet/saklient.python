@@ -24,13 +24,6 @@ class LoadBalancer(Appliance):
     virtual_ips = property(get_virtual_ips, None, None)
     
     ## @return {str}
-    def get_swytch_id(self):
-        return Util.get_by_path(self.raw_annotation, "Switch.ID")
-    
-    ## スイッチID
-    swytch_id = property(get_swytch_id, None, None)
-    
-    ## @return {str}
     def get_default_route(self):
         return Util.get_by_path(self.raw_annotation, "Network.DefaultRoute")
     
@@ -117,7 +110,8 @@ class LoadBalancer(Appliance):
         if self.raw_settings is None:
             self.raw_settings = {}
         self.raw_settings["LoadBalancer"] = lb
-        self.clazz = EApplianceClass.loadbalancer
+        if self.is_new:
+            self.clazz = EApplianceClass.loadbalancer
     
     ## @ignore
     # @param {saklient.cloud.resources.swytch.Swytch} swytch
@@ -149,11 +143,18 @@ class LoadBalancer(Appliance):
         self.plan_id = 2 if isHighSpec else 1
         return self
     
-    ## @param {any} settings
-    # @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
-    def add_virtual_ip(self, settings):
-        self._virtual_ips.append(LbVirtualIp(settings))
+    ## @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
+    def clear_virtual_ips(self):
+        while (0 < len(self._virtual_ips)):
+            self._virtual_ips.pop()
         return self
+    
+    ## @param {any} settings=None
+    # @return {saklient.cloud.resources.lbvirtualip.LbVirtualIp}
+    def add_virtual_ip(self, settings=None):
+        ret = LbVirtualIp(settings)
+        self._virtual_ips.append(ret)
+        return ret
     
     ## @param {str} address
     # @return {saklient.cloud.resources.lbvirtualip.LbVirtualIp}
@@ -163,4 +164,16 @@ class LoadBalancer(Appliance):
             if vip.virtual_ip_address == address:
                 return vip
         return None
+    
+    ## @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
+    def reload_status(self):
+        result = self.request_retry("GET", self._api_path() + "/" + Util.url_encode(self._id()) + "/status")
+        vips = (result["LoadBalancer"] if "LoadBalancer" in result else None)
+        for vipDyn in vips:
+            vipStr = (vipDyn["VirtualIPAddress"] if "VirtualIPAddress" in vipDyn else None)
+            vip = self.get_virtual_ip_by_address(vipStr)
+            if vip is None:
+                next
+            vip.update_status((vipDyn["Servers"] if "Servers" in vipDyn else None))
+        return self
     

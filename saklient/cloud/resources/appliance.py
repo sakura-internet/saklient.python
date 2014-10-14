@@ -5,6 +5,7 @@ from ..client import Client
 from .resource import Resource
 from .icon import Icon
 from .iface import Iface
+from .swytch import Swytch
 from ..enums.eapplianceclass import EApplianceClass
 from ..enums.eavailability import EAvailability
 from ..enums.eserverinstancestatus import EServerInstanceStatus
@@ -42,6 +43,8 @@ class Appliance(Resource):
     # (instance field) m_service_class
     
     # (instance field) m_availability
+    
+    # (instance field) m_swytch_id
     
     ## @private
     # @return {str}
@@ -106,6 +109,21 @@ class Appliance(Resource):
     # @return {void}
     def _on_before_save(self, query):
         Util.set_by_path(query, "OriginalSettingsHash", self.get_raw_settings_hash())
+    
+    ## このルータが接続されているスイッチを取得します。
+    # 
+    # @return {saklient.cloud.resources.swytch.Swytch}
+    def get_swytch(self):
+        model = Util.create_class_instance("saklient.cloud.models.Model_Swytch", [self._client])
+        id = self.get_swytch_id()
+        return model.get_by_id(id)
+    
+    ## アプライアンスの設定を反映します。
+    # 
+    # @return {saklient.cloud.resources.appliance.Appliance} this
+    def apply(self):
+        self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/config")
+        return self
     
     ## アプライアンスを起動します。
     # 
@@ -434,6 +452,17 @@ class Appliance(Resource):
     ## 有効状態 {@link EAvailability}
     availability = property(get_availability, None, None)
     
+    # (instance field) n_swytch_id = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {str}
+    def get_swytch_id(self):
+        return self.m_swytch_id
+    
+    ## 接続先スイッチID
+    swytch_id = property(get_swytch_id, None, None)
+    
     ## (This method is generated in Translator_default#buildImpl)
     # 
     # @param {any} r
@@ -542,6 +571,12 @@ class Appliance(Resource):
             self.m_availability = None
             self.is_incomplete = True
         self.n_availability = False
+        if Util.exists_path(r, "Switch.ID"):
+            self.m_swytch_id = None if Util.get_by_path(r, "Switch.ID") is None else str(Util.get_by_path(r, "Switch.ID"))
+        else:
+            self.m_swytch_id = None
+            self.is_incomplete = True
+        self.n_swytch_id = False
     
     ## @ignore
     # @param {bool} withClean=False
@@ -604,6 +639,8 @@ class Appliance(Resource):
             Util.set_by_path(ret, "ServiceClass", self.m_service_class)
         if withClean or self.n_availability:
             Util.set_by_path(ret, "Availability", self.m_availability)
+        if withClean or self.n_swytch_id:
+            Util.set_by_path(ret, "Switch.ID", self.m_swytch_id)
         if len(missing) > 0:
             raise SaklientException("required_field", "Required fields must be set before the Appliance creation: " + ", ".join(missing))
         return ret

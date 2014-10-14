@@ -36,7 +36,7 @@ class Util:
     def get_by_path_any(objects, pathes):
         for obj in objects:
             for path in pathes:
-                ret = get_by_path(obj, path)
+                ret = Util.get_by_path(obj, path)
                 if ret is not None: return ret
         return None
     
