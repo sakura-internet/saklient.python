@@ -2,6 +2,7 @@
 
 from ..client import Client
 from .model import Model
+from ..resources.resource import Resource
 from ..resources.appliance import Appliance
 from ..resources.loadbalancer import LoadBalancer
 from ..resources.vpcrouter import VpcRouter
@@ -32,6 +33,20 @@ class Model_Appliance(Model):
     # @return {str}
     def _class_name(self):
         return "Appliance"
+    
+    ## @private
+    # @param {any} obj
+    # @param {bool} wrapped=False
+    # @return {saklient.cloud.resources.resource.Resource}
+    def _create_resource_impl(self, obj, wrapped=False):
+        Util.validate_type(wrapped, "bool")
+        ret = Appliance(self._client, obj, wrapped)
+        clazz = ret.clazz
+        if clazz == "loadbalancer":
+            return LoadBalancer(self._client, obj, wrapped)
+        if clazz == "vpcrouter":
+            return VpcRouter(self._client, obj, wrapped)
+        return ret
     
     ## 次に取得するリストの開始オフセットを指定します。
     # 
@@ -76,12 +91,13 @@ class Model_Appliance(Model):
         Util.validate_type(vrid, "int")
         Util.validate_type(realIps, "list")
         Util.validate_type(isHighSpec, "bool")
-        ret = self._create("LoadBalancer")
+        ret = LoadBalancer(self._client, None)
         return ret.set_initial_params(swytch, vrid, realIps, isHighSpec)
     
     ## @return {saklient.cloud.resources.vpcrouter.VpcRouter}
     def create_vpc_router(self):
-        return self._create("VpcRouter")
+        ret = VpcRouter(self._client, None)
+        return ret
     
     ## 指定したIDを持つ唯一のリソースを取得します。
     # 

@@ -2,6 +2,7 @@
 
 from ..client import Client
 from .model import Model
+from ..resources.resource import Resource
 from ..resources.ipv6net import Ipv6Net
 from ...util import Util
 
@@ -29,6 +30,14 @@ class Model_Ipv6Net(Model):
     # @return {str}
     def _class_name(self):
         return "IPv6Net"
+    
+    ## @private
+    # @param {any} obj
+    # @param {bool} wrapped=False
+    # @return {saklient.cloud.resources.resource.Resource}
+    def _create_resource_impl(self, obj, wrapped=False):
+        Util.validate_type(wrapped, "bool")
+        return Ipv6Net(self._client, obj, wrapped)
     
     ## 次に取得するリストの開始オフセットを指定します。
     # 

@@ -211,11 +211,6 @@ class Resource:
         return self.api_serialize(True)
     
     ## @ignore
-    # @return {str}
-    def true_class_name(self):
-        return None
-    
-    ## @ignore
     # @static
     # @param {str} className
     # @param {saklient.cloud.client.Client} client
@@ -228,11 +223,7 @@ class Resource:
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
         a = [client, obj, wrapped]
-        ret = Util.create_class_instance("saklient.cloud.resources." + className, a)
-        trueClassName = ret.true_class_name()
-        if trueClassName is not None:
-            ret = Util.create_class_instance("saklient.cloud.resources." + trueClassName, a)
-        return ret
+        return Util.create_class_instance("saklient.cloud.resources." + className, a)
     
     ## @param {str} method
     # @param {str} path

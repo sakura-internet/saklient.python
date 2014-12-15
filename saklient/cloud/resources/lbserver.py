@@ -93,7 +93,7 @@ class LbServer:
     def get_active_connections(self):
         return self._active_connections
     
-    ## レスポンスコード
+    ## 現在の接続数
     active_connections = property(get_active_connections, None, None)
     
     # (instance field) _status
@@ -102,7 +102,7 @@ class LbServer:
     def get_status(self):
         return self._status
     
-    ## レスポンスコード
+    ## 現在の状態
     status = property(get_status, None, None)
     
     ## @ignore

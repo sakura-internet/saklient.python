@@ -129,7 +129,7 @@ class DiskConfig:
     def get_scripts(self):
         return self._scripts
     
-    ## スタートアップスクリプト（pushによりスクリプトを追加できます）
+    ## スタートアップスクリプト {@link Script} の配列（pushによりスクリプトを追加できます）
     scripts = property(get_scripts, None, None)
     
     ## @ignore

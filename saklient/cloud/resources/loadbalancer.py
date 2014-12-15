@@ -20,7 +20,7 @@ class LoadBalancer(Appliance):
     def get_virtual_ips(self):
         return self._virtual_ips
     
-    ## 仮想IPアドレス
+    ## 仮想IPアドレス {@link LbVirtualIp} の配列
     virtual_ips = property(get_virtual_ips, None, None)
     
     ## @return {str}

@@ -84,17 +84,6 @@ class Appliance(Resource):
         return self._reload()
     
     ## @ignore
-    # @return {str}
-    def true_class_name(self):
-        if self.clazz is None:
-            return None
-        if self.clazz == "loadbalancer":
-            return "LoadBalancer"
-        elif self.clazz == "vpcrouter":
-            return "VpcRouter"
-        return None
-    
-    ## @ignore
     # @param {saklient.cloud.client.Client} client
     # @param {any} obj
     # @param {bool} wrapped=False
@@ -307,7 +296,7 @@ class Appliance(Resource):
         self.n_tags = True
         return self.m_tags
     
-    ## タグ
+    ## タグ文字列の配列
     tags = property(get_tags, set_tags, None)
     
     # (instance field) n_icon = False
@@ -362,7 +351,7 @@ class Appliance(Resource):
     def get_ifaces(self):
         return self.m_ifaces
     
-    ## インタフェース
+    ## インタフェース {@link Iface} の配列
     ifaces = property(get_ifaces, None, None)
     
     # (instance field) n_raw_annotation = False

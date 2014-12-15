@@ -220,7 +220,7 @@ class Swytch(Resource):
     def get_ipv4_nets(self):
         return self.m_ipv4_nets
     
-    ## IPv4ネットワーク（ルータによる自動割当）
+    ## IPv4ネットワーク（ルータによる自動割当） {@link Ipv4Net} の配列
     ipv4_nets = property(get_ipv4_nets, None, None)
     
     # (instance field) n_ipv6_nets = False
@@ -231,7 +231,7 @@ class Swytch(Resource):
     def get_ipv6_nets(self):
         return self.m_ipv6_nets
     
-    ## IPv6ネットワーク（ルータによる自動割当）
+    ## IPv6ネットワーク（ルータによる自動割当） {@link Ipv6Net} の配列
     ipv6_nets = property(get_ipv6_nets, None, None)
     
     ## (This method is generated in Translator_default#buildImpl)

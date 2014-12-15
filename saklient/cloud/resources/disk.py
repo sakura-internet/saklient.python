@@ -280,7 +280,7 @@ class Disk(Resource):
         self.n_tags = True
         return self.m_tags
     
-    ## タグ
+    ## タグ文字列の配列
     tags = property(get_tags, set_tags, None)
     
     # (instance field) n_icon = False

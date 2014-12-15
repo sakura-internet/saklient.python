@@ -62,7 +62,7 @@ class LbVirtualIp:
     def get_servers(self):
         return self._servers
     
-    ## 実サーバ
+    ## 実サーバ {@link LbServer} の配列
     servers = property(get_servers, None, None)
     
     ## @ignore
