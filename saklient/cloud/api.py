@@ -3,6 +3,7 @@
 from ..util import Util
 from .client import Client
 from .product import Product
+from .facility import Facility
 from .models.model_icon import Model_Icon
 from .models.model_server import Model_Server
 from .models.model_disk import Model_Disk
@@ -12,8 +13,10 @@ from .models.model_isoimage import Model_IsoImage
 from .models.model_iface import Model_Iface
 from .models.model_swytch import Model_Swytch
 from .models.model_router import Model_Router
+from .models.model_bridge import Model_Bridge
 from .models.model_ipv6net import Model_Ipv6Net
 from .models.model_script import Model_Script
+from .models.model_license import Model_License
 
 # module saklient.cloud.api
 
@@ -39,6 +42,15 @@ class API:
     
     ## 商品情報にアクセスするためのモデルを集めたオブジェクト。
     product = property(get_product, None, None)
+    
+    # (instance field) _facility
+    
+    ## @return {saklient.cloud.facility.Facility}
+    def get_facility(self):
+        return self._facility
+    
+    ## 設備情報にアクセスするためのモデルを集めたオブジェクト。
+    facility = property(get_facility, None, None)
     
     # (instance field) _icon
     
@@ -121,6 +133,15 @@ class API:
     ## ルータにアクセスするためのモデル。
     router = property(get_router, None, None)
     
+    # (instance field) _bridge
+    
+    ## @return {saklient.cloud.models.model_bridge.Model_Bridge}
+    def get_bridge(self):
+        return self._bridge
+    
+    ## ブリッジにアクセスするためのモデル。
+    bridge = property(get_bridge, None, None)
+    
     # (instance field) _ipv6_net
     
     ## @return {saklient.cloud.models.model_ipv6net.Model_Ipv6Net}
@@ -139,12 +160,22 @@ class API:
     ## スクリプトにアクセスするためのモデル。
     script = property(get_script, None, None)
     
+    # (instance field) _license
+    
+    ## @return {saklient.cloud.models.model_license.Model_License}
+    def get_license(self):
+        return self._license
+    
+    ## ライセンスにアクセスするためのモデル。
+    license = property(get_license, None, None)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     def __init__(self, client):
         Util.validate_type(client, "saklient.cloud.client.Client")
         self._client = client
         self._product = Product(client)
+        self._facility = Facility(client)
         self._icon = Model_Icon(client)
         self._server = Model_Server(client)
         self._disk = Model_Disk(client)
@@ -154,8 +185,10 @@ class API:
         self._iface = Model_Iface(client)
         self._swytch = Model_Swytch(client)
         self._router = Model_Router(client)
+        self._bridge = Model_Bridge(client)
         self._ipv6_net = Model_Ipv6Net(client)
         self._script = Model_Script(client)
+        self._license = Model_License(client)
     
     ## 指定した認証情報を用いてアクセスを行うAPIクライアントを作成します。
     # 

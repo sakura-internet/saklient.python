@@ -20,6 +20,10 @@ class Swytch(Resource):
     
     # (instance field) m_description
     
+    # (instance field) m_tags
+    
+    # (instance field) m_icon
+    
     # (instance field) m_user_default_route
     
     # (instance field) m_user_mask_len
@@ -179,6 +183,49 @@ class Swytch(Resource):
     ## 説明
     description = property(get_description, set_description, None)
     
+    # (instance field) n_tags = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {str[]}
+    def get_tags(self):
+        self.n_tags = True
+        return self.m_tags
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @param {str[]} v
+    # @return {str[]}
+    def set_tags(self, v):
+        Util.validate_type(v, "list")
+        self.m_tags = v
+        self.n_tags = True
+        return self.m_tags
+    
+    ## タグ文字列の配列
+    tags = property(get_tags, set_tags, None)
+    
+    # (instance field) n_icon = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {saklient.cloud.resources.icon.Icon}
+    def get_icon(self):
+        return self.m_icon
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @param {saklient.cloud.resources.icon.Icon} v
+    # @return {saklient.cloud.resources.icon.Icon}
+    def set_icon(self, v):
+        Util.validate_type(v, "saklient.cloud.resources.icon.Icon")
+        self.m_icon = v
+        self.n_icon = True
+        return self.m_icon
+    
+    ## アイコン
+    icon = property(get_icon, set_icon, None)
+    
     # (instance field) n_user_default_route = False
     
     ## (This method is generated in Translator_default#buildImpl)
@@ -262,6 +309,25 @@ class Swytch(Resource):
             self.m_description = None
             self.is_incomplete = True
         self.n_description = False
+        if Util.exists_path(r, "Tags"):
+            if Util.get_by_path(r, "Tags") is None:
+                self.m_tags = []
+            else:
+                self.m_tags = []
+                for t in Util.get_by_path(r, "Tags"):
+                    v1 = None
+                    v1 = None if t is None else str(t)
+                    self.m_tags.append(v1)
+        else:
+            self.m_tags = None
+            self.is_incomplete = True
+        self.n_tags = False
+        if Util.exists_path(r, "Icon"):
+            self.m_icon = None if Util.get_by_path(r, "Icon") is None else Icon(self._client, Util.get_by_path(r, "Icon"))
+        else:
+            self.m_icon = None
+            self.is_incomplete = True
+        self.n_icon = False
         if Util.exists_path(r, "UserSubnet.DefaultRoute"):
             self.m_user_default_route = None if Util.get_by_path(r, "UserSubnet.DefaultRoute") is None else str(Util.get_by_path(r, "UserSubnet.DefaultRoute"))
         else:
@@ -286,9 +352,9 @@ class Swytch(Resource):
             else:
                 self.m_ipv4_nets = []
                 for t in Util.get_by_path(r, "Subnets"):
-                    v1 = None
-                    v1 = None if t is None else Ipv4Net(self._client, t)
-                    self.m_ipv4_nets.append(v1)
+                    v2 = None
+                    v2 = None if t is None else Ipv4Net(self._client, t)
+                    self.m_ipv4_nets.append(v2)
         else:
             self.m_ipv4_nets = None
             self.is_incomplete = True
@@ -299,9 +365,9 @@ class Swytch(Resource):
             else:
                 self.m_ipv6_nets = []
                 for t in Util.get_by_path(r, "IPv6Nets"):
-                    v2 = None
-                    v2 = None if t is None else Ipv6Net(self._client, t)
-                    self.m_ipv6_nets.append(v2)
+                    v3 = None
+                    v3 = None if t is None else Ipv6Net(self._client, t)
+                    self.m_ipv6_nets.append(v3)
         else:
             self.m_ipv6_nets = None
             self.is_incomplete = True
@@ -325,6 +391,16 @@ class Swytch(Resource):
                 missing.append("name")
         if withClean or self.n_description:
             Util.set_by_path(ret, "Description", self.m_description)
+        if withClean or self.n_tags:
+            Util.set_by_path(ret, "Tags", [])
+            for r1 in self.m_tags:
+                v = None
+                v = r1
+                (ret["Tags"] if "Tags" in ret else None).append(v)
+        if withClean or self.n_icon:
+            Util.set_by_path(ret, "Icon", (None if self.m_icon is None else self.m_icon.api_serialize(withClean)) if withClean else ({
+                'ID': "0"
+            } if self.m_icon is None else self.m_icon.api_serialize_id()))
         if withClean or self.n_user_default_route:
             Util.set_by_path(ret, "UserSubnet.DefaultRoute", self.m_user_default_route)
         if withClean or self.n_user_mask_len:
@@ -335,19 +411,19 @@ class Swytch(Resource):
             } if self.m_router is None else self.m_router.api_serialize_id()))
         if withClean or self.n_ipv4_nets:
             Util.set_by_path(ret, "Subnets", [])
-            for r1 in self.m_ipv4_nets:
-                v = None
-                v = (None if r1 is None else r1.api_serialize(withClean)) if withClean else ({
-                    'ID': "0"
-                } if r1 is None else r1.api_serialize_id())
-                (ret["Subnets"] if "Subnets" in ret else None).append(v)
-        if withClean or self.n_ipv6_nets:
-            Util.set_by_path(ret, "IPv6Nets", [])
-            for r2 in self.m_ipv6_nets:
+            for r2 in self.m_ipv4_nets:
                 v = None
                 v = (None if r2 is None else r2.api_serialize(withClean)) if withClean else ({
                     'ID': "0"
                 } if r2 is None else r2.api_serialize_id())
+                (ret["Subnets"] if "Subnets" in ret else None).append(v)
+        if withClean or self.n_ipv6_nets:
+            Util.set_by_path(ret, "IPv6Nets", [])
+            for r3 in self.m_ipv6_nets:
+                v = None
+                v = (None if r3 is None else r3.api_serialize(withClean)) if withClean else ({
+                    'ID': "0"
+                } if r3 is None else r3.api_serialize_id())
                 (ret["IPv6Nets"] if "IPv6Nets" in ret else None).append(v)
         if len(missing) > 0:
             raise SaklientException("required_field", "Required fields must be set before the Swytch creation: " + ", ".join(missing))

@@ -3,6 +3,7 @@
 from .models.model_serverplan import Model_ServerPlan
 from .models.model_diskplan import Model_DiskPlan
 from .models.model_routerplan import Model_RouterPlan
+from .models.model_licenseinfo import Model_LicenseInfo
 from .client import Client
 from ..util import Util
 
@@ -38,6 +39,15 @@ class Product:
     ## ルータ帯域プラン情報。
     router = property(get_router, None, None)
     
+    # (instance field) _license
+    
+    ## @return {saklient.cloud.models.model_licenseinfo.Model_LicenseInfo}
+    def get_license(self):
+        return self._license
+    
+    ## ライセンス種別情報。
+    license = property(get_license, None, None)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     def __init__(self, client):
@@ -45,4 +55,5 @@ class Product:
         self._server = Model_ServerPlan(client)
         self._disk = Model_DiskPlan(client)
         self._router = Model_RouterPlan(client)
+        self._license = Model_LicenseInfo(client)
     
