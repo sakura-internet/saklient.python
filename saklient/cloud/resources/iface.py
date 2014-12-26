@@ -3,6 +3,7 @@
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
+from .swytch import Swytch
 from ...util import Util
 
 # module saklient.cloud.resources.iface
@@ -67,11 +68,27 @@ class Iface(Resource):
         Util.validate_type(wrapped, "bool")
         self.api_deserialize(obj, wrapped)
     
+    ## スイッチに接続します。
+    # 
+    # @param {saklient.cloud.resources.swytch.Swytch} swytch 接続先のスイッチ。
+    # @return {saklient.cloud.resources.iface.Iface} this
+    def connect_to_swytch(self, swytch):
+        Util.validate_type(swytch, "saklient.cloud.resources.swytch.Swytch")
+        self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/to/switch/" + Util.url_encode(swytch._id()))
+        return self.reload()
+    
     ## 共有セグメントに接続します。
     # 
     # @return {saklient.cloud.resources.iface.Iface} this
     def connect_to_shared_segment(self):
         self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/to/switch/shared")
+        return self.reload()
+    
+    ## スイッチから切断します。
+    # 
+    # @return {saklient.cloud.resources.iface.Iface} this
+    def disconnect_from_swytch(self):
+        self._client.request("DELETE", self._api_path() + "/" + Util.url_encode(self._id()) + "/to/switch")
         return self.reload()
     
     # (instance field) n_id = False

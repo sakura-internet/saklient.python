@@ -7,6 +7,7 @@ from .icon import Icon
 from .router import Router
 from .ipv4net import Ipv4Net
 from .ipv6net import Ipv6Net
+from .bridge import Bridge
 from ...util import Util
 
 # module saklient.cloud.resources.swytch
@@ -29,6 +30,8 @@ class Swytch(Resource):
     # (instance field) m_user_mask_len
     
     # (instance field) m_router
+    
+    # (instance field) m_bridge
     
     # (instance field) m_ipv4_nets
     
@@ -122,11 +125,30 @@ class Swytch(Resource):
     
     ## このルータ＋スイッチの帯域プランを変更します。
     # 
-    # @param {int} bandWidthMbps
+    # @param {int} bandWidthMbps 帯域幅（api.product.router.find() から取得できる {@link RouterPlan} の bandWidthMbps を指定）。
     # @return {saklient.cloud.resources.swytch.Swytch} this
     def change_plan(self, bandWidthMbps):
         Util.validate_type(bandWidthMbps, "int")
         self.get_router().change_plan(bandWidthMbps)
+        self.reload()
+        return self
+    
+    ## このルータ＋スイッチをブリッジに接続します。
+    # 
+    # @param swytch 接続先のブリッジ。
+    # @param {saklient.cloud.resources.bridge.Bridge} bridge
+    # @return {saklient.cloud.resources.swytch.Swytch} this
+    def connect_to_bridge(self, bridge):
+        Util.validate_type(bridge, "saklient.cloud.resources.bridge.Bridge")
+        result = self._client.request("PUT", self._api_path() + "/" + self._id() + "/to/bridge/" + bridge._id())
+        self.reload()
+        return self
+    
+    ## このルータ＋スイッチをブリッジから切断します。
+    # 
+    # @return {saklient.cloud.resources.swytch.Swytch} this
+    def disconnect_from_bridge(self):
+        result = self._client.request("DELETE", self._api_path() + "/" + self._id() + "/to/bridge")
         self.reload()
         return self
     
@@ -259,6 +281,17 @@ class Swytch(Resource):
     ## 接続されているルータ
     router = property(get_router, None, None)
     
+    # (instance field) n_bridge = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {saklient.cloud.resources.bridge.Bridge}
+    def get_bridge(self):
+        return self.m_bridge
+    
+    ## 接続されているブリッジ
+    bridge = property(get_bridge, None, None)
+    
     # (instance field) n_ipv4_nets = False
     
     ## (This method is generated in Translator_default#buildImpl)
@@ -346,6 +379,12 @@ class Swytch(Resource):
             self.m_router = None
             self.is_incomplete = True
         self.n_router = False
+        if Util.exists_path(r, "Bridge"):
+            self.m_bridge = None if Util.get_by_path(r, "Bridge") is None else Bridge(self._client, Util.get_by_path(r, "Bridge"))
+        else:
+            self.m_bridge = None
+            self.is_incomplete = True
+        self.n_bridge = False
         if Util.exists_path(r, "Subnets"):
             if Util.get_by_path(r, "Subnets") is None:
                 self.m_ipv4_nets = []
@@ -409,6 +448,10 @@ class Swytch(Resource):
             Util.set_by_path(ret, "Internet", (None if self.m_router is None else self.m_router.api_serialize(withClean)) if withClean else ({
                 'ID': "0"
             } if self.m_router is None else self.m_router.api_serialize_id()))
+        if withClean or self.n_bridge:
+            Util.set_by_path(ret, "Bridge", (None if self.m_bridge is None else self.m_bridge.api_serialize(withClean)) if withClean else ({
+                'ID': "0"
+            } if self.m_bridge is None else self.m_bridge.api_serialize_id()))
         if withClean or self.n_ipv4_nets:
             Util.set_by_path(ret, "Subnets", [])
             for r2 in self.m_ipv4_nets:

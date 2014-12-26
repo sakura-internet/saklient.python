@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
     name = 'saklient',
-    version = '0.0.2.2',
+    version = '0.0.2.5',
     description = 'SAKURA Internet API Client Library',
     author='SAKURA Internet Inc.',
     author_email='dev-support-ml@sakura.ad.jp',
