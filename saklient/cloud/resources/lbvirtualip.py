@@ -6,7 +6,7 @@ from .lbserver import LbServer
 # module saklient.cloud.resources.lbvirtualip
 
 class LbVirtualIp:
-    ## ロードバランサの仮想IPアドレス。
+    ## ロードバランサの仮想IPアドレス設定。
     
     # (instance field) _virtual_ip_address
     
@@ -91,7 +91,9 @@ class LbVirtualIp:
             for server in servers:
                 self._servers.append(LbServer(server))
     
-    ## @param {any} settings=None
+    ## 監視対象サーバ設定を追加します。
+    # 
+    # @param {any} settings=None 設定オブジェクト
     # @return {saklient.cloud.resources.lbserver.LbServer}
     def add_server(self, settings=None):
         ret = LbServer(settings)
@@ -110,8 +112,10 @@ class LbVirtualIp:
             'Servers': servers
         }
     
-    ## @param {str} address
-    # @return {saklient.cloud.resources.lbserver.LbServer}
+    ## 指定したIPアドレスにマッチする監視対象サーバ設定のうち、最初にマッチしたものを取得します。
+    # 
+    # @param {str} address 検索するIPアドレス
+    # @return {saklient.cloud.resources.lbserver.LbServer} 監視対象サーバ設定（見つからなかった場合はnull）
     def get_server_by_address(self, address):
         Util.validate_type(address, "str")
         for srv in self._servers:
@@ -119,7 +123,21 @@ class LbVirtualIp:
                 return srv
         return None
     
-    ## @param {any[]} srvs
+    ## 指定したIPアドレスにマッチする監視対象サーバ設定をすべて削除します。
+    # 
+    # @param {str} address
+    # @return {saklient.cloud.resources.lbvirtualip.LbVirtualIp}
+    def remove_server_by_address(self, address):
+        Util.validate_type(address, "str")
+        servers = []
+        for srv in self._servers:
+            if srv.ip_address != address:
+                servers.append(srv)
+        self._servers = servers
+        return self
+    
+    ## @ignore
+    # @param {any[]} srvs
     # @return {saklient.cloud.resources.lbvirtualip.LbVirtualIp}
     def update_status(self, srvs):
         Util.validate_type(srvs, "list")

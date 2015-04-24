@@ -5,7 +5,7 @@ from ...util import Util
 # module saklient.cloud.resources.lbserver
 
 class LbServer:
-    ## ロードバランサの監視対象サーバ。
+    ## ロードバランサの監視対象サーバ設定。
     
     # (instance field) _ip_address
     
@@ -139,7 +139,8 @@ class LbServer:
             }
         }
     
-    ## @param {any} obj
+    ## @ignore
+    # @param {any} obj
     # @return {saklient.cloud.resources.lbserver.LbServer}
     def update_status(self, obj):
         connStr = (obj["ActiveConn"] if "ActiveConn" in obj else None)

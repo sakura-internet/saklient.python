@@ -149,14 +149,18 @@ class LoadBalancer(Appliance):
             self._virtual_ips.pop()
         return self
     
-    ## @param {any} settings=None
+    ## 仮想IPアドレス設定を追加します。
+    # 
+    # @param {any} settings=None 設定オブジェクト
     # @return {saklient.cloud.resources.lbvirtualip.LbVirtualIp}
     def add_virtual_ip(self, settings=None):
         ret = LbVirtualIp(settings)
         self._virtual_ips.append(ret)
         return ret
     
-    ## @param {str} address
+    ## 指定したIPアドレスにマッチする仮想IPアドレス設定を取得します。
+    # 
+    # @param {str} address
     # @return {saklient.cloud.resources.lbvirtualip.LbVirtualIp}
     def get_virtual_ip_by_address(self, address):
         Util.validate_type(address, "str")
@@ -165,15 +169,18 @@ class LoadBalancer(Appliance):
                 return vip
         return None
     
-    ## @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
+    ## 監視対象サーバのステータスを最新の状態に更新します。
+    # 
+    # @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
     def reload_status(self):
         result = self.request_retry("GET", self._api_path() + "/" + Util.url_encode(self._id()) + "/status")
-        vips = (result["LoadBalancer"] if "LoadBalancer" in result else None)
-        for vipDyn in vips:
-            vipStr = (vipDyn["VirtualIPAddress"] if "VirtualIPAddress" in vipDyn else None)
-            vip = self.get_virtual_ip_by_address(vipStr)
-            if vip is None:
-                next
-            vip.update_status((vipDyn["Servers"] if "Servers" in vipDyn else None))
+        if ( "LoadBalancer" in result if isinstance(result, dict) else hasattr(result, "LoadBalancer")):
+            vips = (result["LoadBalancer"] if "LoadBalancer" in result else None)
+            for vipDyn in vips:
+                vipStr = (vipDyn["VirtualIPAddress"] if "VirtualIPAddress" in vipDyn else None)
+                vip = self.get_virtual_ip_by_address(vipStr)
+                if vip is None:
+                    next
+                vip.update_status((vipDyn["Servers"] if "Servers" in vipDyn else None))
         return self
     
