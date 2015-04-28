@@ -4,6 +4,7 @@ import unittest, sys, os, re, random, string, time, subprocess
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import socket, struct
 from datetime import datetime
+from saklient.util import Util
 from saklient.cloud.api import API
 from saklient.cloud.resources.swytch import Swytch
 from saklient.cloud.resources.ipv4net import Ipv4Net
@@ -23,7 +24,7 @@ class TestLoadbalancer(unittest.TestCase):
     
     
     
-    TESTS_CONFIG_READYMADE_LB_ID = '112600809060'
+    TESTS_CONFIG_READYMADE_LB_ID = None
     
     def test_should_be_cruded(self):
         
@@ -66,22 +67,36 @@ class TestLoadbalancer(unittest.TestCase):
         
         
         # create a LB
-        if not self.TESTS_CONFIG_READYMADE_LB_ID:
+        if self.TESTS_CONFIG_READYMADE_LB_ID is None:
             
             # search a switch
-            print('searching a swytch...')
-            swytches = api.swytch.with_tag('lb-attached').limit(1).find()
-            self.assertTrue(len(swytches) > 0)
-            swytch = swytches[0]
+            print('作成済みのルータ＋スイッチを検索しています...')
+            swytches = api.swytch.with_name_like('saklient-lb-attached').limit(1).find()
+            if 0 < len(swytches):
+                swytch = swytches[0]
+            else:
+                print('ルータ＋スイッチを作成しています...')
+                router = api.router.create()
+                router.name = 'saklient-lb-attached'
+                router.band_width_mbps = 100
+                router.network_mask_len = 28
+                router.save()
+                
+                print('ルータ＋スイッチの作成完了を待機しています...')
+                if not router.sleep_while_creating(): fail('ルータが正常に作成されません')
+                swytch = router.get_swytch()
+            
             self.assertIsInstance(swytch, Swytch)
             self.assertTrue(len(swytch.ipv4_nets) > 0)
             net = swytch.ipv4_nets[0]
             print('%s/%d -> %s' % (net.address, net.mask_len, net.default_route))
             
             # create a loadbalancer
-            print('creating a LB...')
+            print('ロードバランサを作成しています...')
             vrid = 123
-            lb = api.appliance.create_load_balancer(swytch, vrid, ['133.242.255.244', '133.242.255.245'], True)
+            real_ip1 = Util.long2ip(Util.ip2long(net.default_route) + 3)
+            real_ip2 = Util.long2ip(Util.ip2long(net.default_route) + 4)
+            lb = api.appliance.create_load_balancer(swytch, vrid, [real_ip1, real_ip2], True)
             
             def test_required():
                 lb.save()
@@ -99,7 +114,7 @@ class TestLoadbalancer(unittest.TestCase):
             self.assertEqual(lb.swytch_id, swytch.id)
             
             # wait the LB becomes up
-            print('waiting the LB becomes up...')
+            print('ロードバランサの起動を待機しています...')
             if not lb.sleep_until_up(): fail('ロードバランサが正常に起動しません')
         
         else:
@@ -232,11 +247,11 @@ class TestLoadbalancer(unittest.TestCase):
             
             # stop the LB
             time.sleep(1)
-            print('stopping the LB...')
+            print('ロードバランサを停止しています...')
             if not lb.stop().sleep_until_down(): fail('ロードバランサが正常に停止しません')
             
             # delete the LB
-            print('deleting the LB...')
+            print('ロードバランサを削除しています...')
             lb.destroy()
 
 

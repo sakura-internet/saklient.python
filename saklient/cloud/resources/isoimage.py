@@ -7,6 +7,7 @@ from .ftpinfo import FtpInfo
 from ..enums.escope import EScope
 from ...errors.saklientexception import SaklientException
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.isoimage
 

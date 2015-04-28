@@ -9,6 +9,7 @@ from .ipv4net import Ipv4Net
 from .ipv6net import Ipv6Net
 from .bridge import Bridge
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.swytch
 
@@ -151,6 +152,56 @@ class Swytch(Resource):
         result = self._client.request("DELETE", self._api_path() + "/" + self._id() + "/to/bridge")
         self.reload()
         return self
+    
+    ## @private
+    # @ignore
+    # @return {any}
+    def _used_ipv4_address_hash(self):
+        filter = {}
+        filter["Switch" + ".ID"] = self._id()
+        query = {}
+        Util.set_by_path(query, "Count", 0)
+        Util.set_by_path(query, "Filter", filter)
+        Util.set_by_path(query, "Include", ["IPAddress", "UserIPAddress"])
+        result = self._client.request("GET", "/interface", query)
+        if result is None:
+            return None
+        result = (result["Interfaces"] if "Interfaces" in result else None)
+        if result is None:
+            return None
+        ifaces = result
+        if ifaces is None:
+            return None
+        found = {}
+        for iface in ifaces:
+            ip = (iface["IPAddress"] if "IPAddress" in iface else None)
+            userIp = (iface["UserIPAddress"] if "UserIPAddress" in iface else None)
+            if ip is None:
+                ip = userIp
+            if ip is not None:
+                found[ip] = True
+        return found
+    
+    ## このルータ＋スイッチに接続中のインタフェースに割り当てられているIPアドレスを収集します。
+    # 
+    # @return {str[]}
+    def collect_used_ipv4_addresses(self):
+        found = self._used_ipv4_address_hash()
+        return Util.sort_array(found.keys())
+    
+    ## このルータ＋スイッチで利用できる未使用のIPアドレスを収集します。
+    # 
+    # @return {str[]}
+    def collect_unused_ipv4_addresses(self):
+        nets = self.get_ipv4_nets()
+        if len(nets) < 1:
+            return None
+        used = self._used_ipv4_address_hash()
+        ret = []
+        for ip in nets[0].range.as_array:
+            if not ( ip in used if isinstance(used, dict) else hasattr(used, ip)):
+                ret.append(ip)
+        return Util.sort_array(ret)
     
     # (instance field) n_id = False
     

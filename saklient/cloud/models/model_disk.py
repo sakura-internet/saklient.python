@@ -5,6 +5,7 @@ from .model import Model
 from ..resources.resource import Resource
 from ..resources.disk import Disk
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_disk
 

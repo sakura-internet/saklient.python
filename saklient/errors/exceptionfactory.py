@@ -151,6 +151,7 @@ from ..cloud.errors.unsupportedresclassexception import UnsupportedResClassExcep
 from ..cloud.errors.usernotspecifiedexception import UserNotSpecifiedException
 from ..cloud.errors.vncproxyrequestfailureexception import VncProxyRequestFailureException
 from ..util import Util
+import saklient
 
 # module saklient.errors.exceptionfactory
 

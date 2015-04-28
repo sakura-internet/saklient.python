@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...util import Util
+import saklient
 
 # module saklient.cloud.enums.escriptclass
 

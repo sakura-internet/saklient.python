@@ -2,7 +2,9 @@
 
 from ..client import Client
 from .resource import Resource
+from .ipv4range import Ipv4Range
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.ipv4net
 
@@ -18,6 +20,15 @@ class Ipv4Net(Resource):
     # (instance field) m_default_route
     
     # (instance field) m_next_hop
+    
+    # (instance field) _range
+    
+    ## @return {saklient.cloud.resources.ipv4range.Ipv4Range}
+    def get_range(self):
+        return self._range
+    
+    ## 利用可能なIPアドレス範囲
+    range = property(get_range, None, None)
     
     ## @private
     # @return {str}
@@ -59,6 +70,16 @@ class Ipv4Net(Resource):
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
         self.api_deserialize(obj, wrapped)
+    
+    ## @private
+    # @param {any} r
+    # @param {any} root
+    # @return {void}
+    def _on_after_api_deserialize(self, r, root):
+        self._range = None
+        addresses = (r["IPAddresses"] if "IPAddresses" in r else None)
+        if addresses is not None:
+            self._range = Ipv4Range(addresses)
     
     # (instance field) n_id = False
     

@@ -17,6 +17,7 @@ from .models.model_bridge import Model_Bridge
 from .models.model_ipv6net import Model_Ipv6Net
 from .models.model_script import Model_Script
 from .models.model_license import Model_License
+import saklient
 
 # module saklient.cloud.api
 

@@ -3,6 +3,7 @@
 from .models.model_region import Model_Region
 from .client import Client
 from ..util import Util
+import saklient
 
 # module saklient.cloud.facility
 

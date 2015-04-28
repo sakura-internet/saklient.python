@@ -6,6 +6,7 @@ from .models.model_routerplan import Model_RouterPlan
 from .models.model_licenseinfo import Model_LicenseInfo
 from .client import Client
 from ..util import Util
+import saklient
 
 # module saklient.cloud.product
 

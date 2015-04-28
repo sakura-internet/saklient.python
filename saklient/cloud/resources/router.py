@@ -7,6 +7,7 @@ from .icon import Icon
 from .ipv4net import Ipv4Net
 from .ipv6net import Ipv6Net
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.router
 

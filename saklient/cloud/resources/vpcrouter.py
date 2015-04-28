@@ -4,6 +4,7 @@ from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .appliance import Appliance
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.vpcrouter
 

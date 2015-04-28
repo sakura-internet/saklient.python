@@ -5,6 +5,7 @@ from .model import Model
 from ..resources.resource import Resource
 from ..resources.iface import Iface
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_iface
 

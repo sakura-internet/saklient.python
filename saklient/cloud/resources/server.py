@@ -11,6 +11,7 @@ from .isoimage import IsoImage
 from ..enums.eserverinstancestatus import EServerInstanceStatus
 from ..enums.eavailability import EAvailability
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.server
 

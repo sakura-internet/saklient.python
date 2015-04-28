@@ -4,6 +4,7 @@ from ...util import Util
 from ..client import Client
 from ...errors.httpexception import HttpException
 import re
+import saklient
 
 # module saklient.cloud.resources.resource
 

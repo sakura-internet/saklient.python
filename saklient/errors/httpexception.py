@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 
+import saklient
 
 # module saklient.errors.httpexception
 

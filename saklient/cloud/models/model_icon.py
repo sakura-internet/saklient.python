@@ -6,6 +6,7 @@ from ..resources.resource import Resource
 from ..resources.icon import Icon
 from ..enums.escope import EScope
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_icon
 

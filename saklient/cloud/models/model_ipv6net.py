@@ -5,6 +5,7 @@ from .model import Model
 from ..resources.resource import Resource
 from ..resources.ipv6net import Ipv6Net
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_ipv6net
 

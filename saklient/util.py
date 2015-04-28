@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import datetime, re, types, time, urllib.parse
+import datetime, re, types, time, urllib.parse, struct, socket
 from .errors.saklientexception import SaklientException
 
 # module saklient.util
@@ -76,11 +76,42 @@ class Util:
         if d is None:
             return None
         return d.strftime("%Y-%m-%dT%H:%M:%S%z")
+
+    ## @ignore
+    @staticmethod
+    def ip2long(ip):
+        if not isinstance(ip, str) or not re.match(r"^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$", ip): return None
+        ret = None
+        try:
+            ret = struct.unpack("!L", socket.inet_aton(ip))[0]
+        except:
+            ret = None
+        return ret
+    
+    ## @ignore
+    @staticmethod
+    def long2ip(num):
+        if num is None: return None
+        ret = None
+        v = int(num)
+        if v<0: v += 1<<32
+        try:
+            ret = socket.inet_ntoa(struct.pack('!L', v))
+        except:
+            ret = None
+        return ret
     
     ## @ignore
     @staticmethod
     def url_encode(s):
         return urllib.parse.quote_plus(s)
+    
+    ## @ignore
+    @staticmethod
+    def sort_array(a):
+        ret = list(a)
+        ret.sort()
+        return ret
     
     ## @ignore
     @staticmethod

@@ -6,6 +6,7 @@ from ..resources.resource import Resource
 from ..resources.isoimage import IsoImage
 from ..enums.escope import EScope
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_isoimage
 

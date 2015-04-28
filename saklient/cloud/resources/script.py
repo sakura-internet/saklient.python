@@ -7,6 +7,7 @@ from .icon import Icon
 from ..enums.escope import EScope
 from ..enums.escriptclass import EScriptClass
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.script
 

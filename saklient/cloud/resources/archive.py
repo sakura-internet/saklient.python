@@ -10,6 +10,7 @@ from ..enums.escope import EScope
 from ..enums.eavailability import EAvailability
 from ...errors.saklientexception import SaklientException
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.archive
 

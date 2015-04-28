@@ -8,6 +8,7 @@ from .swytch import Swytch
 from .ipv4net import Ipv4Net
 from ..enums.eapplianceclass import EApplianceClass
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.loadbalancer
 

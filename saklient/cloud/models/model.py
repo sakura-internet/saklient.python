@@ -5,6 +5,7 @@ from ..resources.resource import Resource
 from .queryparams import QueryParams
 from ...errors.saklientexception import SaklientException
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model
 

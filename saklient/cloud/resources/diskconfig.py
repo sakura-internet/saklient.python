@@ -3,6 +3,7 @@
 from ...util import Util
 from ..client import Client
 from .script import Script
+import saklient
 
 # module saklient.cloud.resources.diskconfig
 

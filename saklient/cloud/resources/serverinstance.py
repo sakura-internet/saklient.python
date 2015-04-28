@@ -5,6 +5,7 @@ from ..client import Client
 from .resource import Resource
 from .isoimage import IsoImage
 from ..enums.eserverinstancestatus import EServerInstanceStatus
+import saklient
 
 # module saklient.cloud.resources.serverinstance
 

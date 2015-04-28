@@ -8,6 +8,7 @@ from ..resources.serverplan import ServerPlan
 from ..resources.isoimage import IsoImage
 from ..enums.eserverinstancestatus import EServerInstanceStatus
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_server
 

@@ -11,6 +11,7 @@ from ..enums.eavailability import EAvailability
 from ..enums.ediskconnection import EDiskConnection
 from ..enums.estorageclass import EStorageClass
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.disk
 

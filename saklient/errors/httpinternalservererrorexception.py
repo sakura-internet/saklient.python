@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from .httpexception import HttpException
+import saklient
 
 # module saklient.errors.httpinternalservererrorexception
 

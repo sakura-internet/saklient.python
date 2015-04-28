@@ -5,6 +5,7 @@ from ..client import Client
 from .resource import Resource
 from .region import Region
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.bridge
 

@@ -4,6 +4,7 @@ from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.licenseinfo
 

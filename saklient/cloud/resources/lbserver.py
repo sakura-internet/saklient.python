@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.lbserver
 
@@ -126,6 +127,8 @@ class LbServer:
             self._response_expected = int(responseExpected)
         if self._response_expected == 0:
             self._response_expected = None
+        self._active_connections = 0
+        self._status = None
     
     ## @return {any}
     def to_raw_settings(self):

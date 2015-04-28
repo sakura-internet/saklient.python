@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...errors.httpconflictexception import HttpConflictException
+import saklient
 
 # module saklient.cloud.errors.samelicenserequiredexception
 

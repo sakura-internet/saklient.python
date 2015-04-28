@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...errors.httpforbiddenexception import HttpForbiddenException
+import saklient
 
 # module saklient.cloud.errors.accessapikeydisabledexception
 

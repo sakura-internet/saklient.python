@@ -5,6 +5,7 @@ from ..client import Client
 from .resource import Resource
 from ..enums.escope import EScope
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.icon
 

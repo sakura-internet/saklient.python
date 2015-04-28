@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...errors.httpgatewaytimeoutexception import HttpGatewayTimeoutException
+import saklient
 
 # module saklient.cloud.errors.apiproxytimeoutnongetexception
 

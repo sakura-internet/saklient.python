@@ -4,6 +4,7 @@ from ..client import Client
 from .resource import Resource
 from ..enums.estorageclass import EStorageClass
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.diskplan
 

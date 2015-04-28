@@ -19,7 +19,7 @@ class TestException(unittest.TestCase):
         
         x = ExceptionFactory.create(666, 'nameless_http_error', 'Ia! Cthulhu Fthagn!')
         self.assertIsInstance(x, HttpException)
-        self.assertEqual(x.message, 'Ia! Cthulhu Fthagn!')
+        self.assertEqual(str(x), 'Ia! Cthulhu Fthagn!')
 
 if __name__ == '__main__':
     unittest.main()

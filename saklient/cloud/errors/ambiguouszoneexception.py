@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...errors.httpbadrequestexception import HttpBadRequestException
+import saklient
 
 # module saklient.cloud.errors.ambiguouszoneexception
 

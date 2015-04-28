@@ -2,6 +2,7 @@
 
 from ...util import Util
 from .lbserver import LbServer
+import saklient
 
 # module saklient.cloud.resources.lbvirtualip
 

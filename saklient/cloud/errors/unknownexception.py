@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...errors.httpinternalservererrorexception import HttpInternalServerErrorException
+import saklient
 
 # module saklient.cloud.errors.unknownexception
 

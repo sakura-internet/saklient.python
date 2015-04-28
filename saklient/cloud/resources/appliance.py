@@ -10,6 +10,7 @@ from ..enums.eapplianceclass import EApplianceClass
 from ..enums.eavailability import EAvailability
 from ..enums.eserverinstancestatus import EServerInstanceStatus
 from ...util import Util
+import saklient
 
 # module saklient.cloud.resources.appliance
 

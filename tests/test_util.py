@@ -71,6 +71,35 @@ class TestUtil(unittest.TestCase):
             server.availability = "available"
         self.assertRaises(AttributeError, immutable_test)
         # 未定義または読み取り専用フィールドへのset時は AttributeError がスローされなければなりません
+        
+        #
+        self.assertEqual(Util.ip2long('0.0.0.0'), 0)
+        self.assertEqual(Util.ip2long('127.255.255.255'), 0x7FFFFFFF)
+        self.assertEqual(Util.ip2long('128.0.0.0'), 0x80000000)
+        self.assertEqual(Util.ip2long('255.255.255.255'), 0xFFFFFFFF)
+        self.assertEqual(Util.ip2long('222.173.190.239'), 0xDEADBEEF)
+        #
+        self.assertEqual(Util.long2ip(0), '0.0.0.0')
+        self.assertEqual(Util.long2ip(0x7FFFFFFF), '127.255.255.255')
+        self.assertEqual(Util.long2ip(0x80000000), '128.0.0.0')
+        self.assertEqual(Util.long2ip(0xFFFFFFFF), '255.255.255.255')
+        self.assertEqual(Util.long2ip(0xDEADBEEF), '222.173.190.239')
+        self.assertEqual(Util.long2ip(Util.ip2long('127.255.255.255') + 1), '128.0.0.0')
+        #
+        self.assertIsNone(Util.ip2long(None))
+        self.assertIsNone(Util.ip2long(0))
+        self.assertIsNone(Util.ip2long(''))
+        self.assertIsNone(Util.ip2long('x'))
+        self.assertIsNone(Util.ip2long('0.0.0'))
+        self.assertIsNone(Util.ip2long('0.0.0.x'))
+        self.assertIsNone(Util.ip2long('0.0.0.0.0'))
+        self.assertIsNone(Util.ip2long('255.255.255.256'))
+        self.assertIsNone(Util.ip2long('256.255.255.255'))
+        self.assertIsNone(Util.long2ip(None))
+        self.assertEqual(Util.long2ip('0'), '0.0.0.0')
+        self.assertEqual(Util.long2ip(Util.ip2long('0.0.0.0') - 1), '255.255.255.255')
+        self.assertIsNone(Util.long2ip(Util.ip2long('255.255.255.255') + 1))
+        
 
 if __name__ == '__main__':
     unittest.main()

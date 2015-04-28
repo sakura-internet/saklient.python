@@ -8,6 +8,7 @@ from ..resources.loadbalancer import LoadBalancer
 from ..resources.vpcrouter import VpcRouter
 from ..resources.swytch import Swytch
 from ...util import Util
+import saklient
 
 # module saklient.cloud.models.model_appliance
 

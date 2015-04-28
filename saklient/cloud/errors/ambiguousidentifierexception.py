@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from ...errors.httpnotfoundexception import HttpNotFoundException
+import saklient
 
 # module saklient.cloud.errors.ambiguousidentifierexception
 
