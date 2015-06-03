@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...util import Util
 from .lbserver import LbServer
 import saklient

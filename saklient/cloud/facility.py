@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from .models.model_region import Model_Region
 from .client import Client
 from ..util import Util

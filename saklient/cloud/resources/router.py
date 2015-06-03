@@ -1,11 +1,14 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
 from .icon import Icon
 from .ipv4net import Ipv4Net
 from .ipv6net import Ipv6Net
+from .routeractivity import RouterActivity
 from ...util import Util
 import saklient
 
@@ -63,6 +66,15 @@ class Router(Resource):
     def reload(self):
         return self._reload()
     
+    # (instance field) _activity
+    
+    ## @return {saklient.cloud.resources.routeractivity.RouterActivity}
+    def get_activity(self):
+        return self._activity
+    
+    ## アクティビティ
+    activity = property(get_activity, None, None)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     # @param {any} obj
@@ -71,7 +83,16 @@ class Router(Resource):
         super(Router, self).__init__(client)
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
+        self._activity = RouterActivity(client)
         self.api_deserialize(obj, wrapped)
+    
+    ## @private
+    # @param {any} r
+    # @param {any} root
+    # @return {void}
+    def _on_after_api_deserialize(self, r, root):
+        if r is not None:
+            self._activity.set_source_id(self._id())
     
     ## 作成中のルータが利用可能になるまで待機します。
     # 

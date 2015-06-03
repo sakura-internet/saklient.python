@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from .models.model_serverplan import Model_ServerPlan
 from .models.model_diskplan import Model_DiskPlan
 from .models.model_routerplan import Model_RouterPlan

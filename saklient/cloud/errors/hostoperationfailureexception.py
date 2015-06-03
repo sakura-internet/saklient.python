@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.httpserviceunavailableexception import HttpServiceUnavailableException
 import saklient
 

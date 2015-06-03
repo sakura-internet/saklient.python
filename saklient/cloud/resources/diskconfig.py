@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...util import Util
 from ..client import Client
 from .script import Script
@@ -60,21 +62,33 @@ class DiskConfig:
     ## ログインパスワード
     password = property(get_password, set_password, None)
     
-    # (instance field) _ssh_key
+    # (instance field) _ssh_keys
+    
+    ## @return {str[]}
+    def get_ssh_keys(self):
+        return self._ssh_keys
     
     ## @return {str}
     def get_ssh_key(self):
-        return self._ssh_key
+        if len(self._ssh_keys) < 1:
+            return None
+        return self._ssh_keys[0]
     
     ## @param {str} v
     # @return {str}
     def set_ssh_key(self, v):
         Util.validate_type(v, "str")
-        self._ssh_key = v
+        if len(self._ssh_keys) < 1:
+            self._ssh_keys.append(v)
+        else:
+            self._ssh_keys[0] = v
         return v
     
     ## SSHキー
     ssh_key = property(get_ssh_key, set_ssh_key, None)
+    
+    ## SSHキー
+    ssh_keys = property(get_ssh_keys, None, None)
     
     # (instance field) _ip_address
     
@@ -143,7 +157,7 @@ class DiskConfig:
         self._disk_id = diskId
         self._host_name = None
         self._password = None
-        self._ssh_key = None
+        self._ssh_keys = []
         self._ip_address = None
         self._default_route = None
         self._network_mask_len = None
@@ -169,8 +183,8 @@ class DiskConfig:
             Util.set_by_path(q, "HostName", self._host_name)
         if self._password is not None:
             Util.set_by_path(q, "Password", self._password)
-        if self._ssh_key is not None:
-            Util.set_by_path(q, "SSHKey.PublicKey", self._ssh_key)
+        if len(self._ssh_keys) > 0:
+            Util.set_by_path(q, "SSHKey.PublicKey", "\n".join(self._ssh_keys))
         if self._ip_address is not None:
             Util.set_by_path(q, "UserIPAddress", self._ip_address)
         if self._default_route is not None:

@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -198,7 +200,7 @@ class Swytch(Resource):
             return None
         used = self._used_ipv4_address_hash()
         ret = []
-        for ip in nets[0].range.as_array:
+        for ip in nets[0].get_range().get_as_array():
             if not ( ip in used if isinstance(used, dict) else hasattr(used, ip)):
                 ret.append(ip)
         return Util.sort_array(ret)

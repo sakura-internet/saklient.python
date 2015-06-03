@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -7,6 +9,7 @@ from .icon import Icon
 from .diskplan import DiskPlan
 from .server import Server
 from .diskconfig import DiskConfig
+from .diskactivity import DiskActivity
 from ..enums.eavailability import EAvailability
 from ..enums.ediskconnection import EDiskConnection
 from ..enums.estorageclass import EStorageClass
@@ -75,6 +78,15 @@ class Disk(Resource):
     def reload(self):
         return self._reload()
     
+    # (instance field) _activity
+    
+    ## @return {saklient.cloud.resources.diskactivity.DiskActivity}
+    def get_activity(self):
+        return self._activity
+    
+    ## アクティビティ
+    activity = property(get_activity, None, None)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     # @param {any} obj
@@ -83,6 +95,7 @@ class Disk(Resource):
         super(Disk, self).__init__(client)
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
+        self._activity = DiskActivity(client)
         self.api_deserialize(obj, wrapped)
     
     ## @return {bool}
@@ -129,6 +142,7 @@ class Disk(Resource):
     # @return {void}
     def _on_after_api_deserialize(self, r, root):
         if r is not None:
+            self._activity.set_source_id(self._id())
             if ( "SourceDisk" in r if isinstance(r, dict) else hasattr(r, "SourceDisk")):
                 s = (r["SourceDisk"] if "SourceDisk" in r else None)
                 if s is not None:

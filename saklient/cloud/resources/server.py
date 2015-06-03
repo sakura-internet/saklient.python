@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -8,6 +10,7 @@ from .iface import Iface
 from .serverplan import ServerPlan
 from .serverinstance import ServerInstance
 from .isoimage import IsoImage
+from .serveractivity import ServerActivity
 from ..enums.eserverinstancestatus import EServerInstanceStatus
 from ..enums.eavailability import EAvailability
 from ...util import Util
@@ -73,6 +76,15 @@ class Server(Resource):
     def reload(self):
         return self._reload()
     
+    # (instance field) _activity
+    
+    ## @return {saklient.cloud.resources.serveractivity.ServerActivity}
+    def get_activity(self):
+        return self._activity
+    
+    ## アクティビティ
+    activity = property(get_activity, None, None)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     # @param {any} obj
@@ -81,7 +93,16 @@ class Server(Resource):
         super(Server, self).__init__(client)
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
+        self._activity = ServerActivity(client)
         self.api_deserialize(obj, wrapped)
+    
+    ## @private
+    # @param {any} r
+    # @param {any} root
+    # @return {void}
+    def _on_after_api_deserialize(self, r, root):
+        if r is not None:
+            self._activity.set_source_id(self._id())
     
     ## サーバが起動しているときtrueを返します。
     # 

@@ -1,9 +1,12 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
 from .swytch import Swytch
+from .ifaceactivity import IfaceActivity
 from ...util import Util
 import saklient
 
@@ -59,6 +62,15 @@ class Iface(Resource):
     def reload(self):
         return self._reload()
     
+    # (instance field) _activity
+    
+    ## @return {saklient.cloud.resources.ifaceactivity.IfaceActivity}
+    def get_activity(self):
+        return self._activity
+    
+    ## アクティビティ
+    activity = property(get_activity, None, None)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     # @param {any} obj
@@ -67,7 +79,16 @@ class Iface(Resource):
         super(Iface, self).__init__(client)
         Util.validate_type(client, "saklient.cloud.client.Client")
         Util.validate_type(wrapped, "bool")
+        self._activity = IfaceActivity(client)
         self.api_deserialize(obj, wrapped)
+    
+    ## @private
+    # @param {any} r
+    # @param {any} root
+    # @return {void}
+    def _on_after_api_deserialize(self, r, root):
+        if r is not None:
+            self._activity.set_source_id(self._id())
     
     ## スイッチに接続します。
     # 

@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...util import Util
 import saklient
 
@@ -50,12 +52,12 @@ class Ipv4Range:
         self._first = None
         if first is not None:
             self._first = first
-        if self._first == "":
+        if self._first is not None and self._first == "":
             self._first = None
         last = Util.get_by_path_any([obj], ["Max", "max"])
         self._last = None
         if last is not None:
             self._last = last
-        if self._last == "":
+        if self._last is not None and self._last == "":
             self._last = None
     

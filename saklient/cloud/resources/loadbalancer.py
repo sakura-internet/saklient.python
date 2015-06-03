@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+# This code is automatically transpiled by Saklient Translator
+
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .appliance import Appliance
@@ -175,7 +177,7 @@ class LoadBalancer(Appliance):
     # @return {saklient.cloud.resources.loadbalancer.LoadBalancer}
     def reload_status(self):
         result = self.request_retry("GET", self._api_path() + "/" + Util.url_encode(self._id()) + "/status")
-        if ( "LoadBalancer" in result if isinstance(result, dict) else hasattr(result, "LoadBalancer")):
+        if result is not None and ( "LoadBalancer" in result if isinstance(result, dict) else hasattr(result, "LoadBalancer")):
             vips = (result["LoadBalancer"] if "LoadBalancer" in result else None)
             for vipDyn in vips:
                 vipStr = (vipDyn["VirtualIPAddress"] if "VirtualIPAddress" in vipDyn else None)
