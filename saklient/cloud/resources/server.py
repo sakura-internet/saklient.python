@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+from ...errors.httpexception import HttpException
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -173,7 +174,10 @@ class Server(Resource):
         Util.validate_type(timeoutSec, "int")
         step = 10
         while (0 < timeoutSec):
-            self.reload()
+            try:
+                self.reload()
+            except saklient.errors.httpexception.HttpException:
+                pass
             s = None
             inst = self.instance
             if inst is not None:

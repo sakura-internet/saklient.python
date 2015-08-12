@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+from ...errors.httpexception import HttpException
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -155,7 +156,10 @@ class Appliance(Resource):
         Util.validate_type(timeoutSec, "int")
         step = 10
         while (0 < timeoutSec):
-            self.reload()
+            try:
+                self.reload()
+            except saklient.errors.httpexception.HttpException:
+                pass
             a = self.get_availability()
             if a == EAvailability.available:
                 return True
@@ -193,7 +197,10 @@ class Appliance(Resource):
         Util.validate_type(timeoutSec, "int")
         step = 10
         while (0 < timeoutSec):
-            self.reload()
+            try:
+                self.reload()
+            except saklient.errors.httpexception.HttpException:
+                pass
             s = self.get_status()
             if s is None:
                 s = EServerInstanceStatus.down

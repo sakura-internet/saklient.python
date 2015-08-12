@@ -3,6 +3,7 @@
 # This code is automatically transpiled by Saklient Translator
 
 from ...errors.saklientexception import SaklientException
+from ...errors.httpexception import HttpException
 from ..client import Client
 from .resource import Resource
 from .icon import Icon
@@ -212,7 +213,10 @@ class Disk(Resource):
         Util.validate_type(timeoutSec, "int")
         step = 10
         while (0 < timeoutSec):
-            self.reload()
+            try:
+                self.reload()
+            except saklient.errors.httpexception.HttpException:
+                pass
             a = self.get_availability()
             if a == EAvailability.available:
                 return True

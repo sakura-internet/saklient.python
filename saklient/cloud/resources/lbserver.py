@@ -10,6 +10,22 @@ import saklient
 class LbServer:
     ## ロードバランサの監視対象サーバ設定。
     
+    # (instance field) _enabled
+    
+    ## @return {bool}
+    def get_enabled(self):
+        return self._enabled
+    
+    ## @param {bool} v
+    # @return {bool}
+    def set_enabled(self, v):
+        Util.validate_type(v, "bool")
+        self._enabled = v
+        return self._enabled
+    
+    ## 有効状態
+    enabled = property(get_enabled, set_enabled, None)
+    
     # (instance field) _ip_address
     
     ## @return {str}
@@ -114,6 +130,11 @@ class LbServer:
         if obj is None:
             obj = {}
         health = Util.get_by_path_any([obj], ["HealthCheck", "healthCheck", "health_check", "health"])
+        enabled = Util.get_by_path_any([obj], ["Enabled", "enabled"])
+        self._enabled = None
+        if enabled is not None:
+            enabledStr = enabled
+            self._enabled = enabledStr.lower() == "true"
         self._ip_address = Util.get_by_path_any([obj], ["IPAddress", "ipAddress", "ip_address", "ip"])
         self._protocol = Util.get_by_path_any([health, obj], ["Protocol", "protocol"])
         self._path_to_check = Util.get_by_path_any([health, obj], ["Path", "path", "pathToCheck", "path_to_check"])
@@ -135,6 +156,7 @@ class LbServer:
     ## @return {any}
     def to_raw_settings(self):
         return {
+            'Enabled': None if self._enabled is None else ("True" if self._enabled else "False"),
             'IPAddress': self._ip_address,
             'Port': self._port,
             'HealthCheck': {

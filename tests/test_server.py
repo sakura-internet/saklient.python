@@ -215,6 +215,10 @@ class TestServer(unittest.TestCase):
         self.assertTrue(server.sleep_until_down())
         # サーバが正常に停止しません
         
+        # activity
+        for sample in server.activity.fetch().samples:
+            self.assertIsInstance(sample.at, datetime)
+        
         # disconnect the disk from the server
         print('disconnecting the disk from the server...')
         disk.disconnect()

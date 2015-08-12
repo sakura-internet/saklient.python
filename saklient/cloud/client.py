@@ -63,7 +63,7 @@ class Client:
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': self.config['authorization'],
-            'User-Agent': 'saklient.python ver-0.0.2.8 rev-ba6f656e7fdf2e344bc279593970d0d325ad25dd',
+            'User-Agent': 'saklient.python ver-0.0.2.11 rev-ba6f656e7fdf2e344bc279593970d0d325ad25dd',
             'X-Requested-With': 'XMLHttpRequest',
             'X-Sakura-No-Authenticate-Header': '1',
             'X-Sakura-HTTP-Method': method,

@@ -10,6 +10,7 @@ from .diskplan import DiskPlan
 from .server import Server
 from ..enums.escope import EScope
 from ..enums.eavailability import EAvailability
+from ...errors.httpexception import HttpException
 from ...errors.saklientexception import SaklientException
 from ...util import Util
 import saklient
@@ -215,7 +216,10 @@ class Archive(Resource):
         Util.validate_type(timeoutSec, "int")
         step = 3
         while (0 < timeoutSec):
-            self.reload()
+            try:
+                self.reload()
+            except saklient.errors.httpexception.HttpException:
+                pass
             a = self.get_availability()
             if a == EAvailability.available:
                 return True

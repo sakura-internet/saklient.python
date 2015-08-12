@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+from ...errors.httpexception import HttpException
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -114,9 +115,12 @@ class Router(Resource):
         Util.validate_type(timeoutSec, "int")
         step = 3
         while (0 < timeoutSec):
-            if self.exists():
-                self.reload()
-                return True
+            try:
+                if self.exists():
+                    self.reload()
+                    return True
+            except saklient.errors.httpexception.HttpException:
+                pass
             timeoutSec -= step
             if 0 < timeoutSec:
                 Util.sleep(step)
