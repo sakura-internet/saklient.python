@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+from ..client import Client
 from .activity import Activity
 from .ifaceactivitysample import IfaceActivitySample
 from ...util import Util
@@ -29,6 +30,12 @@ class IfaceActivity(Activity):
     # @return {str}
     def _api_path_suffix(self):
         return "/monitor"
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(IfaceActivity, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     
     ## @private
     # @param {str} atStr

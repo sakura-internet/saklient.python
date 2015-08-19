@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+from ..client import Client
 from .activity import Activity
 from .routeractivitysample import RouterActivitySample
 from ...util import Util
@@ -24,6 +25,12 @@ class RouterActivity(Activity):
     # @return {str}
     def _api_path_prefix(self):
         return "/internet"
+    
+    ## @ignore
+    # @param {saklient.cloud.client.Client} client
+    def __init__(self, client):
+        super(RouterActivity, self).__init__(client)
+        Util.validate_type(client, "saklient.cloud.client.Client")
     
     ## @private
     # @param {str} atStr

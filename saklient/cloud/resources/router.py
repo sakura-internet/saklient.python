@@ -114,17 +114,20 @@ class Router(Resource):
     def sleep_while_creating(self, timeoutSec=120):
         Util.validate_type(timeoutSec, "int")
         step = 3
+        isOk = False
         while (0 < timeoutSec):
             try:
                 if self.exists():
                     self.reload()
-                    return True
+                    isOk = True
             except saklient.errors.httpexception.HttpException:
                 pass
             timeoutSec -= step
+            if isOk:
+                timeoutSec = 0
             if 0 < timeoutSec:
                 Util.sleep(step)
-        return False
+        return isOk
     
     ## このルータが接続されているスイッチを取得します。
     # 
