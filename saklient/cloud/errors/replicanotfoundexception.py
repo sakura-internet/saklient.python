@@ -2,9 +2,11 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...errors.httpnotfoundexception import HttpNotFoundException
 import saklient
 
+str = six.text_type
 # module saklient.cloud.errors.replicanotfoundexception
 
 class ReplicaNotFoundException(HttpNotFoundException):

@@ -2,12 +2,14 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.routeractivitysample
 
-class RouterActivitySample:
+class RouterActivitySample(object):
     ## @ignore
     
     # (instance field) _at

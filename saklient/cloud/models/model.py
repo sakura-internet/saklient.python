@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ..client import Client
 from ..resources.resource import Resource
 from .queryparams import QueryParams
@@ -9,9 +10,10 @@ from ...errors.saklientexception import SaklientException
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.models.model
 
-class Model:
+class Model(object):
     ## @ignore
     
     # (instance field) _client

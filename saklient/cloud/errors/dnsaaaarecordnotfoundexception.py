@@ -2,9 +2,11 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...errors.httpbadrequestexception import HttpBadRequestException
 import saklient
 
+str = six.text_type
 # module saklient.cloud.errors.dnsaaaarecordnotfoundexception
 
 class DnsAaaaRecordNotFoundException(HttpBadRequestException):

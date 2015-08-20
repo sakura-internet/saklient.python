@@ -2,14 +2,16 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 from ..client import Client
 from .script import Script
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.diskconfig
 
-class DiskConfig:
+class DiskConfig(object):
     ## ディスク修正のパラメータ。
     
     # (instance field) _client

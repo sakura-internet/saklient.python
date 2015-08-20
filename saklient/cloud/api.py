@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ..util import Util
 from .client import Client
 from .product import Product
@@ -21,9 +22,10 @@ from .models.model_script import Model_Script
 from .models.model_license import Model_License
 import saklient
 
+str = six.text_type
 # module saklient.cloud.api
 
-class API:
+class API(object):
     ## さくらのクラウドAPIクライアントを利用する際、最初にアクセスすべきルートとなるクラス。
     # 
     # @see API.authorize

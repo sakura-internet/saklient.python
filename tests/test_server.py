@@ -1,5 +1,7 @@
 # -*- coding:utf-8 -*-
 
+import six
+str = six.text_type
 import unittest, sys, os, re, random, string, time, subprocess
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from datetime import datetime
@@ -63,7 +65,7 @@ class TestServer(unittest.TestCase):
             self.assertEqual(server.plan.memory_mib / server.plan.memory_gib, 1024)
             self.assertIsInstance(server.tags, list)
             for tag in server.tags:
-                self.assertIsInstance(tag, str)
+                self.assertIsInstance(tag, (six.text_type, six.string_types))
             self.assertTrue(mem <= server.plan.memory_gib)
             mem = server.plan.memory_gib
         

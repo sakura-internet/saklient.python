@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .appliance import Appliance
@@ -12,6 +13,7 @@ from ..enums.eapplianceclass import EApplianceClass
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.loadbalancer
 
 class LoadBalancer(Appliance):

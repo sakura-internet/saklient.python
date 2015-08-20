@@ -2,9 +2,11 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from .httpexception import HttpException
 import saklient
 
+str = six.text_type
 # module saklient.errors.httpinternalservererrorexception
 
 class HttpInternalServerErrorException(HttpException):

@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 from ..client import Client
 from .resource import Resource
@@ -9,6 +10,7 @@ from .isoimage import IsoImage
 from ..enums.eserverinstancestatus import EServerInstanceStatus
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.serverinstance
 
 class ServerInstance(Resource):

@@ -2,12 +2,14 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.ipv4range
 
-class Ipv4Range:
+class Ipv4Range(object):
     ## IPv4ネットワークのIPアドレス範囲。
     
     # (instance field) _first

@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...errors.httpexception import HttpException
 from ...errors.saklientexception import SaklientException
 from ..client import Client
@@ -13,6 +14,7 @@ from .routeractivity import RouterActivity
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.router
 
 class Router(Resource):

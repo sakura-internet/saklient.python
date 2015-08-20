@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from .httpexception import HttpException
 from .httpbadgatewayexception import HttpBadGatewayException
 from .httpbadrequestexception import HttpBadRequestException
@@ -155,9 +156,10 @@ from ..cloud.errors.vncproxyrequestfailureexception import VncProxyRequestFailur
 from ..util import Util
 import saklient
 
+str = six.text_type
 # module saklient.errors.exceptionfactory
 
-class ExceptionFactory:
+class ExceptionFactory(object):
     
     ## @static
     # @param {int} status

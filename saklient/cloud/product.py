@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from .models.model_serverplan import Model_ServerPlan
 from .models.model_diskplan import Model_DiskPlan
 from .models.model_routerplan import Model_RouterPlan
@@ -10,9 +11,10 @@ from .client import Client
 from ..util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.product
 
-class Product:
+class Product(object):
     ## 商品情報にアクセスするためのモデルを集めたクラス。
     
     # (instance field) _server

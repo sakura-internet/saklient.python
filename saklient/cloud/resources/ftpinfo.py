@@ -2,12 +2,14 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.ftpinfo
 
-class FtpInfo:
+class FtpInfo(object):
     ## FTPサーバのアカウント情報。
     
     # (instance field) _host_name

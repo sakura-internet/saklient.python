@@ -2,12 +2,14 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ..client import Client
 from .activity import Activity
 from .diskactivitysample import DiskActivitySample
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.diskactivity
 
 class DiskActivity(Activity):

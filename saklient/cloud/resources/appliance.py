@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...errors.httpexception import HttpException
 from ...errors.saklientexception import SaklientException
 from ..client import Client
@@ -15,6 +16,7 @@ from ..enums.eserverinstancestatus import EServerInstanceStatus
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.appliance
 
 class Appliance(Resource):

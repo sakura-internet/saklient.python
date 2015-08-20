@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...errors.saklientexception import SaklientException
 from ..client import Client
 from .resource import Resource
@@ -9,6 +10,7 @@ from ..enums.escope import EScope
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.region
 
 class Region(Resource):

@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ..client import Client
 from .model import Model
 from ..resources.resource import Resource
@@ -12,6 +13,7 @@ from ..enums.escope import EScope
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.models.model_archive
 
 class Model_Archive(Model):

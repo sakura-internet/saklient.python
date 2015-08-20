@@ -2,12 +2,14 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.lbserver
 
-class LbServer:
+class LbServer(object):
     ## ロードバランサの監視対象サーバ設定。
     
     # (instance field) _enabled

@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ..client import Client
 from .model import Model
 from ..resources.resource import Resource
@@ -9,6 +10,7 @@ from ..resources.routerplan import RouterPlan
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.models.model_routerplan
 
 class Model_RouterPlan(Model):

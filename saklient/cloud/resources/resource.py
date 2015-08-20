@@ -2,15 +2,17 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 from ..client import Client
 from ...errors.httpexception import HttpException
 import re
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.resource
 
-class Resource:
+class Resource(object):
     ## @ignore
     
     # (instance field) _client

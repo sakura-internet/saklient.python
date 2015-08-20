@@ -2,6 +2,7 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ..client import Client
 from .resource import Resource
 from .icon import Icon
@@ -15,6 +16,7 @@ from ...errors.saklientexception import SaklientException
 from ...util import Util
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.archive
 
 class Archive(Resource):

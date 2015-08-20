@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import urllib.request, urllib.parse
-from urllib.error import URLError, HTTPError
+from six.moves import urllib
+from six.moves.urllib.error import URLError, HTTPError
 import json, re, base64
+import contextlib
 from ..errors.exceptionfactory import ExceptionFactory
 
-class Client:
+class Client(object):
     
     def __init__(self, token, secret):
         self.config = {
@@ -63,7 +64,7 @@ class Client:
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': self.config['authorization'],
-            'User-Agent': 'saklient.python ver-0.0.2.11 rev-ba6f656e7fdf2e344bc279593970d0d325ad25dd',
+            'User-Agent': 'saklient.python ver-0.0.4 rev-074cf09976387d88ffea37601a21476ce19fc19d',
             'X-Requested-With': 'XMLHttpRequest',
             'X-Sakura-No-Authenticate-Header': '1',
             'X-Sakura-HTTP-Method': method,
@@ -75,7 +76,7 @@ class Client:
         res = ''
         try:
             req = urllib.request.Request(path, params_json, headers)
-            with urllib.request.urlopen(req) as page:
+            with contextlib.closing(urllib.request.urlopen(req)) as page:
                 for line in page.readlines():
                     res += line.decode('utf-8')
         except HTTPError as ex:

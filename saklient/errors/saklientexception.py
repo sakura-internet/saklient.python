@@ -2,8 +2,10 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 import saklient
 
+str = six.text_type
 # module saklient.errors.saklientexception
 
 class SaklientException(Exception):

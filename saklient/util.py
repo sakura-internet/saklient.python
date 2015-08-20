@@ -1,11 +1,15 @@
 # -*- coding:utf-8 -*-
 
-import datetime, re, types, time, urllib.parse, struct, socket
+import six
+str = six.text_type
+from six.moves import urllib
+import dateutil.parser
+import datetime, re, types, time, struct, socket
 from .errors.saklientexception import SaklientException
 
 # module saklient.util
 
-class Util:
+class Util(object):
     
     ## @ignore
     @staticmethod
@@ -68,7 +72,7 @@ class Util:
     def str2date(s):
         if s is None:
             return None
-        return datetime.datetime.strptime(re.sub(r"([+-][0-9]{2}):([0-9]{2})$", "\\1\\2", s), "%Y-%m-%dT%H:%M:%S%z")
+        return dateutil.parser.parse(s)
     
     ## @ignore
     @staticmethod
@@ -80,7 +84,7 @@ class Util:
     ## @ignore
     @staticmethod
     def ip2long(ip):
-        if not isinstance(ip, str) or not re.match(r"^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$", ip): return None
+        if not isinstance(ip, (six.text_type, six.string_types)) or not re.match(r"^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$", ip): return None
         ret = None
         try:
             ret = struct.unpack("!L", socket.inet_aton(ip))[0]
@@ -132,7 +136,9 @@ class Util:
             clazz = type(value)
             if (type_name == "function"):
                 is_ok = isinstance(value, types.FunctionType)
-            elif (type_name in {"str", "float", "int", "bool", "dict", "list"}):
+            elif type_name == "str":
+                is_ok = isinstance(value, (six.text_type, six.string_types))
+            elif (type_name in {"float", "int", "bool", "dict", "list"}):
                 is_ok = type(value).__name__ == type_name
             else:
                 p = type_name.split(".")

@@ -2,13 +2,15 @@
 
 # This code is automatically transpiled by Saklient Translator
 
+import six
 from ...util import Util
 from ..client import Client
 import saklient
 
+str = six.text_type
 # module saklient.cloud.resources.activity
 
-class Activity:
+class Activity(object):
     
     # (instance field) _client
     
