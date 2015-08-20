@@ -1,9 +1,16 @@
 from distutils.core import setup
 
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except(IOError, ImportError):
+    long_description = open('README.md').read()
+
 setup(
     name = 'saklient',
-    version = '0.0.4',
+    version = '0.0.4.3',
     description = 'SAKURA Internet API Client Library',
+    long_description=long_description,
     author='SAKURA Internet Inc.',
     author_email='dev-support-ml@sakura.ad.jp',
     py_modules = ["saklient"],

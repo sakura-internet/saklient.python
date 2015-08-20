@@ -14,14 +14,14 @@ This library gives you an easy interface to control your resources on
 
 ## Requirements
 
-- Python 3
+- Python 2.7 or 3.4
 
 
 ## How to use this library in your project
 
 ```bash
 # Install the package
-pip3 install saklient
+pip install saklient
 
 # Edit your code
 cd YOUR/PROJECT/ROOT
@@ -46,7 +46,7 @@ Code examples are available [here](http://sakura-internet.github.io/saklient.doc
 
 ## Copyright and license
 
-Copyright (C) 2014 SAKURA Internet, Inc.
+Copyright (C) 2014-2015 SAKURA Internet, Inc.
 
 This library is freely redistributable under [MIT license](http://www.opensource.org/licenses/mit-license.php).
 
