@@ -50,3 +50,5 @@ Copyright (C) 2014-2015 SAKURA Internet, Inc.
 
 This library is freely redistributable under [MIT license](http://www.opensource.org/licenses/mit-license.php).
 
+- Special thanks to ABEJA.INC for supporting Python 2
+
