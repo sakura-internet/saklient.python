@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest, sys, os, re, random, string, time, subprocess
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path[:0] = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from datetime import datetime
 from saklient.cloud.api import API
 from saklient.cloud.resources.server import Server
@@ -72,10 +72,18 @@ class TestServer(unittest.TestCase):
         iface = server.add_iface()
         self.assertIsInstance(iface, Iface)
         self.assertTrue(0 < int(iface.id))
+        self.assertEqual(iface.server_id, server.id)
+        server.reload()
+        self.assertEqual(server.ifaces[0].id, iface.id)
+        self.assertEqual(server.ifaces[0].server_id, server.id)
+        iface.reload()
+        self.assertEqual(iface.swytch_id, None)
         
         #
         print('connecting the interface to the swytch...')
         iface.connect_to_swytch(swytch)
+        self.assertEqual(iface.swytch_id, swytch.id)
+        self.assertEqual(api.swytch.get_by_id(iface.swytch_id).id, swytch.id)
         
         #
         print('disconnecting the interface from the swytch...')

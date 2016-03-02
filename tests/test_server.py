@@ -3,7 +3,7 @@
 import six
 str = six.text_type
 import unittest, sys, os, re, random, string, time, subprocess
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path[:0] = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from datetime import datetime
 from saklient.cloud.api import API
 from saklient.cloud.resources.server import Server

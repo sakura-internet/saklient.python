@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest, sys, os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path[:0] = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from saklient.cloud.enums.eserverinstancestatus import EServerInstanceStatus
 
 class TestEnum(unittest.TestCase):

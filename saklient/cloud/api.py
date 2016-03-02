@@ -12,6 +12,7 @@ from .models.model_server import Model_Server
 from .models.model_disk import Model_Disk
 from .models.model_appliance import Model_Appliance
 from .models.model_archive import Model_Archive
+from .models.model_commonserviceitem import Model_CommonServiceItem
 from .models.model_isoimage import Model_IsoImage
 from .models.model_iface import Model_Iface
 from .models.model_swytch import Model_Swytch
@@ -165,6 +166,15 @@ class API(object):
     ## スクリプトにアクセスするためのモデル。
     script = property(get_script, None, None)
     
+    # (instance field) _common_service_item
+    
+    ## @return {saklient.cloud.models.model_commonserviceitem.Model_CommonServiceItem}
+    def get_common_service_item(self):
+        return self._common_service_item
+    
+    ## 共通サービス契約にアクセスするためのモデル。
+    common_service_item = property(get_common_service_item, None, None)
+    
     # (instance field) _license
     
     ## @return {saklient.cloud.models.model_license.Model_License}
@@ -193,6 +203,7 @@ class API(object):
         self._bridge = Model_Bridge(client)
         self._ipv6_net = Model_Ipv6Net(client)
         self._script = Model_Script(client)
+        self._common_service_item = Model_CommonServiceItem(client)
         self._license = Model_License(client)
     
     ## 指定した認証情報を用いてアクセスを行うAPIクライアントを作成します。

@@ -204,9 +204,6 @@ class Bridge(Resource):
             Util.set_by_path(ret, "Region", (None if self.m_region is None else self.m_region.api_serialize(withClean)) if withClean else ({
                 'ID': "0"
             } if self.m_region is None else self.m_region.api_serialize_id()))
-        else:
-            if self.is_new:
-                missing.append("region")
         if len(missing) > 0:
             raise SaklientException("required_field", "Required fields must be set before the Bridge creation: " + ", ".join(missing))
         return ret

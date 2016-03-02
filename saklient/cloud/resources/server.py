@@ -103,6 +103,25 @@ class Server(Resource):
     # @param {any} r
     # @param {any} root
     # @return {void}
+    def _on_before_api_deserialize(self, r, root):
+        if r is None:
+            return
+        id = (r["ID"] if "ID" in r else None)
+        ifaces = (r["Interfaces"] if "Interfaces" in r else None)
+        if ifaces is not None:
+            for iface in ifaces:
+                server = None
+                if ( "Server" in iface if isinstance(iface, dict) else hasattr(iface, "Server")):
+                    server = (iface["Server"] if "Server" in iface else None)
+                else:
+                    server = {}
+                    iface["Server"] = server
+                server["ID"] = id
+    
+    ## @private
+    # @param {any} r
+    # @param {any} root
+    # @return {void}
     def _on_after_api_deserialize(self, r, root):
         if r is not None:
             self._activity.set_source_id(self._id())

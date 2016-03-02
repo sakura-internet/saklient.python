@@ -8,7 +8,7 @@ except(IOError, ImportError):
 
 setup(
     name = 'saklient',
-    version = '0.0.4.3',
+    version = '0.0.6',
     description = 'SAKURA Internet API Client Library',
     long_description=long_description,
     author='SAKURA Internet Inc.',

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 import unittest, sys, os, re, random, string, time, subprocess
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path[:0] = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import socket, struct
 from datetime import datetime
 from saklient.util import Util

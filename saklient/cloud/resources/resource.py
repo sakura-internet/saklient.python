@@ -80,6 +80,13 @@ class Resource(object):
     # @param {any} r
     # @param {any} root
     # @return {void}
+    def _on_before_api_deserialize(self, r, root):
+        {}
+    
+    ## @private
+    # @param {any} r
+    # @param {any} root
+    # @return {void}
     def _on_after_api_deserialize(self, r, root):
         {}
     
@@ -120,6 +127,7 @@ class Resource(object):
             else:
                 root = obj
                 record = (obj[rkey] if rkey in obj else None)
+        self._on_before_api_deserialize(record, root)
         self.api_deserialize_impl(record)
         self._on_after_api_deserialize(record, root)
     
@@ -195,8 +203,10 @@ class Resource(object):
     # @private
     # @return {saklient.cloud.resources.resource.Resource} this
     def _reload(self):
-        result = self.request_retry("GET", self._api_path() + "/" + Util.url_encode(self._id()))
-        self.api_deserialize(result, True)
+        id = self._id()
+        if id is not None:
+            result = self.request_retry("GET", self._api_path() + "/" + Util.url_encode(id))
+            self.api_deserialize(result, True)
         return self
     
     ## このリソースが存在するかを調べます。

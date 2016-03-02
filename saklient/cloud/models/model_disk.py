@@ -149,6 +149,12 @@ class Model_Disk(Model):
         Util.validate_type(reverse, "bool")
         return self._sort_by_name(reverse)
     
+    ## @param {bool} reverse=False
+    # @return {saklient.cloud.models.model_disk.Model_Disk}
+    def sort_by_connection_order(self, reverse=False):
+        Util.validate_type(reverse, "bool")
+        return self._sort("ConnectionOrder", reverse)
+    
     ## @ignore
     # @param {saklient.cloud.client.Client} client
     def __init__(self, client):

@@ -27,6 +27,8 @@ class Iface(Resource):
     
     # (instance field) m_server_id
     
+    # (instance field) m_swytch_id
+    
     ## @private
     # @return {str}
     def _api_path(self):
@@ -99,6 +101,15 @@ class Iface(Resource):
     def connect_to_swytch(self, swytch):
         Util.validate_type(swytch, "saklient.cloud.resources.swytch.Swytch")
         self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/to/switch/" + Util.url_encode(swytch._id()))
+        return self.reload()
+    
+    ## 指定したIDのスイッチに接続します。
+    # 
+    # @param {str} swytchId 接続先のスイッチID。
+    # @return {saklient.cloud.resources.iface.Iface} this
+    def connect_to_swytch_by_id(self, swytchId):
+        Util.validate_type(swytchId, "str")
+        self._client.request("PUT", self._api_path() + "/" + Util.url_encode(self._id()) + "/to/switch/" + swytchId)
         return self.reload()
     
     ## 共有セグメントに接続します。
@@ -192,6 +203,29 @@ class Iface(Resource):
     ## このインタフェースが取り付けられているサーバのID
     server_id = property(get_server_id, set_server_id, None)
     
+    # (instance field) n_swytch_id = False
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @return {str}
+    def get_swytch_id(self):
+        return self.m_swytch_id
+    
+    ## (This method is generated in Translator_default#buildImpl)
+    # 
+    # @param {str} v
+    # @return {str}
+    def set_swytch_id(self, v):
+        Util.validate_type(v, "str")
+        if not self.is_new:
+            raise SaklientException("immutable_field", "Immutable fields cannot be modified after the resource creation: " + "saklient.cloud.resources.iface.Iface#swytch_id")
+        self.m_swytch_id = v
+        self.n_swytch_id = True
+        return self.m_swytch_id
+    
+    ## このインタフェースの接続先スイッチのID
+    swytch_id = property(get_swytch_id, set_swytch_id, None)
+    
     ## (This method is generated in Translator_default#buildImpl)
     # 
     # @param {any} r
@@ -232,6 +266,12 @@ class Iface(Resource):
             self.m_server_id = None
             self.is_incomplete = True
         self.n_server_id = False
+        if Util.exists_path(r, "Switch.ID"):
+            self.m_swytch_id = None if Util.get_by_path(r, "Switch.ID") is None else str(Util.get_by_path(r, "Switch.ID"))
+        else:
+            self.m_swytch_id = None
+            self.is_incomplete = True
+        self.n_swytch_id = False
     
     ## @ignore
     # @param {bool} withClean=False
@@ -255,6 +295,8 @@ class Iface(Resource):
         else:
             if self.is_new:
                 missing.append("server_id")
+        if withClean or self.n_swytch_id:
+            Util.set_by_path(ret, "Switch.ID", self.m_swytch_id)
         if len(missing) > 0:
             raise SaklientException("required_field", "Required fields must be set before the Iface creation: " + ", ".join(missing))
         return ret
